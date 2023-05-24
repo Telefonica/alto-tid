@@ -8,12 +8,12 @@ import networkx
 import socket
 import struct
 
-sys.path.append('cdn-alto/')
+#sys.path.append('cdn-alto/')
 from bgp.manage_bgp_speaker import ManageBGPSpeaker
 
 DEFAULT_ASN = 0
 #RR_BGP_0 = "50.50.50.1"
-RR_BGP_0 = "50.50.30.2"
+RR_BGP_0 = "50.50.50.1"
 #RR_BGP = BGP_INFO['bgp']['ip']
 
 
@@ -27,7 +27,7 @@ class TopologyCreator:
         self.cost_map = {}
         self.router_ids = []
         # set path where to write result json files
-        self.topology_writer = TopologyFileWriter('/root')
+        self.topology_writer = TopologyFileWriter('./maps')
 
     @staticmethod
     def discard_message_from_protocol_id(message, discard_protocols):
@@ -151,6 +151,7 @@ class TopologyCreator:
 
     def load_pids(self, ipv4db):
         # self.pids stores the result of networkmap
+        #print(str(ipv4db))
         for rr_bgp in [RR_BGP_0]:
             for prefix, data in ipv4db[rr_bgp]['ipv4'].items():
                 pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(data['next-hop']))
@@ -201,8 +202,11 @@ class TopologyCreator:
                         elif is_bgp:
                             for next_hop, prefix in is_bgp.items():
                                 for nlri in prefix:
-                                    pids_to_load[neighbor_ip_address]['ipv4'][nlri['nlri']] = {'next-hop': next_hop}
-                                    self.load_pids(pids_to_load)
+                                    try:
+                                        pids_to_load[neighbor_ip_address]['ipv4'][nlri['nlri']] = {'next-hop': next_hop}
+                                        self.load_pids(pids_to_load)
+                                    except:
+                                        print("Error en el PID: " + str(neighbor_ip_address))
 
                 elif 'withdraw' in update_msg and 'bgp-ls bgp-ls' in update_msg['withdraw']:
                     for route in update_msg['withdraw']['bgp-ls bgp-ls']:
