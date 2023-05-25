@@ -7,6 +7,8 @@ import re
 import networkx
 import socket
 import struct
+from ipaddress import ip_address, IPv4Address
+from yang_alto import RespuestasAlto
 
 #sys.path.append('cdn-alto/')
 from bgp.manage_bgp_speaker import ManageBGPSpeaker
@@ -28,6 +30,7 @@ class TopologyCreator:
         self.router_ids = []
         # set path where to write result json files
         self.topology_writer = TopologyFileWriter('./maps')
+        self.resp = RespuestasAlto()
 
     @staticmethod
     def discard_message_from_protocol_id(message, discard_protocols):
@@ -172,6 +175,100 @@ class TopologyCreator:
                     self.cost_map[src_pid_name] = {}
                 self.cost_map[src_pid_name][dst_pid_name] = weight
 
+    def parseo_yang(self, mensaje, tipo):
+        return str(tipo) + 'json{"alto-tid":"1.0","time":' + str(datetime.timestamp(datetime.now())) + ',"host":"altoserver-alberto","' + str(tipo) + '":' + str(mensaje) + '},}'
+
+    ### RFC7285 functions
+    def get_costs_map_by_pid(self, pid):
+        #pid = "pid0:" + str(npid)
+        #print(pid)
+        #print(str(self.pids))
+        if pid in self.cost_map.keys():
+            #print(str(self.pids))
+            #print(str(self.cost_map))
+            #return self.resp.crear_respuesta("filtro", "networkmap-default", self.vtag, str(self.cost_map[pid]))
+            return self.resp.crear_respuesta("filtro", "networkmap-default", 0000, str(self.cost_map[pid]))
+        else:
+            return "404: Not Found"
+
+    def get_properties(self, pid):
+        #return str(self.bf.session.q.nodeProperties().answer().frame())
+        return "Implementation in proccess. Sorry dude"
+
+    def get_endpoint_costs(self, pid):
+        return "Implementation in proccess. Sorry dude"
+
+    def get_maps(self):
+        return ('{"pids_map":' + self.get_pids() + ', "costs_map":' + self.get_costs_map() + '}')
+
+    def get_costs_map(self):
+        #return self.resp.crear_respuesta("cost-map", "networkmap-default", self.vtag, str(self.cost_map))
+        return self.resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(self.cost_map))
+
+    def get_pids(self):
+        #return self.resp.crear_respuesta("pid-map", "networkmap-default", self.vtag, str(self.pids))
+        return self.resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(self.pids))
+
+    def get_directory(self):
+        return self.resp.indice()
+
+
+    ### Ampliation functions
+
+    def shortest_path(self, a, b):
+        try:
+            return networkx.dijkstra_path(self.topology, a, b)
+        except networkx.exception.NetworkXNoPath as e:
+            return []
+        except Exception as e:
+            print(e)
+            return (-1)
+
+    def all_maps(self, topo, src, dst):
+        '''
+        Returns all the diferent paths between src and dest without any edge in common.
+        The result is a list of paths (each path is represented as a char list, e.g. ['a', 'c', 'd'])
+        Args:
+            topo: Topology map
+            src: node used as source
+            dst: node used as destination
+        '''
+        map_aux = networkx.Graph(topo)
+        all_paths = []
+
+        sh_path = networkx.dijkstra_path(map_aux, src, dst)
+        while sh_path != []:
+            cost = 0
+            nodo_s = sh_path[0]
+            for nodo_d in sh_path[1:]:
+                map_aux.remove_edge(nodo_s, nodo_d)
+                nodo_s = nodo_d
+                cost = cost + 1
+
+            all_paths.append({'path':sh_path, 'cost':cost})
+            try:
+                sh_path = networkx.dijkstra_path(map_aux, src, dst)
+            except networkx.exception.NetworkXNoPath as e:
+                sh_path = []
+        return all_paths
+
+    ### Manager function
+    def gestiona_info(self):
+        self.manage_topology_updates()
+
+    def mailbox(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.bind(('localhost',8081))
+        print("Waiting...")
+        while 1:
+            topo = s.recv(16384)
+            topo = topo.decode()
+            print(topo)
+            # Aquí se deben de gestionar los datos recibidos
+            # Recibe una lista de nodos, una lista de ejes (con pesos), un indicador de la métrica pasada y la funete.
+            # Los nodos ya deben estar parseados según el AS.
+
+
     def manage_bgp_speaker_updates(self):
         """
         Reads stdout of process exabgp. It reads line by line
@@ -227,6 +324,7 @@ class TopologyCreator:
                                     self.topology.remove_edge(self.split_router_ids(u), self.split_router_ids(v))
                                 except:
                                     print("Eje ya removido.")
+                print("CostMap generado")
                 self.compute_costmap()
                 self.topology_writer.write_same_ips(self.router_ids)
                 self.topology_writer.write_pid_file(self.pids)
@@ -263,3 +361,5 @@ if __name__ == '__main__':
 
     topology_creator = TopologyCreator(exabgp_process)
     topology_creator.manage_bgp_speaker_updates()
+
+    topology_creator.mailbox()
