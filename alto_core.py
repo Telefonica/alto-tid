@@ -8,10 +8,10 @@ import networkx
 import socket
 import struct
 from ipaddress import ip_address, IPv4Address
-from yang_alto import RespuestasAlto
 
 #sys.path.append('cdn-alto/')
 from bgp.manage_bgp_speaker import ManageBGPSpeaker
+from parsers.yang_alto import RespuestasAlto
 
 DEFAULT_ASN = 0
 #RR_BGP_0 = "50.50.50.1"
