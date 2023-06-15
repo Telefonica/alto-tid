@@ -337,10 +337,13 @@ class TopologyCreator:
                                 for nlri in prefix:
                                     try:
                                         #pids_to_load[neighbor_ip_address]['ipv4'][nlri['nlri']] = {'next-hop': next_hop}
-                                        pids_to_load[neighbor_ip_address].append(nlri['nlri'])                        
+                                                                
+                                        pids_to_load[next_hop].append(nlri['nlri'])                        
                                         #self.load_pids(pids_to_load)
                                     except:
-                                        print("Error en el PID: " + str(neighbor_ip_address))
+                                        print("Error en el PID: " + str(prefix))
+                                        pids_to_load[next_hop] = []
+                                        pids_to_load[next_hop].append(nlri['nlri'])
                 elif 'withdraw' in update_msg and 'bgp-ls bgp-ls' in update_msg['withdraw']:
                     for route in update_msg['withdraw']['bgp-ls bgp-ls']:
                         u=0;v=0
@@ -381,9 +384,10 @@ class TopologyCreator:
                 #self.topology_writer.write_pid_file(self.pids)
                 #self.topology_writer.write_cost_map(self.cost_map)
         #print(tp.nodes(), tp.edges())
-        print(self.topology)
+        #print(self.topology)
         self.topology = tp
         self.pids = pids_to_load
+        #print(tiempo, asn, self.pids, self.topology)
         return tiempo, asn, self.pids, self.topology
 
 class TopologyFileWriter:

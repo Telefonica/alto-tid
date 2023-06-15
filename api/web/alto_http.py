@@ -5,7 +5,7 @@ import os
 import sys
 import json
 #import threading
-from flask import Flask
+import flask
 from werkzeug.serving import make_server
 from time import sleep
 
@@ -14,7 +14,7 @@ class AltoHttp():
 
     def __init__(self, a):
         #threading.Thread.__init__(self)
-        self.app = Flask("http")
+        self.app = flask.Flask("http")
         self.app.config["DEBUG"] = True
         self.alto = a
         self.app.route('/', methods=['GET'])(self.home)

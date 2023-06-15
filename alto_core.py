@@ -4,6 +4,7 @@
 import threading
 import json
 import networkx
+import ipaddress
 
 # Internals imports
 from topology_maps_generator import TopologyCreator
@@ -23,10 +24,12 @@ class AltoCore:
         self.__topology_writer = TopologyFileWriter('./maps')
         self.__resp = RespuestasAlto()
         self.__topology = networkx.DiGraph()
-        self.__pids = {}
+        self.__net_map = {}
         self.__cost_map = {}
         self.__http = AltoHttp(self)
         self.h_thread = threading.Thread(target=self.__http.run)
+        self.__endpoints = {}
+
 
     ### GETers y SETers  ###
     def set_topology_creator(self, tc):
@@ -146,41 +149,51 @@ class AltoCore:
     ### RFC7285 functions
     def get_costs_map_by_pid(self, pid):
         #pid = "pid0:" + str(npid)
-        #print(pid)
-        #print(str(self.pids))
-        if pid in self.cost_map.keys():
+        print(pid)
+        print(str(self.__cost_map.keys()))
+        if pid in self.__cost_map.keys():
             #print(str(self.pids))
             #print(str(self.cost_map))
             #return self.resp.crear_respuesta("filtro", "networkmap-default", self.vtag, str(self.cost_map[pid]))
-            return self.resp.crear_respuesta("filtro", "networkmap-default", 0000, str(self.cost_map[pid]))
+            return self.__resp.crear_respuesta("filtro", "costmap-filtered", 0000, str({pid:self.__cost_map[pid]}))
         else:
             return "404: Not Found"
 
-    def get_properties(self, pid):
+    def get_properties(self, endpoint):
         #return str(self.bf.session.q.nodeProperties().answer().frame())
-        return "Implementation in proccess. Sorry dude"
+        pid = self.__endpoints.get(endpoint)
+        if pid:
+            return str(pid)
+        else:
+            return "Endpoint not valid"
 
-    def get_endpoint_costs(self, pid):
-        return "Implementation in proccess. Sorry dude"
+    def get_endpoint_costs(self, endpoint):
+        pid = self.__endpoints.get(endpoint)
+        print(pid)
+        if pid:
+            return self.get_costs_map_by_pid(pid["pid"])
+        else:
+            return "Endpoint not valid"
+        #return "Implementation in proccess. Sorry dude"
 
     def get_maps(self):
-        return ('{"pids_map":' + self.get_pids() + ', "costs_map":' + self.get_costs_map() + '}')
+        return ('{"pids_map":' + self.get_net_map() + ', "costs_map":' + self.get_costs_map() + '}')
 
     def get_costs_map(self):
         #return self.resp.crear_respuesta("cost-map", "networkmap-default", self.vtag, str(self.cost_map))
-        return self.resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(self.cost_map))
+        return self.__resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(self.__cost_map))
 
-    def get_pids(self):
+    def get_net_map(self):
         #return self.resp.crear_respuesta("pid-map", "networkmap-default", self.vtag, str(self.pids))
-        return self.resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(self.pids))
+        return self.__resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(self.__net_map))
 
     def get_directory(self):
-        return self.resp.indice()
+        return self.__resp.indice()
 
     ### Ampliation functions
     def shortest_path(self, a, b):
         try:
-            return networkx.dijkstra_path(self.topology, a, b)
+            return networkx.dijkstra_path(self.__topology, a, b)
         except networkx.exception.NetworkXNoPath as e:
             return []
         except Exception as e:
@@ -216,6 +229,30 @@ class AltoCore:
         return all_paths
 
     ### Private funtions ###
+    def __compute_netmap(self, asn, redes):
+        for router in redes.keys():
+            ipv4 = []
+            ipv6 = []
+            for ip in redes[router]:
+                if not ip.endswith("/3", -3, -1):
+                    #print(ip[-3:-1])
+                    ipv4.append(ip)
+                #try:
+                #    if type(ipaddress.ip_network(ip)) is IPv4Network:
+                #else: 
+                #        ipv6.append(ip)
+                #except:
+                #    print("Invalid IP" + str(ip))
+            pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
+            if len(ipv4):
+                if pid not in self.__net_map.keys():
+                    self.__net_map[pid] = {}
+                    #self.__net_map[pid]['ipv4'] = [] 
+                #self.__net_map[pid]["ipv4"] = ipv4
+                self.__net_map[pid]['ipv4'] = ipv4
+            if len(ipv6):
+                self.__net_map[pid]["ipv6"] = ipv6
+    
     def __compute_costmap(self, asn, topology):
         # shortest_paths is a dict by source and target that contains the shortest path length for
         # that source and destination
@@ -228,6 +265,21 @@ class AltoCore:
                     self.__cost_map[src_pid_name] = {}
                 self.__cost_map[src_pid_name][dst_pid_name] = weight
 
+    def __compute_pid_endpoint(self, endpoint):
+        #Vamos a recibir la IP del
+        ip_e = ipaddress.IPv4Address(endpoint)
+        red = "0.0.0.0/-1"
+        pid_e = 0
+        #print(str( self.__net_map))
+        for pid in self.__net_map:
+            #print("pid", pid)
+            for prefijo in self.__net_map[pid]["ipv4"]:
+                if ip_e in ipaddress.IPv4Network(prefijo):
+                    if int(prefijo.split("/")[1]) > int(red.split("/")[1]):
+                        red = prefijo
+                        pid_e = pid
+        #print(endpoint,self.__net_map[pid_e]["ipv4"])
+        return pid_e
 
     def manage_updates(self):
         # Thread creation
@@ -238,13 +290,30 @@ class AltoCore:
         #api_thread.run()
         while True:
             timest, asn, pids, topology = tp_thread.run()
-            self.__compute_costmap(int(asn), topology)
-            #self.topology_writer.write_same_ips(self.router_ids)
-            self.__topology_writer.write_pid_file(self.__pids)
-            self.__topology_writer.write_cost_map(self.__cost_map)
-            print(self.__cost_map)
+            if asn != '': 
+                self.__compute_costmap(int(asn), topology)
+                self.__compute_netmap(int(asn), pids)
+                self.evaluate_endpoints()
+                #self.topology_writer.write_same_ips(self.router_ids)
+                self.__topology_writer.write_pid_file(self.__net_map)
+                self.__topology_writer.write_cost_map(self.__cost_map)
+                #print(self.__cost_map)
+                #print(self.__net_map)
+                print("")
+                print(self.__endpoints)
+                print(self.get_endpoint_costs("3.3.3.2"))
         self.__http.detener()
 
+    def evaluate_endpoints(self):
+        with open('./endpoints/properties.json', 'r') as source:
+            jason = source.read()
+            jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
+            users = json.loads(str(jason))
+            for user in users["users"]:
+                user["pid"] = self.__compute_pid_endpoint(user["ipv4"][0])
+                #user["pid"] = ''
+                #print(str(user))
+                self.__endpoints[user["ipv4"][0]]=user
 
 
 ### Aux clases ###
@@ -258,7 +327,6 @@ class TopologyUpdateThread(threading.Thread):
         t,a,p,c = self.__tp_mng.manage_bgp_speaker_updates()
         return t,a,p,c
 
-
 ### Aux clases ###
 class TopologyExpoThread(threading.Thread):
 
@@ -271,9 +339,6 @@ class TopologyExpoThread(threading.Thread):
 
 
 
-
-
 if __name__ == "__main__":
     alto = AltoCore(TopologyCreator(),'')
     alto.manage_updates()
-

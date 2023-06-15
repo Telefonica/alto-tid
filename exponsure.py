@@ -45,9 +45,10 @@ def home():
         <li>Mapa de costes: /costs </li>
         <li>Mapa de PIDs: /pids </li>
         </ul></p>
-        
-    
+
+
     '''
+
 
 ###################################
 ##                               ##
@@ -58,35 +59,56 @@ def home():
 # Map-Filteriong Service
 @app.route('/costmap/filter/<string:pid>', methods=['GET'])
 def api_costs_by_pid(pid):
-    return flask.jsonify(alto.get_costs_map_by_pid(pid))
+    cuerpo = flask.jsonify(alto.get_costs_map_by_pid(pid))
+    res = flask.Response(cuerpo, mimetype="application/alto-costmapfilter+json")
+    res.headers["Content-Type"] = "application/alto-costmapfilter+json"
+    return res
 
 #Endpoint Property Service
 @app.route('/properties/<string:pid>', methods=['GET'])
 def api_properties(pid):
-    return flask.jsonify(alto.get_properties(pid))
+    cuerpo = flask.jsonify(alto.get_properties(pid))
+    res = flask.Response(cuerpo, mimetype="application/alto-endpointprop+json")
+    res.headers["Content-Type"] = "application/alto-endpointprop+json"
+    return res
 
 #Endpoint Cost Service
 @app.route('/costmap/<string:pid>', methods=['GET'])
 def api_endpoint_costs(pid):
-    return flask.jsonify(alto.get_endpoint_costs(pid))
+    cuerpo = flask.jsonify(alto.get_endpoint_costs(pid))
+    res = flask.Response(cuerpo, mimetype="application/alto-endpointcost+json")
+    res.headers["Content-Type"] = "application/alto-endpointcost+json"
+    return res
 
 #Map Service
 @app.route('/maps', methods=['GET'])
 def api_maps():
-    return flask.jsonify(alto.get_maps())
+    cuerpo = flask.jsonify(alto.get_maps())
+    res = flask.Response(cuerpo, mimetype="application/alto-networkmapcostmap+json")
+    res.headers["Content-Type"] = "application/alto-networkmapcostmap+json"
+    return res
 
 #Network Map service
 @app.route('/costmap', methods=['GET'])
 def api_costs():
-    return flask.jsonify(alto.get_costs_map())
+    cuerpo = flask.jsonify(alto.get_costs_map())
+    res = flask.Response(cuerpo, mimetype="application/alto-costmap+json")
+    res.headers["Content-Type"] = "application/alto-costmap+json"
+    return res
 
 @app.route('/networkmap', methods=['GET'])
 def api_pids():
-    return flask.jsonify(alto.get_pids())
+    cuerpo = flask.jsonify(alto.get_pids())
+    res = flask.Response(cuerpo, mimetype="application/alto-networkmap+json")
+    res.headers["Content-Type"] = "application/alto-networkmap+json"
+    return res
 
 @app.route('/directory', methods=['GET'])
 def api_directory():
-    return flask.jsonify(alto.get_directory())
+    cuerpo = flask.jsonify(alto.get_directory())
+    res = flask.Response(cuerpo, mimetype="application/alto-directory+json")
+    res.headers["Content-Type"] = "application/alto-directory+json"
+    return res
 
 
 ###################################

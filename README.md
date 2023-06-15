@@ -55,6 +55,19 @@ Archivos en desuso (/desuso/):
 		(+) kafka_api --> expone: capacidad de enviar a una cola kafka la info recibida.
 + launcher --> Activa la opción con kafka_api
 
+### RFC 7285
++ Funcionalidades:
+	+ Faltan:
+		+ Mostrar el Content-Type en las cabeceras HTTP
+		+ Modificar el Cost-endpoint para que muestre los costes respecto a los endpoints y no los routers
+		+ Falta implementar el filtrado del networkmap
+		+ Capabilities: WTF is this
++ Formateado:
+	+ Falta:
+		+ Depurar el formato YANG
+		+ Formato de errores
+		+ Gestión de cabeceras
+
 
 
 ### Versiones
