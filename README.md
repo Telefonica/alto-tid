@@ -72,92 +72,18 @@ Archivos en desuso (/desuso/):
 
 ### Versiones
 
-v3.0 (en proceso)
-Incluímos las funcionalidades de la versión 2 aplicándoselo también si la fuente es IETF en vez de BGP.
-Falta:
-	- Terminar la definición de propiedades.
-	- Una vez esté todo correcto, extraer tanto el lector bgp como el lector ietf a dos archivos distintos.
-	- Modificar las funciones auxiliares para que puedan utilizarse en ambos tipos de topología.
-
-
-v2.1
-Añadimos todos los servicios ofrecidos por ALTO en el rfc7285:
-* Map-Filtering Service: Realiza un resumen del mapa de costes o PIDs a partir de un parámetro pasado.
-* Endpoint Property Service: Devuelve un JSON con las características del nodo solicitado.
-* Endpoint Cost Service: Devuelve el mapa de costes del Endpoint solicitado.
-* Map Service: Servicio que se ha definido por defecto. Devuelve los dos mapas que se generaban hasta ahora.
-
-- Modificado el formato de los networkmap para que indiquen no solo las IPs, sino también el tipo de IP, tal y como se especifica en el RFC7285.
-- Creado un archivo que sirva de codificador json-yang. Falta:
-	- Casos que aún no están implementados tampoco están formateados (por pereza, por poder lo podría haber hecho).
-	- Realizar pruebas con más de 1 prefijo por PID en el networkmap.
-	- Seguir revisando condiciones del RFC.
-
-v2.0
-Dividimos el proyecto en dos:
-- topology_maps_generator_http.py: Orientado a un servicio C/S. Se busca exponer funciones que sean accesibles desde el exterior.
-- topology_maps_generator_kafka.py: Orientado a una exposición unidireccional. 
-
-Para simplificar el desarrollo se puede realizar todo en la misma rama pero incluyendo un argumento que elija la versión para lanzar.
-Esta versión va en paralelo con la v1.2, de manera que aclopará esos cambios.
-
-    ***
-        Hay que crear funciones para exponer los servicios que prestamos:
-        - Multimaps (DONE)
-        - CostesCifrados (?)
-        - Echo (para debugin) (DONE)
-        Cada conexión http un hilo (?) --> Hay que revisar documentación, cómo crear el servicio, cómo exponerlo (en claro o bajo SSL), ... (DONE: versión inicial)
-        Importante --> Lista de puntos pendientes
-    ***
-Servicios expuestos: multipath, costs, pids, best path
-
-
-PARA FUTURAS VERSIONES: Posibilidad de devolver un PDF de un grafo de red.
-
-v1.2 (en desarrollo)
-Revisar la viabilidad de utilizar el batfish.
-Incluir la opción de mostrar todos los caminos disjuntos para llegar de un punto a otro de la red delimitada. (done)
-Hacer que la opción de caminos disjuntos sea preguntable desde un externo: Problema, la cola Kafka es unidireccional (dos opciones, realizar un branch sin colas kafka o utilizar otro método de exposición)
-
-
-v1.1
-Ciframos el PID de los nodos con un hash sha3 de 384bits, utilizando un timestamp como salt. Para evitar nombres muy largos acotamos a los 32 caracteres más significativos 
-(Dado que la intención es enmascarar la IP, no se pierde seguridad al reducir los bits mostrados)
-En paralelo Fer ha estado incluyendo conexiones ponderadas.
-
-
-v1.0
-Instalamos una cola kafka activable mediante ./kafka_ale/launcher. Dependencias: Zookeper
-Creamos un archivo python que servirá de API para trabajar con la cola kafka.
-Versión inicial: 2 colas (mapa_costes y mapa_pids).
-
-Falta por definir en fase 2:
-- Que la cola solamente almacene los 2-3 registros más recientes (no hacen falta más al no consumirse al ser accedidos a ellos).
-- Accesible mediante conexión SSL.
-- Posibilidad de colas distribuídas.
-- Script de gestión de fallos.
-
-Además, hemos sustituído el grafo Direcional simple por un grafo unidireccional Múltiple (permite más de 1 enlace entre dos nodos).
-
-
 v0.1
-Hemos modificado el código de topology_maps_generator.py y topology_maps_generator_isis.py para que si se cae un nodo no generen una excepción, sino que eliminen los enlaces que han desaparecido.
-La funcionalidad básica está correcta en ospf pero en isis no se propagan las solicitudes a routers no colindantes.
-
+Esta versión es la original. Es una versión casi completa del RFC7285, pero con todas las funcionalidades que nos van a hacer falta para el DISCRETION.
 
 ### ToDo List
 
 ***
 
-1. Proceso de revisión continua de los servicios definidos.
-2. Implementar el servicio a través de SSL en vez de HTTP.
-3. Pulir la exposición a través de Kafka.
-4. Evaluar ALTO de Infraestructura con LLDP.
+1. Cifrado de PIDs. (done)
+2. Mostrar solamente nodos barrera. (done)
+3. Incluir la exposición a través de Kafka.
+4. Pulir la exposición a través de Kafka.
 5. Parsear todas las respuestas a formato YANG.
-6. Terminar la integración con la información IETF.
-7. Realizar una recepción modular y paralelizada de la información.
-8. Buscar cómo fusionar toda la información sin crear un frankenstein.
-9. Realizar una exportación multicoste.
 
 ***
 
