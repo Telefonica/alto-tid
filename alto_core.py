@@ -5,13 +5,15 @@ import threading
 import json
 import networkx
 import ipaddress
+import hashlib
+from datetime import datetime
 
 # Internals imports
 from topology_maps_generator import TopologyCreator
 from topology_writer import TopologyFileWriter
 from parsers.yang_alto import RespuestasAlto
 from api.web.alto_http import AltoHttp
-
+from kafka_ale.kafka_api import AltoProducer
 # Global information section
 
 
@@ -29,6 +31,7 @@ class AltoCore:
         self.__http = AltoHttp(self)
         self.h_thread = threading.Thread(target=self.__http.run)
         self.__endpoints = {}
+        self.__ts = {} #timestamp dictionary
 
 
     ### GETers y SETers  ###
@@ -91,6 +94,7 @@ class AltoCore:
         domain_ids = [item.get("domain-id", 0) for item in desc]
         for router_id, autonomous_system, domain_id in zip(routers_id, autonomous_systems, domain_ids):
             pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.__get_hex_id(router_id) if not self.__check_is_hex(router_id) else router_id)
+            #pid_name = self.__cyphered_pid(router_id, autonomous_system)
             origin = (autonomous_system, domain_id, area_id, router_id)
             if pid_name not in self.props:
                 self.props[pid_name] = []
@@ -149,8 +153,8 @@ class AltoCore:
     ### RFC7285 functions
     def get_costs_map_by_pid(self, pid):
         #pid = "pid0:" + str(npid)
-        print(pid)
-        print(str(self.__cost_map.keys()))
+        #print(pid)
+        #print(str(self.__cost_map.keys()))
         if pid in self.__cost_map.keys():
             #print(str(self.pids))
             #print(str(self.cost_map))
@@ -169,7 +173,7 @@ class AltoCore:
 
     def get_endpoint_costs(self, endpoint):
         pid = self.__endpoints.get(endpoint)
-        print(pid)
+        #print(pid)
         if pid:
             return self.get_costs_map_by_pid(pid["pid"])
         else:
@@ -181,11 +185,13 @@ class AltoCore:
 
     def get_costs_map(self):
         #return self.resp.crear_respuesta("cost-map", "networkmap-default", self.vtag, str(self.cost_map))
-        return self.__resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(self.__cost_map))
+        cm = self.__filter_cost_map(1)
+        return self.__resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(cm))
 
     def get_net_map(self):
         #return self.resp.crear_respuesta("pid-map", "networkmap-default", self.vtag, str(self.pids))
-        return self.__resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(self.__net_map))
+        nm = self.__filter_net_map(1)
+        return self.__resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(nm))
 
     def get_directory(self):
         return self.__resp.indice()
@@ -229,6 +235,88 @@ class AltoCore:
         return all_paths
 
     ### Private funtions ###
+    def  __filter_cost_map(self, filter_id):
+        '''
+            in this first version, the only filter we will do is the securoty filter.
+            In this case, first we will evaluate the selected criteria. The nodes that fit
+            will be included in the list of keys for the new dictionary.
+            Once we have filtered the nodes, we will build the cost map with the nodes selected.
+        '''
+        filtrado ={}
+        try:
+            for pid in self.__cost_map.keys():
+                if self.__is_client_net(pid) or self.__is_border_node(pid):
+                    filtrado[pid] = {}
+            print("Claves del cost map:", filtrado.keys())
+            for pid in filtrado.keys():
+                for pid2 in self.__cost_map[pid].keys():
+                    if pid2 in filtrado.keys():
+                        filtrado[pid][pid2] = self.__cost_map[pid][pid2]
+        except:
+            print("Error en el filtrado del mapa de costes")
+            return {}
+        
+        return filtrado
+
+    def __is_client_net(self, pid):
+        '''
+            If there are at least one network with client connectivity, then it's a end-net.
+        '''
+        try:
+            #print(" __is_client_net", pid)
+            if pid in self.__net_map.keys():
+                for net in self.__net_map[pid]["ipv4"]:
+                    #print(net.split("/")[-1])
+                    if int(net.split("/")[-1]) < 30:
+                        return 1
+        except:
+            print("Error en la evaluación c del pid:", pid, self.__net_map)
+        return 0
+
+    def __is_border_node(self, pid):
+        '''
+            If it's connected with at least 1 diferent AS node, then it's a border node.
+        '''
+        try:
+            our_asn = int(pid.split(":",1)[0][3:])
+            #print("__is_border_node", pid,our_asn)
+            for net in self.__cost_map[pid].keys():
+                asn = int(net.split(":",1)[0][3:])
+                #print(asn)
+                if asn != our_asn and self.__cost_map[pid][net] == 1:
+                    return 1
+        except:
+            print("Error en la evaluación b del pid:", pid, self.__cost_map)
+        return 0
+
+    def __filter_net_map(self, filter_id):
+        '''
+            in this first version, the only filter we will do is the securoty filter.
+            In this case, we will evaluate the selected criteria. The nodes that fit
+            will be included in the returned net map.
+        '''
+        filtrado ={}
+        for pid in self.__net_map.keys():
+            if self.__is_client_net(pid) or self.__is_border_node(pid):
+                filtrado[pid] = self.__net_map[pid]
+        return filtrado
+
+
+    def __cyphered_pid(self, router, asn):
+        """Returns the hashed PID of the router passed as argument. 
+            If the PID was already mapped, it uses a dictionary to access to it.
+        """
+        tsn = int(datetime.timestamp(datetime.now())*1000000)
+        rid = self.__get_hex_id(router) if not self.__check_is_hex(router) else router
+        if rid not in self.__ts.keys():
+            self.__ts[rid] = tsn
+        else:
+            tsn = self.__ts[rid]
+        hash_r = hashlib.sha3_384((router + str(tsn)).encode())
+        return ('pid%d:%s:%d' % (asn, hash_r.hexdigest()[:32], tsn))
+
+
+
     def __compute_netmap(self, asn, redes):
         for router in redes.keys():
             ipv4 = []
@@ -244,6 +332,7 @@ class AltoCore:
                 #except:
                 #    print("Invalid IP" + str(ip))
             pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
+            #pid = self.__cyphered_pid(router, asn)
             if len(ipv4):
                 if pid not in self.__net_map.keys():
                     self.__net_map[pid] = {}
@@ -259,10 +348,14 @@ class AltoCore:
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topology))
         for src, dest_pids in shortest_paths.items():
             src_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(src))
+            #src_pid_name = self.__cyphered_pid(src, asn)
+            if src_pid_name not in self.__cost_map:
+                self.__cost_map[src_pid_name] = {}
             for dest_pid, weight in dest_pids.items():
                 dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
-                if src_pid_name not in self.__cost_map:
-                    self.__cost_map[src_pid_name] = {}
+                #dst_pid_name = self.__cyphered_pid(dest_pid, asn)
+                #if src_pid_name not in self.__cost_map:
+                #    self.__cost_map[src_pid_name] = {}
                 self.__cost_map[src_pid_name][dst_pid_name] = weight
 
     def __compute_pid_endpoint(self, endpoint):
@@ -295,13 +388,13 @@ class AltoCore:
                 self.__compute_netmap(int(asn), pids)
                 self.evaluate_endpoints()
                 #self.topology_writer.write_same_ips(self.router_ids)
-                self.__topology_writer.write_pid_file(self.__net_map)
-                self.__topology_writer.write_cost_map(self.__cost_map)
+                self.__topology_writer.write_pid_file(self.__filter_net_map(1))
+                self.__topology_writer.write_cost_map(self.__filter_cost_map(1))
                 #print(self.__cost_map)
                 #print(self.__net_map)
-                print("")
-                print(self.__endpoints)
-                print(self.get_endpoint_costs("3.3.3.2"))
+                #print("")
+                #print(self.__endpoints)
+                #print(self.get_endpoint_costs("3.3.3.2"))
         self.__http.detener()
 
     def evaluate_endpoints(self):
