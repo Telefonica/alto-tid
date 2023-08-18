@@ -12,27 +12,27 @@ from datetime import datetime
 from topology_maps_generator import TopologyCreator
 from topology_writer import TopologyFileWriter
 from parsers.yang_alto import RespuestasAlto
-from api.web.alto_http import AltoHttp
+#from api.web.alto_http import AltoHttp
 from kafka_ale.kafka_api import AltoProducer
 # Global information section
 
-
+RUTA = "/root/cdn-alto/alto-tid"
 
 # ALTO class
 class AltoCore:
     
     def __init__(self, topo_manager, api):
         self.__topology_creator = topo_manager
-        self.__topology_writer = TopologyFileWriter('./maps')
+        self.__topology_writer = TopologyFileWriter(RUTA + '/maps')
         self.__resp = RespuestasAlto()
         self.__topology = networkx.DiGraph()
         self.__net_map = {}
         self.__cost_map = {}
-        self.__http = AltoHttp(self)
-        self.h_thread = threading.Thread(target=self.__http.run)
+        #self.__http = AltoHttp(self)
+        #self.h_thread = threading.Thread(target=self.__http.run)
         self.__endpoints = {}
         self.__ts = {} #timestamp dictionary
-
+        self.__kafka_p = AltoProducer("localhost", "9092")
 
     ### GETers y SETers  ###
     def set_topology_creator(self, tc):
@@ -331,8 +331,8 @@ class AltoCore:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
-            pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
-            #pid = self.__cyphered_pid(router, asn)
+            #pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
+            pid = self.__cyphered_pid(router, asn)
             if len(ipv4):
                 if pid not in self.__net_map.keys():
                     self.__net_map[pid] = {}
@@ -347,13 +347,13 @@ class AltoCore:
         # that source and destination
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topology))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(src))
-            #src_pid_name = self.__cyphered_pid(src, asn)
+            #src_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(src))
+            src_pid_name = self.__cyphered_pid(src, asn)
             if src_pid_name not in self.__cost_map:
                 self.__cost_map[src_pid_name] = {}
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
-                #dst_pid_name = self.__cyphered_pid(dest_pid, asn)
+                #dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
+                dst_pid_name = self.__cyphered_pid(dest_pid, asn)
                 #if src_pid_name not in self.__cost_map:
                 #    self.__cost_map[src_pid_name] = {}
                 self.__cost_map[src_pid_name][dst_pid_name] = weight
@@ -379,7 +379,7 @@ class AltoCore:
         tp_thread = TopologyUpdateThread(self.__topology_creator)
         tp_thread.start()
         #api_thread = TopologyExpoThread(self)
-        self.h_thread.start()
+        #self.h_thread.start()
         #api_thread.run()
         while True:
             timest, asn, pids, topology = tp_thread.run()
@@ -395,10 +395,13 @@ class AltoCore:
                 #print("")
                 #print(self.__endpoints)
                 #print(self.get_endpoint_costs("3.3.3.2"))
-        self.__http.detener()
+                self.__kafka_p.envio_alto('alto-costes', self.get_costs_map(), 0)
+                self.__kafka_p.envio_alto('alto-pids', self.get_net_map(), 0)
+
+        #self.__http.detener()
 
     def evaluate_endpoints(self):
-        with open('./endpoints/properties.json', 'r') as source:
+        with open('/root/cdn-alto/alto-tid/endpoints/properties.json', 'r') as source:
             jason = source.read()
             jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
             users = json.loads(str(jason))
@@ -418,6 +421,7 @@ class TopologyUpdateThread(threading.Thread):
 
     def run (self):
         t,a,p,c = self.__tp_mng.manage_bgp_speaker_updates()
+        #t,a,p,c = self.__tp_mng.manage_updates()
         return t,a,p,c
 
 ### Aux clases ###
