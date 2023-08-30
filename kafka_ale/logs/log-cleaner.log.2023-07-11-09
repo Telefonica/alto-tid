@@ -1,0 +1,23 @@
+[2023-07-11 09:31:03,931] INFO Starting the log cleaner (kafka.log.LogCleaner)
+[2023-07-11 09:31:04,033] INFO [kafka-log-cleaner-thread-0]: Starting (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,128] INFO Cleaner 0: Beginning cleaning of log __consumer_offsets-28 (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,129] INFO Cleaner 0: Building offset map for __consumer_offsets-28... (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,250] INFO Cleaner 0: Building offset map for log __consumer_offsets-28 for 1 segments in offset range [0, 5). (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,259] INFO Cleaner 0: Offset map for log __consumer_offsets-28 complete. (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,262] INFO Cleaner 0: Cleaning log __consumer_offsets-28 (cleaning prior to Tue Jun 27 08:30:39 UTC 2023, discarding tombstones prior to upper bound deletion horizon Thu Jan 01 00:00:00 UTC 1970)... (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,265] INFO Cleaner 0: Cleaning LogSegment(baseOffset=0, size=1054, lastModifiedTime=1687854639999, largestRecordTimestamp=Some(1687854640004)) in log __consumer_offsets-28 into 0 with an upper bound deletion horizon 0 computed from the segment last modified time of 1687854639999,retaining deletes. (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,271] INFO Cleaner 0: Swapping in cleaned segment LogSegment(baseOffset=0, size=225, lastModifiedTime=1687854639999, largestRecordTimestamp=Some(1687854640004)) for segment(s) List(LogSegment(baseOffset=0, size=1054, lastModifiedTime=1687854639999, largestRecordTimestamp=Some(1687854640004))) in log Log(dir=/tmp/kafka-logs/__consumer_offsets-28, topicId=vOyvHmKnTOapBhHsuYI2Ug, topic=__consumer_offsets, partition=28, highWatermark=6, lastStableOffset=6, logStartOffset=0, logEndOffset=6) (kafka.log.LogCleaner)
+[2023-07-11 09:41:19,279] INFO [kafka-log-cleaner-thread-0]: 
+	Log cleaner thread 0 cleaned log __consumer_offsets-28 (dirty section = [0, 5])
+	0.0 MB of log processed in 0.1 seconds (0.0 MB/sec).
+	Indexed 0.0 MB in 0.1 seconds (0.0 Mb/sec, 88.4% of total time)
+	Buffer utilization: 0.0%
+	Cleaned 0.0 MB in 0.0 seconds (0.1 Mb/sec, 11.6% of total time)
+	Start size: 0.0 MB (5 messages)
+	End size: 0.0 MB (2 messages)
+	78.7% size reduction (60.0% fewer messages)
+ (kafka.log.LogCleaner)
+[2023-07-11 09:50:32,829] INFO Shutting down the log cleaner. (kafka.log.LogCleaner)
+[2023-07-11 09:50:32,829] INFO [kafka-log-cleaner-thread-0]: Shutting down (kafka.log.LogCleaner)
+[2023-07-11 09:50:32,830] INFO [kafka-log-cleaner-thread-0]: Stopped (kafka.log.LogCleaner)
+[2023-07-11 09:50:32,830] INFO [kafka-log-cleaner-thread-0]: Shutdown completed (kafka.log.LogCleaner)

@@ -1,0 +1,352 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "0 : 0 : 0",
+        "network-types": {
+		"ietf-l3-isis-topology:isis-topology": {
+          },
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "1.1.1.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "node_01",
+              "router-id": ["1.1.1.1"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.1/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": "true",
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": "false"
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.12.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.13.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.12.11.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "node_02",
+              "router-id": ["1.1.1.2"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.2/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": "true",
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": "false"
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.12.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.23.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.24.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "node_03",
+              "router-id": ["1.1.1.3"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.3/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": "true",
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": "false"
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.13.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.12.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.13.33.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.4",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "node_04",
+              "router-id": ["1.1.1.4"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.4/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": "true",
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": "false"
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.24.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["1.11.04.1/24"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "node_01 ge0/0/0 - node_02 ge0/0/0",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_01 ge0/0/1 - node_03 ge0/0/0",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_01 ge0/0/2 - 11.11.11.1 ge0/0/2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_02 ge0/0/0 - node_01 ge0/0/0",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_02 ge0/0/1 - node_03 ge0/0/1",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_02 ge0/0/2 - node_04 ge0/0/0",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_03 ge0/0/0 - node_01 ge0/0/2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_03 ge0/0/1 - node_02 ge0/0/2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_03 ge0/0/2 - 21.21.21.3 ge0/0/2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "node_04 ge0/0/0 - node_02 ge0/0/2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
