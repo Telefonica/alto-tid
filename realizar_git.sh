@@ -5,7 +5,7 @@ git add .
 git reset api/web/certs/*
 git reset alto_fed/*
 git reset kafka_ale/*
-git add api/web/certs/README.md
+git reset alto_local/*
 #git reset __pycache__/*
 git reset __pycache__
 git commit -m $( date +"%s" )
