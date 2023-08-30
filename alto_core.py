@@ -10,26 +10,36 @@ import ipaddress
 from topology_maps_generator import TopologyCreator
 from topology_writer import TopologyFileWriter
 from parsers.yang_alto import RespuestasAlto
+<<<<<<< HEAD
 from api.web.alto_http import AltoHttp
 
+=======
+#from api.web.alto_http import AltoHttp
+from kafka_ale.kafka_api import AltoProducer
+>>>>>>> e5814a87b19f2b99a5d4b8ef4193cfb6520ec834
 # Global information section
 
-
+RUTA = "/root/cdn-alto/alto-tid"
 
 # ALTO class
 class AltoCore:
     
     def __init__(self, topo_manager, api):
         self.__topology_creator = topo_manager
-        self.__topology_writer = TopologyFileWriter('./maps')
+        self.__topology_writer = TopologyFileWriter(RUTA + '/maps')
         self.__resp = RespuestasAlto()
         self.__topology = networkx.DiGraph()
         self.__net_map = {}
         self.__cost_map = {}
-        self.__http = AltoHttp(self)
-        self.h_thread = threading.Thread(target=self.__http.run)
+        #self.__http = AltoHttp(self)
+        #self.h_thread = threading.Thread(target=self.__http.run)
         self.__endpoints = {}
+<<<<<<< HEAD
 
+=======
+        self.__ts = {} #timestamp dictionary
+        self.__kafka_p = AltoProducer("localhost", "9092")
+>>>>>>> e5814a87b19f2b99a5d4b8ef4193cfb6520ec834
 
     ### GETers y SETers  ###
     def set_topology_creator(self, tc):
@@ -243,7 +253,12 @@ class AltoCore:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
+<<<<<<< HEAD
             pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
+=======
+            #pid = 'pid%d:%s' % (asn, self.__get_hex_id(router))
+            pid = self.__cyphered_pid(router, asn)
+>>>>>>> e5814a87b19f2b99a5d4b8ef4193cfb6520ec834
             if len(ipv4):
                 if pid not in self.__net_map.keys():
                     self.__net_map[pid] = {}
@@ -258,11 +273,23 @@ class AltoCore:
         # that source and destination
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topology))
         for src, dest_pids in shortest_paths.items():
+<<<<<<< HEAD
             src_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(src))
             for dest_pid, weight in dest_pids.items():
                 dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
                 if src_pid_name not in self.__cost_map:
                     self.__cost_map[src_pid_name] = {}
+=======
+            #src_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(src))
+            src_pid_name = self.__cyphered_pid(src, asn)
+            if src_pid_name not in self.__cost_map:
+                self.__cost_map[src_pid_name] = {}
+            for dest_pid, weight in dest_pids.items():
+                #dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
+                dst_pid_name = self.__cyphered_pid(dest_pid, asn)
+                #if src_pid_name not in self.__cost_map:
+                #    self.__cost_map[src_pid_name] = {}
+>>>>>>> e5814a87b19f2b99a5d4b8ef4193cfb6520ec834
                 self.__cost_map[src_pid_name][dst_pid_name] = weight
 
     def __compute_pid_endpoint(self, endpoint):
@@ -286,7 +313,7 @@ class AltoCore:
         tp_thread = TopologyUpdateThread(self.__topology_creator)
         tp_thread.start()
         #api_thread = TopologyExpoThread(self)
-        self.h_thread.start()
+        #self.h_thread.start()
         #api_thread.run()
         while True:
             timest, asn, pids, topology = tp_thread.run()
@@ -299,13 +326,23 @@ class AltoCore:
                 self.__topology_writer.write_cost_map(self.__cost_map)
                 #print(self.__cost_map)
                 #print(self.__net_map)
+<<<<<<< HEAD
                 print("")
                 print(self.__endpoints)
                 print(self.get_endpoint_costs("3.3.3.2"))
         self.__http.detener()
+=======
+                #print("")
+                #print(self.__endpoints)
+                #print(self.get_endpoint_costs("3.3.3.2"))
+                self.__kafka_p.envio_alto('alto-costes', self.get_costs_map(), 0)
+                self.__kafka_p.envio_alto('alto-pids', self.get_net_map(), 0)
+
+        #self.__http.detener()
+>>>>>>> e5814a87b19f2b99a5d4b8ef4193cfb6520ec834
 
     def evaluate_endpoints(self):
-        with open('./endpoints/properties.json', 'r') as source:
+        with open('/root/cdn-alto/alto-tid/endpoints/properties.json', 'r') as source:
             jason = source.read()
             jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
             users = json.loads(str(jason))
@@ -325,6 +362,7 @@ class TopologyUpdateThread(threading.Thread):
 
     def run (self):
         t,a,p,c = self.__tp_mng.manage_bgp_speaker_updates()
+        #t,a,p,c = self.__tp_mng.manage_updates()
         return t,a,p,c
 
 ### Aux clases ###
