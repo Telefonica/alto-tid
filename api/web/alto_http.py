@@ -82,7 +82,8 @@ class AltoHttp():
     
     #@self.app.route('/networkmap', methods=['GET'])
     def api_pids(self):
-        return flask.jsonify(self.alto.get_pids())
+        return flask.jsonify(self.alto.get_net_map())
+        #return flask.jsonify(self.alto.get_pids())
     
     #@self.app.route('/directory', methods=['GET'])
     def api_directory(self):
