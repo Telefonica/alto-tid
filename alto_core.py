@@ -13,7 +13,6 @@ from topology_maps_generator import TopologyCreator
 from topology_writer import TopologyFileWriter
 from parsers.yang_alto import RespuestasAlto
 from api.web.alto_http import AltoHttp
-from kafka_ale.kafka_api import AltoProducer
 # Global information section
 
 
