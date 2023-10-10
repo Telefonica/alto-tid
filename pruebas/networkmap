@@ -1,1 +1,0 @@
-"{'meta' : {'type':'alto-networkmap+json','vtag' : [{'resource-id':'networkmap-default','tag':'0'}]},'network-map':{'pid100:32323201': {'ipv4': ['0.0.0.0/0']}, 'pid100:0a0a0a03': {'ipv4': ['3.3.3.0/24']}, 'pid100:0a0a0a02': {'ipv4': ['2.2.2.0/24']}, 'pid100:0a0a0a01': {'ipv4': ['1.1.1.0/24']}}}"

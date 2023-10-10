@@ -341,7 +341,7 @@ class TopologyCreator:
                                         pids_to_load[next_hop].append(nlri['nlri'])                        
                                         #self.load_pids(pids_to_load)
                                     except:
-                                        print("Error en el PID: " + str(prefix))
+                                        #print("Error en el PID: " + str(prefix))
                                         pids_to_load[next_hop] = []
                                         pids_to_load[next_hop].append(nlri['nlri'])
                 elif 'withdraw' in update_msg and 'bgp-ls bgp-ls' in update_msg['withdraw']:

@@ -39,13 +39,14 @@ class AltoHttp():
     #@self.app.route('/', methods=['GET'])
     def home(self):
         return '''
-            <h1>API DE ACCESO AL SERVICE ALTO DE PRUEBAS</h1>
-            <h2>Servicios disponibles:</h2>
+            <h1>ALTO PoC's API</h1>
+            <h2>Services expossed:</h2>
             <p><ul>
-            <li>Todos los camimos disjuntos entre A y B: <b><tt> /all/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
-            <li>Camino más corto entre A y B: <b><tt> /best/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
-            <li>Mapa de costes: /costs </li>
-            <li>Mapa de PIDs: /pids </li>
+            <li>All disjunts paths between A & B: <b><tt> /all/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
+            <li>Shortest path between A & B: <b><tt> /best/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
+            <li>Costs map: /costmap </li>
+            <li>PIDs map: /networkmap </li>
+            <li>Filtered Cost map: /costmap/filter/<string:pid></li>
             </ul></p>
         '''
 

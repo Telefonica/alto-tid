@@ -184,12 +184,14 @@ class AltoCore:
 
     def get_costs_map(self):
         #return self.resp.crear_respuesta("cost-map", "networkmap-default", self.vtag, str(self.cost_map))
-        cm = self.__filter_cost_map(1)
+        #cm = self.__filter_cost_map(1)
+        cm = self.__cost_map
         return self.__resp.crear_respuesta("cost-map", "networkmap-default", 0000, str(cm))
 
     def get_net_map(self):
         #return self.resp.crear_respuesta("pid-map", "networkmap-default", self.vtag, str(self.pids))
-        nm = self.__filter_net_map(1)
+        #nm = self.__filter_net_map(1)
+        nm = self.__net_map
         return self.__resp.crear_respuesta("pid-map", "networkmap-default", 0000, str(nm))
 
     def get_directory(self):
@@ -353,8 +355,8 @@ class AltoCore:
             for dest_pid, weight in dest_pids.items():
                 dst_pid_name = 'pid%d:%s' % (asn, self.__get_hex_id(dest_pid))
                 #dst_pid_name = self.__cyphered_pid(dest_pid, asn)
-                #if src_pid_name not in self.__cost_map:
-                #    self.__cost_map[src_pid_name] = {}
+                if src_pid_name not in self.__cost_map:
+                    self.__cost_map[src_pid_name] = {}
                 self.__cost_map[src_pid_name][dst_pid_name] = weight
 
     def __compute_pid_endpoint(self, endpoint):
@@ -387,9 +389,9 @@ class AltoCore:
                 self.__compute_netmap(int(asn), pids)
                 self.evaluate_endpoints()
                 #self.topology_writer.write_same_ips(self.router_ids)
-                self.__topology_writer.write_pid_file(self.__filter_net_map(1))
-                self.__topology_writer.write_cost_map(self.__filter_cost_map(1))
-                #print(self.__cost_map)
+                #self.__topology_writer.write_pid_file(self.__filter_net_map(1))
+                #self.__topology_writer.write_cost_map(self.__filter_cost_map(1))
+                print(self.__cost_map)
                 #print(self.__net_map)
                 #print("")
                 #print(self.__endpoints)

@@ -9,5 +9,5 @@ git reset kafka_ale/logs/*
 #git reset __pycache__/*
 git reset __pycache__
 git commit -m $( date +"%s" )
-git push origin codeco
+git push origin nemo
 
