@@ -1,0 +1,4 @@
+flask==2.2.2
+kafka-python==2.0.2
+networkx==2.5
+Werkzeug==2.2.2

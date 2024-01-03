@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+
+
+import os
+import sys
+import json
+import threading
+import flask
+from time import sleep
+sys.path.append('cdn-alto/')
+from bgp.manage_bgp_speaker import ManageBGPSpeaker
+sys.path.append('alto-ale/')
+from topology_maps_generator import TopologyCreator
+from topology_maps_generator import TopologyFileWriter
+from modulos.topology_bgp import TopologyBGP
+from modulos.topology_ietf import TopologyIetf
+
+
+
+class HiloHTTP(threading.Thread):
+
+    def __init__(self):
+        threading.Thread.__init__(self)
+        #self.tc = topology_creator
+        #Código global
+        #app = flask.Flask(__name__)
+        #app.config["DEBUG"] = True
+
+    def run (self):
+        alto.manage_bgp_speaker_updates(0)
+        #alto.mailbox(8888)
+        #self.app.run()
+
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
+
+@app.route('/', methods=['GET'])
+def home():
+    return '''
+        <h1>API DE ACCESO AL SERVICE ALTO DE PRUEBAS</h1>
+        <h2>Servicios disponibles:</h2>
+        <p><ul>
+        <li>Todos los camimos disjuntos entre A y B: <b><tt> /all/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
+        <li>Camino más corto entre A y B: <b><tt> /best/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
+        <li>Mapa de costes: /costs </li>
+        <li>Mapa de PIDs: /pids </li>
+        </ul></p>
+        
+    
+    '''
+
+###################################
+##                               ##
+#   Services defined in RFC 7285  #
+##                               ##
+###################################
+
+# Map-Filteriong Service
+@app.route('/costmap/filter/<string:pid>', methods=['GET'])
+def api_costs_by_pid(pid):
+    return flask.jsonify(alto.get_costs_map_by_pid(pid))
+
+#Endpoint Property Service
+@app.route('/properties/<string:pid>', methods=['GET'])
+def api_properties(pid):
+    return flask.jsonify(alto.get_properties(pid))
+
+#Endpoint Cost Service
+@app.route('/costmap/<string:pid>', methods=['GET'])
+def api_endpoint_costs(pid):
+    return flask.jsonify(alto.get_endpoint_costs(pid))
+
+#Map Service
+@app.route('/maps', methods=['GET'])
+def api_maps():
+    return flask.jsonify(alto.get_maps())
+
+#Network Map service
+@app.route('/costmap', methods=['GET'])
+def api_costs():
+    return flask.jsonify(alto.get_costs_map())
+
+@app.route('/networkmap', methods=['GET'])
+def api_pids():
+    return flask.jsonify(alto.get_pids())
+
+@app.route('/directory', methods=['GET'])
+def api_directory():
+    return flask.jsonify(alto.get_directory())
+
+
+###################################
+##                               ##
+#           Ampliations           #
+##                               ##
+###################################
+
+
+#All possible paths between A and B without any common node
+@app.route('/all/<string:a>/<string:b>', methods=['GET'])
+def api_all(a,b):
+    return flask.jsonify(alto.parseo_yang(str(alto.all_maps(alto.topology, a, b)),"all-paths"))
+
+#Best path between A and B
+@app.route('/best/<string:a>/<string:b>', methods=['GET'])
+def api_shortest(a,b):
+    return flask.jsonify(str(alto.shortest_path(a, b)))
+
+if __name__ == '__main__':
+    #Creation of ALTO modules
+    '''modules={}
+    modules['bgp'] = TopologyBGP(('localhost',8888))
+    #modules['ietf'] = TopologyIetf(('localhost',8081))
+    alto = TopologyCreator(modules, 0)
+    hilos = alto.lanzadera()
+
+    hilo = HiloHTTP()
+    hilo.start()
+    hilos.append(hilo)
+    sleep(30)
+    alto.get_costs_map()
+    '''
+
+speaker_bgp = ManageBGPSpeaker()
+exabgp_process = speaker_bgp.check_tcp_connection()
+alto = TopologyCreator(exabgp_process,0)
+hilo = HiloHTTP()
+hilo.start()
+#app.run(host='192.168.165.193', port=8080)
+app.run()

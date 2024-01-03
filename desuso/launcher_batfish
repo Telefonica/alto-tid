@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#Tengo que revisar esto por que no funciona ni de lejos lo del trap --> Revisar lo de trap por que no aparece el man trap y puede ir por ahí la vaina
+
+matemos(){
+        echo "Matemos"
+        kill -9 $AMATAR
+        docker stop batfish
+        docker rm batfish
+        echo "Todo muerto"
+	SEGUIR=0
+}
+
+SEGUIR=1
+docker pull batfish/allinone
+docker run --name batfish -v batfish-data:/data -p 8888:8888 -p 9997:9997 -p 9996:9996 batfish/allinone &
+
+AMATAR=$!
+
+trap 'matemos' 2
+
+while [[ $SEGUIR == 1 ]];
+do
+	sleep 1
+done
