@@ -361,7 +361,15 @@
             "node-id": "5.5.5.1",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "HL5-1-2",
-              "router-id": ["5.5.5.1"]
+              "router-id": ["5.5.5.1"],
+              "prefix": [
+                {
+                  "prefix": "99.4.41.5/24"
+                },
+                {
+                  "prefix": "99.5.55.1/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {
@@ -385,7 +393,15 @@
             "node-id": "5.5.5.2",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "ATN950C-1_HL5-1-1",
-              "router-id": ["5.5.5.2"]
+              "router-id": ["5.5.5.2"],
+              "prefix": [
+                {
+                  "prefix": "98.4.56.2/24"
+                },
+                {
+                  "prefix": "98.4.57.1/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {
@@ -428,7 +444,12 @@
             "node-id": "5.5.5.3",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "ATN910C-2_HL5-2-1",
-              "router-id": ["5.5.5.3"]
+              "router-id": ["5.5.5.3"],
+              "prefix": [
+                {
+                  "prefix": "98.4.41.5/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {
@@ -504,7 +525,15 @@
             "node-id": "5.5.5.4",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "ATN950C-2_HL5-3-1",
-              "router-id": ["5.5.5.4"]
+              "router-id": ["5.5.5.4"],
+              "prefix": [
+                {
+                  "prefix": "98.5.54.3/24"
+                },
+                {
+                  "prefix": "98.5.55.3/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {
@@ -547,7 +576,15 @@
             "node-id": "5.5.5.5",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "HL5-2-2",
-              "router-id": ["5.5.5.5"]
+              "router-id": ["5.5.5.5"],
+              "prefix": [
+                {
+                  "prefix": "99.5.55.2/24"
+                },
+                {
+                  "prefix": "99.4.42.5/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {
@@ -571,7 +608,12 @@
             "node-id": "5.5.5.6",
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "AS7315-30X",
-              "router-id": ["5.5.5.6"]
+              "router-id": ["5.5.5.6"],
+              "prefix": [
+                {
+                  "prefix": "98.4.42.5/24"
+                }
+              ]
             },
             "ietf-ne-commissioning:commissioning-configs": {
               "system-config": {

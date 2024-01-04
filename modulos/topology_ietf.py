@@ -47,6 +47,8 @@ class TopologyIetf(AltoModule):
         '''
         #Diccionario nodo-id:nombre
         nodos = {}
+        #Disccionario Nodo-id:prefijos
+        prefijos = {}
         #Diccionario nodo-id:[(interfaz, ip)]
         tps = {}
         #Lista de enlaces
@@ -68,6 +70,8 @@ class TopologyIetf(AltoModule):
                         #Realizo un macheo de los IDs de los nodos con el nombre y el/los prefijo/s.
                         nodos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["name"]
                         tps[nodo["node-id"]] = []
+                        if "prefix" in nodo["ietf-l3-unicast-topology:l3-node-attributes"].keys():
+                            prefijos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["prefix"]
                         if "ietf-network-topology:termination-point" in nodo.keys():
                             for tp in nodo["ietf-network-topology:termination-point"]:
                                 tps[nodo["node-id"]].append(str(nodos[nodo["node-id"]]) + ' ' +  str(tp["tp-id"]))
@@ -109,11 +113,11 @@ class TopologyIetf(AltoModule):
             datos = str(self.pids).replace("'", '"')
             nodos = list(set(self.topology.nodes()))
             snodos = str(nodos).replace("'", '"')
-            
+            prefijos = str(prefijos).replace("'", '"')
             #print(self.ejes.keys)
             z_ejes = [(tupla[0], tupla[1], self.ejes[tupla]) for tupla in self.ejes]
             #print(str(z_ejes))
-            data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+"}"
+            data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"
             self.return_info(2,0,1, data)
                         
 

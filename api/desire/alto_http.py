@@ -7,11 +7,12 @@ from werkzeug.serving import make_server
 #class AltoHttp(threading.Thread):
 class AltoHttp():
 
-    def __init__(self, a):
+    def __init__(self, a, port=5000):
         #threading.Thread.__init__(self)
         self.app = flask.Flask("http")
         self.app.config["DEBUG"] = True
         self.alto = a
+        self.port = port
         self.app.route('/', methods=['GET'])(self.home)
         self.app.route('/costmap/filter/<string:pid>', methods=['GET'])(self.api_costs_by_pid)
         self.app.route('/properties/<string:pid>', methods=['POST','GET'])(self.api_properties)
@@ -27,9 +28,9 @@ class AltoHttp():
 
     def run(self):
         #self.app.run(host="127.0.0.1", port=5000)
-        self.server = make_server('0.0.0.0', 5000, self.app)
+        self.server = make_server('0.0.0.0', self.port, self.app)
         #self.server = make_server('192.168.165.193', 8080, self.app)
-        print("API running on " + "\x1b[1;34m" +"http://127.0.0.1:5000" + "\x1b[1;37;40m")
+        print("API running on " + "\x1b[1;34m" +"http://127.0.0.1:5001" + "\x1b[1;37;40m")
         self.server.serve_forever()
 
     def detener(self):
