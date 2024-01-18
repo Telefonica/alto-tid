@@ -1,0 +1,1007 @@
+{
+    "version":"RGS/QKD-015ed2_ContIntSDN",
+    "reference":"https://www.etsi.org/deliver/etsi_gs/QKD/001_099/015/02.01.01_60/gs_QKD015v020101p.pdf",
+    "nodes": [
+        {
+            "node": "5.5.5.3",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "5.5.5.6",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "4.4.4.1",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "4.4.4.2",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "5.5.5.2",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "3.3.3.2",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "1.1.1.4",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "1.1.1.2",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "1.1.1.1",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "2.2.2.2",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        },
+        {
+            "node": "2.2.2.1",
+            "sd-qkd-node": {
+                "qkdn_id": "1234",
+                "qkdn_status": true,
+                "qkdn_version": "None",
+                "qkdn_location_id": "",
+                "sd-qkd-node-capabilities": {
+                    "link-stats_support": true,
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true
+                },
+                "qkd-interfaces": [
+                    {
+                        "qkdi_id": 0,
+                        "qkdi_status": "",
+                        "qkdi_capabilities": {
+                            "role_support": "",
+                            "wavelenght_range": "",
+                            "max_absorption": 0.000
+                        },
+                        "qkdi_model": "",
+                        "qkdi_type": "",
+                        "qkdi_att_point": {
+                            "device": "",
+                            "port": 0
+                        }
+                    }
+                ],
+                "qkd-key-association-links": [
+                    {
+                        "qkdl_id": "",
+                        "qkdl_enable": true,
+                        "qkdl_local":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_remote":{
+                            "qkdn_id": "",
+                            "qkdi_id":0
+                        },
+                        "qkdl_type":"",
+                        "qkdl_status":"",
+                        "qkdl_application":"",
+                        "virt_prev_hop":"",
+                        "virt_next_hop":"",
+                        "virt_bandwidth":0,
+                        "phys_channel_att":0.000,
+                        "phys_wavelength":"",
+                        "phys_qkd_role":"",
+                        "qkdl_performance": {
+                            "expected_consumption":0,
+                            "skr":0,
+                            "eskr":0,
+                            "phys_perf":{
+                                "perf_type":"",
+                                "value":0.000
+                            }
+                        }
+                    }
+                ],
+                "qkd-application": [
+                    {
+                        "app_id":"",
+                        "app_status":"",
+                        "qos": {
+                            "max_bandwidth":0,
+                            "min_bandwidth":0,
+                            "jitter":0,
+                            "ttl":0,
+                            "client_shared_path_enable":false,
+                            "client_shared_keys_required":false
+                        },
+                        "app_type":"",
+                        "server_app_id":"",
+                        "client_app_id":"",
+                        "backing_qkdl_id":"",
+                        "local_qkdn_id":"",
+                        "remote_qkdn_id":"",
+                        "app_priority":0,
+                        "creation_time":"",
+                        "expiration_time":"",
+                        "app_statistics":{
+                            "end_time":"",
+                            "start_time":"",
+                            "consumed_bits":0
+                        }
+                    }                    
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+# Documento donde se listan los parámetros de ALTO.                                                                  
+# La intención de este documento es que se pueda modificar las distintas variables de ALTO desde un mismo documento, 
+# fácil de entender y sencillo de modificar.                                                                         
+# Por ahora el formato va a ser un YAML estándar por el tema de los comentarios...                                   
+
+#DEFAULT 
+
+#Modules available: BGP, IETF, 
+MODULES: 
+  - IETF
+MODULES_IP: localhost
+MODULES_PORT: 5001
+#APIS available: HTTP, KAFKA, DESIRE6G, IETF (por hacer)
+API: HTTP
+#DEFAULT port  = 8080; DEFAULT IP = 127.0.0.1
+API_IP: "0.0.0.0"
+API_PORT: 8082
+#Metrics used: hopcount(default), rutingcost, energy, latency
+METRIC: 
+  - hopcount

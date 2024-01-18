@@ -4,6 +4,8 @@
 import flask
 from werkzeug.serving import make_server
 
+ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
+
 #class AltoHttp(threading.Thread):
 class AltoHttp():
 
@@ -47,6 +49,7 @@ class AltoHttp():
             <li>Costs map: /costmap </li>
             <li>PIDs map: /networkmap </li>
             <li>Filtered Cost map: /costmap/filter/<string:pid></li>
+            <li>Desire Graphs request: /graphs/all</li>
             </ul></p>
         '''
 
@@ -59,6 +62,11 @@ class AltoHttp():
     # Map-Filteriong Service
     #@self.app.route('/costmap/filter/<string:pid>', methods=['GET'])
     def api_costs_by_pid(self, pid):
+        if pid == None:
+            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
+        if type(pid) is not str:
+            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+        pid = self.sanitize_input_GET(pid)
         return flask.jsonify(self.alto.get_costs_map_by_pid(pid))
 
     # #Endpoint Property Service
@@ -69,20 +77,44 @@ class AltoHttp():
     #Endpoint Cost Service
     #@self.app.route('/costmap/<string:pid>', methods=['GET'])
     def api_endpoint_costs(self, pid):
+        if pid == None:
+            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
+        if type(pid) is not str:
+            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})        
+        pid = self.sanitize_input_GET(pid)
         return flask.jsonify(self.alto.get_endpoint_costs(pid))
     
     #Map Service
-    #@self.app.route('/maps', methods=['GET'])
+    #@self.app.route('/maps', methods=['GET','POST'])
     def api_maps(self):
+        if flask.request.method == 'POST':
+            data = flask.request.json
+            filter = data.get('filter',"")
+            if filter == "":
+                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
+            filter = self.sanitize_input_POST(filter)
+            return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_maps())
     
     #Network Map service
-    #@self.app.route('/costmap', methods=['GET'])
+    #@self.app.route('/costmap', methods=['GET','POST'])
     def api_costs(self):
+        if flask.request.method == 'POST':
+            data = flask.request.json
+            filter = data.get('filter',"")
+            if filter == "":
+                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})          
+            filter = self.sanitize_input_POST(filter)      
+            return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_costs_map())
     
-    #@self.app.route('/networkmap', methods=['GET'])
+    #@self.app.route('/networkmap', methods=['GET','POST'])
     def api_pids(self):
+        if flask.request.method == 'POST':
+            data = flask.request.json
+            filter = data.get('filter',"")
+            filter = self.sanitize_input_POST(filter)
+            return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_net_map())
         #return flask.jsonify(self.alto.get_pids())
     
@@ -92,11 +124,20 @@ class AltoHttp():
     
         #@self.app.route('/properties/<string:pid>', methods=['POST'])
     def api_properties(self,pid):
+        if pid == None:
+            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
+        if type(pid) is not str:
+            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
         if flask.request.method == 'POST':
             data = flask.request.json
             properties = data.get('properties',[])
+            if properties == []:
+                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
+            properties=self.sanitize_input_POST(properties)
             print(properties)
-        return flask.jsonify(self.alto.get_properties(pid,properties))
+            return flask.jsonify(self.alto.get_properties(pid,properties))
+        else:
+            return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})            
 
     
     
@@ -108,48 +149,50 @@ class AltoHttp():
     ##                               ##
     ###################################
     
-    
-    
-    
-    
     #All possible paths between A and B without any common node
     #@self.app.route('/all/<string:a>/<string:b>', methods=['GET'])
     def api_all(self, a,b):
+        a = self.sanitize_input_GET(a)
+        b = self.sanitize_input_GET(b)
+        if (a == None) or (b == None):
+            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
+        if (type(a) is not str) or (type(b) is not str):
+            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
+        #return flask.jsonify(str(self.alto.all_maps(self.alto.get_topology(), a, b)))
         return flask.jsonify(self.alto.parseo_yang(str(self.alto.all_maps(self.alto.get_topology(), a, b)),"all-paths"))
     
     #Best path between A and B
     #@self.app.route('/best/<string:a>/<string:b>', methods=['GET'])
     def api_shortest(self, a,b):
+        a = self.sanitize_input_GET(a)
+        b = self.sanitize_input_GET(b)
+        if (a == None) or (b == None):
+            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
+        if (type(a) is not str) or (type(b) is not str):
+            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
         return flask.jsonify(str(self.alto.shortest_path(a, b)))
-    
 
     ### Desire6G ampliation
     #@self.app.route('/graphs/all', methods=['POST'])(self.api_graphs)
     def api_graphs(self):
         if flask.request.method == 'POST':
             data = flask.request.json
+            data = self.sanitize_input_POST(data)
             return flask.jsonify(str(self.alto.desire6g_graphs(data)))
         else:
-            return "{'error':'method not valid.'}"
+            return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})
 
-if __name__ == '__main__':
-    #Creation of ALTO modules
-    '''modules={}
-    modules['bgp'] = TopologyBGP(('localhost',8888))
-    #modules['ietf'] = TopologyIetf(('localhost',8081))
-    alto = TopologyCreator(modules, 0)
-    hilos = alto.lanzadera()
 
-    hilo = HiloHTTP()
-    hilo.start()
-    hilos.append(hilo)
-    sleep(30)
-    alto.get_costs_map()
-    '''    
-    #speaker_bgp = ManageBGPSpeaker()
-    #exabgp_process = speaker_bgp.check_tcp_connection()
-    #alto = TopologyCreator(exabgp_process,0)
-    #hilo = HiloHTTP()
-    #hilo.start()
-    #app.run(host='192.168.165.193', port=8080)
-    #app.run()
+    def sanitize_input_POST(texto):
+        '''
+        Characters acepted in the input: a-zA-Z0-9.{}[]",: -
+        '''
+        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//","").replace('_','').replace('<','').replace('>','').replace('&','').replace('%','')
+        return texto_sano
+    
+    def sanitize_input_GET(texto):
+        '''
+        Characters acepted in the input: a-zA-Z0-9.:
+        '''
+        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//","").replace('_','').replace('<','').replace('>','').replace('&','').replace('%','').replace("{",'').replace("}","").replace('"',"").replace("-","")
+        return texto_sano

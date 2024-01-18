@@ -2,22 +2,17 @@
 
 
 
-## Tabla de contenidos
-1. [Descripción general](#descripcion-general)
+## Table of Contents
+1. [General Description](#general-description)
 2. [Lista de archivos](#lista-de-archivos)
 3. [Jerarquía de archivos](#jerarquía-de-archivos)
 4. [Versiones](#versiones)
 5. [ToDo list](#todo-list)
 
 
-### Descripción general
-Directorio creado para realizar una revisión del código para ver si lo podemos adaptar a un contexto en el cual se sincronice con una cola kafka. 
-Este sistema idealmente sería distribuído y tolerante a fallos.
+### General Description
+This code is an ALTO's special implementation ussed in different european projects, being the Discretion application the main one used as root for this. ALTO is a 
 
-El principal objetivo de este directorio es toquetear el código sin fastidiar nada de lo que han hecho los compañeros previamente, valiéndonos de una copia.
-
-Debemos además realizar la evaluación de qué tenemos que implementar para que tengamos un servidor ALTO plenamente funcional.
-Revisar cómo pasar a python los trabajos que hemos hablado Contreras, Rafa y yo.
 
 ### Lista de archivos
 
@@ -132,22 +127,21 @@ Hemos modificado el código de topology_maps_generator.py y topology_maps_genera
 La funcionalidad básica está correcta en ospf pero en isis no se propagan las solicitudes a routers no colindantes.
 
 
-### ToDo List
+### Execution
 
-***
+Terminal 1:
+$ cd alto-eucnc/
+$ python3 alto_core.py
 
-1. Proceso de revisión continua de los servicios definidos.
-2. Implementar el servicio a través de SSL en vez de HTTP.
-3. Pulir la exposición a través de Kafka.
-4. Evaluar ALTO de Infraestructura con LLDP.
-5. Parsear todas las respuestas a formato YANG.
-6. Terminar la integración con la información IETF.
-7. Realizar una recepción modular y paralelizada de la información.
-8. Buscar cómo fusionar toda la información sin crear un frankenstein.
-9. Realizar una exportación multicoste.
-
-***
+Terminal 2:
+$ curl -X POST -d '{"filter": "qkd"}' -H "Content-Type:application/json" http://127.0.0.1:5001/maps
+$ curl http://127.0.0.1:5001/qkd-properties/"pid0:02020201"
+$ curl http://127.0.0.1:5001/qkd-properties/yang
 
 
+### Notas
+Pausamos la inclusión de Kafka dado que con un solo Productor no tiene demasiado sentido. Además, podríamos buscar una forma de estandarizar esta salida, para que sirva para más de un tipo de colas... 
+En teoría en las colas hay mínimo tres actores: Broker o gestor de la cola, Productor y Consumidor.
+El Broker y el Productor no son lo mismo, tienen que ir separados.
 
 

@@ -114,8 +114,6 @@ class AltoModule(ABC):
         rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
         return ('pid%d:%s' % (asn, rid))
 
-
-
     def create_pid_name(self, lsa, descriptors, area_id):
         """Creates partition ID.
         with AS number + domain_id + area_id + hexadecimal router_id

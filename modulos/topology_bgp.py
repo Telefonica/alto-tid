@@ -7,7 +7,7 @@ import hashlib
 from time import sleep
 from datetime import datetime
 sys.path.append('cdn-alto/')
-from bgp.manage_bgp_speaker import ManageBGPSpeaker
+from modulos.bgp.manage_bgp_speaker import ManageBGPSpeaker
 sys.path.append('alto-ale/')
 #from ipaddress import ip_address, IPv4Address
 from modulos.alto_module import AltoModule

@@ -1920,6 +1920,61 @@
                 "level": "2"
               }
             }
+          },
+          {
+            "link-id": "NE40X8-2_HL3 GigabitEthernet4/0/3.53 - HL2-4-1 GigabitEthernet0/0/0/3", 
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X2-1_HL4-2-1 50|100GE0/1/0 - NE40X8-2_HL3 GigabitEthernet4/0/0.44", 
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X2-1_HL4-2-1 50|100GE0/1/0 - ATN950C-1_HL5-1-1 Ethernet0/0/0", 
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X2-1_HL4-2-1 50|100GE0/1/0 - AS7315-30X Ethernet0/0/0", 
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X2-1_HL4-2-1 50|100GE0/1/0 - ATN950C-1_HL5-1-1 Ethernet0/0/0", 
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
           }
         ]
       },

@@ -97,15 +97,15 @@ class TopologyIetf(AltoModule):
                             elif nodos[k] == b1:
                                 b = k
                         links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["metric1"]))
-                        
+                print("Numero de enlaces:  ",len(links))        
                 # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
                 # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
-                for link in links:
-                    if int(link[1])>=0:
-                        self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
-                        self.ejes[(link[0][0], link[0][1])] = int(link[1])
-                        #print("Hola Mundo")
-                        #self.ejes.append((link[0][0], link[0][1], int(link[1])))
+            for link in links:
+                if int(link[1])>=0:
+                    self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
+                    self.ejes[(link[0][0], link[0][1])] = int(link[1])
+                    #print("Hola Mundo")
+                    #self.ejes.append((link[0][0], link[0][1], int(link[1])))
             # Hay que revisar qué diccionarios seguirían haciendo falta.
             # Dado que bgp lo representa con node-id - node-id, quizás es importante unificar la representación que se muestre. (done)
             # Qué hacemos con las interfaces? Las mostramos en los ejes o no hace falta? Guardamos una lista de enlaces donde se vean cómo se conectan?
@@ -114,7 +114,7 @@ class TopologyIetf(AltoModule):
             nodos = list(set(self.topology.nodes()))
             snodos = str(nodos).replace("'", '"')
             prefijos = str(prefijos).replace("'", '"')
-            #print(self.ejes.keys)
+            print(len(self.topology.edges))
             z_ejes = [(tupla[0], tupla[1], self.ejes[tupla]) for tupla in self.ejes]
             #print(str(z_ejes))
             data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"
