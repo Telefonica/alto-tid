@@ -97,7 +97,7 @@ class TopologyIetf(AltoModule):
                             elif nodos[k] == b1:
                                 b = k
                         links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["metric1"]))
-                print("Numero de enlaces:  ",len(links))        
+                #print("Numero de enlaces:  ",len(links))        
                 # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
                 # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
             for link in links:
@@ -114,7 +114,7 @@ class TopologyIetf(AltoModule):
             nodos = list(set(self.topology.nodes()))
             snodos = str(nodos).replace("'", '"')
             prefijos = str(prefijos).replace("'", '"')
-            print(len(self.topology.edges))
+            print("Nº de enlaces cargados:  " + str(len(self.topology.edges)))
             z_ejes = [(tupla[0], tupla[1], self.ejes[tupla]) for tupla in self.ejes]
             #print(str(z_ejes))
             data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"

@@ -9,7 +9,7 @@ ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVA
 #class AltoHttp(threading.Thread):
 class AltoHttp():
 
-    def __init__(self, a, port=5000):
+    def __init__(self, a, ip="0.0.0.0", port=5000):
         #threading.Thread.__init__(self)
         self.app = flask.Flask("http")
         self.app.config["DEBUG"] = True
@@ -32,7 +32,7 @@ class AltoHttp():
         #self.app.run(host="127.0.0.1", port=5000)
         self.server = make_server('0.0.0.0', self.port, self.app)
         #self.server = make_server('192.168.165.193', 8080, self.app)
-        print("API running on " + "\x1b[1;34m" +"http://127.0.0.1:5001" + "\x1b[1;37;40m")
+        print("API running on " + "\x1b[1;34m" +"http://127.0.0.1:" + str(self.port) + "\x1b[1;37;40m")
         self.server.serve_forever()
 
     def detener(self):
@@ -66,7 +66,7 @@ class AltoHttp():
             return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
         if type(pid) is not str:
             return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        pid = self.sanitize_input_GET(pid)
+        #pid = self.sanitize_input_GET(pid)
         return flask.jsonify(self.alto.get_costs_map_by_pid(pid))
 
     # #Endpoint Property Service
@@ -81,7 +81,7 @@ class AltoHttp():
             return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
         if type(pid) is not str:
             return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})        
-        pid = self.sanitize_input_GET(pid)
+        #pid = self.sanitize_input_GET(pid)
         return flask.jsonify(self.alto.get_endpoint_costs(pid))
     
     #Map Service
@@ -92,7 +92,7 @@ class AltoHttp():
             filter = data.get('filter',"")
             if filter == "":
                 return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
-            filter = self.sanitize_input_POST(filter)
+            #filter = self.sanitize_input_POST(filter)            
             return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_maps())
     
@@ -104,7 +104,7 @@ class AltoHttp():
             filter = data.get('filter',"")
             if filter == "":
                 return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})          
-            filter = self.sanitize_input_POST(filter)      
+            #filter = self.sanitize_input_POST(filter)      
             return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_costs_map())
     
@@ -113,7 +113,7 @@ class AltoHttp():
         if flask.request.method == 'POST':
             data = flask.request.json
             filter = data.get('filter',"")
-            filter = self.sanitize_input_POST(filter)
+            #filter = self.sanitize_input_POST(filter)
             return flask.jsonify(self.alto.get_maps(filter))
         return flask.jsonify(self.alto.get_net_map())
         #return flask.jsonify(self.alto.get_pids())
@@ -133,11 +133,12 @@ class AltoHttp():
             properties = data.get('properties',[])
             if properties == []:
                 return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
-            properties=self.sanitize_input_POST(properties)
+            #properties=self.sanitize_input_POST(properties)
             print(properties)
             return flask.jsonify(self.alto.get_properties(pid,properties))
         else:
-            return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})            
+            return flask.jsonify(self.alto.get_properties(pid))
+            #return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})            
 
     
     
@@ -177,7 +178,7 @@ class AltoHttp():
     def api_graphs(self):
         if flask.request.method == 'POST':
             data = flask.request.json
-            data = self.sanitize_input_POST(data)
+            #data = self.sanitize_input_POST(data)
             return flask.jsonify(str(self.alto.desire6g_graphs(data)))
         else:
             return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})
