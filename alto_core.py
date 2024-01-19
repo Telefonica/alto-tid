@@ -20,8 +20,8 @@ from yang_alto import RespuestasAlto
 #from ipaddress import ip_address, IPv4Address
 from modulos.topology_bgp import TopologyBGP
 from modulos.topology_ietf import TopologyIetf
-#from api.desire.alto_http import AltoHttp
-from api.web.alto_http import AltoHttp
+from api.desire.alto_http import AltoHttp
+#from api.web.alto_http import AltoHttp
 
 DEFAULT_ASN = 0
 DEF_PORT = 8080
@@ -29,12 +29,13 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
         self.__cost_map = {}
         self.__net_map = {}
+        self.port_module = portm
         # set path where to write result json files
         self.__topology_writer = TopologyFileWriter('/root/')
         if mode:
@@ -219,14 +220,14 @@ class TopologyCreator:
         else:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
 
-    def get_properties(self, pid, properties):
+    def get_properties(self, pid, properties=None):
         #return str(self.bf.session.q.nodeProperties().answer().frame())
         #pid = self.__compute_pid_endpoint(endpoint)
         if pid:
             if type(pid) is not str:
                 return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-            if pid not in self.__topology.nodes():
-                return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
+            #if pid not in self.__topology.nodes():
+            #    return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
             if properties:
                 if type(properties) is not str:
                     return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The Property type is incorrect. We need a string."})
@@ -243,11 +244,19 @@ class TopologyCreator:
                                     resp = {"ipv4": pid ,"properties": properties, "values": [result[prop] for prop in properties]}
                             else:
                                 return str({"ERROR" : ERRORES["valor"], "syntax-error": f'{properties} not valid for {pid}'})
-                                    
-                #print(resp)
-                return self.__resp.respuesta_prop("endpointprop", "my-default-network-map.prop", self.__vtag, str(resp)) 
+                return self.__respuesta.respuesta_prop("endpointprop", "my-default-network-map.prop", self.__vtag, str(resp))
             else:
-                return str({"ERROR" : ERRORES["campo"], "syntax-error": "Properties not provided"})       
+                with open('./endpoints/properties.json','r') as archivo:
+                    prop = json.load(archivo)
+                    for usuario in prop["users"]:
+                        result = {}
+                        if usuario["ipv4"][0] == pid:
+                            resp = usuario                        
+                            return self.__respuesta.respuesta_prop("endpointprop", "my-default-network-map.prop", self.__vtag, str(resp))
+                #print(resp)
+                 
+            #else:
+            #    return str({"ERROR" : ERRORES["campo"], "syntax-error": "Properties not provided"})       
         #return str(self.bf.session.q.nodeProperties().answer().frame())
         return str({"ERROR" : ERRORES["campo"], "syntax-error": "PID not provided"})
 
@@ -405,21 +414,27 @@ class TopologyCreator:
                 Nodes: List of nodes (pid1:23456789).
                 Edges: List of edges ((Node1,Node2,Weight)).
         '''
+
         try:
         #if True:
             nodos = data["src-nodes"].copy()
             ejes = []
             peso = data["filter"]["value"]
+            #print(nodos)
             #topo_ejes = networkx.generate_edgelist(self.__topology)
             # Recorremos los nodos 
-            for nodo in nodos:
+            for nodo in data["src-nodes"]:
                 #ejes = ejes + [(u,v,d["weight"]) for (u,v,d) in self.__topology.edges(data=True) if ((d["weight"] <= peso) and (u == nodo or v == nodo))] #This line is to work just with neightbour nodes.
                 self.__evaluate_graph(nodo,peso,ejes,nodos) 
             
             ejes = list(set(ejes))
             #nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
             #print(str(self.VUELTAS))
+            for i in range(len(nodos)):
+                nodos[i] = ('pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodos[i])))
             respuesta = str( {'nodes':nodos, 'edges':ejes} )
+            #respuesta = str( {'nodes':nodos} )
+
             #print(respuesta)
             return respuesta
         except:
@@ -428,7 +443,7 @@ class TopologyCreator:
             return "{}"
   
     ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    def __evaluate_graph(self, nodo, peso, ejes, nodos):
+    def __evaluate_graph(self, nodo, peso, ejes, nodos, iteracion=0):
         '''
         Auxiliar function used to archive the recursivity in the mision of the previous function. 
         The goal is to locate all the nodes and links that are separated from "nodo", "peso" distance or less.
@@ -438,7 +453,7 @@ class TopologyCreator:
             ejes: list of edges to be updated (pointer). Also used to avoid uneded updates.
             nodos: list of nodes to be updated (pointer). Also used to avoid uneded iterations.
         '''
-        #print("Hola")
+        #print("Peso:", peso, "Iteración:", iteracion)
         #self.VUELTAS = self.VUELTAS + 1
         if peso > 0:
             topo_ejes = self.__topology.edges(data=True) 
@@ -450,13 +465,13 @@ class TopologyCreator:
                     ejes.append((eje[0],eje[1],eje[2]["weight"]))
                     if eje[1] not in nodos:
                         nodos.append(eje[1])
-                        self.__evaluate_graph(eje[1], (peso-eje[2]["weight"]), ejes, nodos)
+                        self.__evaluate_graph(eje[1], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
                 elif ((eje not in ejes) and (eje[2]["weight"] <= peso) and (eje[1] == nodo)):
                     #print("SFDK",nodo,str(eje[0:2]))
                     ejes.append((eje[0],eje[1],eje[2]["weight"]))
                     if eje[0] not in nodos:
                         nodos.append(eje[0])
-                        self.__evaluate_graph(eje[0], (peso-eje[2]["weight"]), ejes, nodos)
+                        self.__evaluate_graph(eje[0], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
         
     ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
     def desire_neighbours(self,data):
@@ -576,7 +591,7 @@ class TopologyCreator:
 
     def mailbox(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind(('localhost',DEF_PORT))
+        s.bind(('localhost',self.port_module))
         print("Waiting...")      
         while 1:
             topo = s.recv(16384)
@@ -609,7 +624,7 @@ class TopologyCreator:
                 print("Error al procesar:\n", str(topo))
             #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
             #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
-            #self.desire6g_graphs('{"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]}')
+            #print(str(self.desire6g_graphs({"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]})))
 
         self.http.detener()
 
@@ -728,13 +743,17 @@ if __name__ == '__main__':
 
 
     print("Creando ALTO CORE")
-    alto = TopologyCreator(modules, mode, DEF_IP, DEF_PORT)
+    alto = TopologyCreator(modules, mode, DEF_IP, DEF_PORT, portm)
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)
         x = threading.Thread(target=alto.gestiona_info, args=(modulo,))#, daemon=True)
         threads.append(x)
         x.start()    
+        
+        
+        
+        
         print("Lanzando API REST")
         t_api = threading.Thread(target=alto.run_api)
         t_api.start()
