@@ -112,8 +112,9 @@ class AltoModule(ABC):
             If the PID was already mapped, it uses a dictionary to access to it.
         """
         rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
-        return ('pid%d:%s' % (asn, rid))
-
+        #return ('pid%d:%s' % (asn, rid))
+        return rid
+        
     def create_pid_name(self, lsa, descriptors, area_id):
         """Creates partition ID.
         with AS number + domain_id + area_id + hexadecimal router_id
@@ -126,7 +127,8 @@ class AltoModule(ABC):
         autonomous_systems = [item.get("autonomous-system") for item in desc]
         domain_ids = [item.get("domain-id", 0) for item in desc]
         for router_id, autonomous_system, domain_id in zip(routers_id, autonomous_systems, domain_ids):
-            pid_name = 'pid%d:%s' % (autonomous_system, self.get_hex_id(router_id) if not self.check_is_hex(router_id) else router_id)
+            #pid_name = 'pid%d:%s' % (autonomous_system, self.get_hex_id(router_id) if not self.check_is_hex(router_id) else router_id)
+            pid_name = router_id
             #pid_name = self.obtain_pid(router_id)
             origin = (autonomous_system, domain_id, area_id, router_id)
             if pid_name not in self.props:
@@ -203,7 +205,8 @@ class AltoModule(ABC):
         # self.pids stores the result of networkmap
         for rr_bgp in [RR_BGP_0]:
             for prefix, data in ipv4db[rr_bgp]['ipv4'].items():
-                pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(data['next-hop']))
+                #pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(data['next-hop']))
+                pid_name = data['next-hop']
                 #pid_name = self.obtain_pid(data['next-hop'])
                 tipo=self.ip_type(prefix)
                 if pid_name not in self.pids:
@@ -218,10 +221,12 @@ class AltoModule(ABC):
         # that source and destination
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(self.topology))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            #src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            src_pid_name = src
             #src_pid_name = self.obtain_pid(src)
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                dst_pid_name = dest_pid
                 #dst_pid_name = self.obtain_pid(dest_pid)
                 if src_pid_name not in self.cost_map:
                     self.cost_map[src_pid_name] = {}

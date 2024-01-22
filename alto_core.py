@@ -147,8 +147,9 @@ class TopologyCreator:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
-            pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
+            #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
             #pid = self.cyphered_pid(router, asn)
+            pid = router
             if len(ipv4):
                 if pid not in net_map.keys():
                     net_map[pid] = {}
@@ -167,11 +168,13 @@ class TopologyCreator:
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            #src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            src_pid_name = src
             #src_pid_name = self.obtain_pid(src)
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
                 #dst_pid_name = self.obtain_pid(dest_pid)
+                dst_pid_name = dest_pid
                 if src_pid_name not in cost_map:
                     cost_map[src_pid_name] = {}
                 cost_map[src_pid_name][dst_pid_name] = weight
@@ -385,7 +388,8 @@ class TopologyCreator:
             netmap = self.compute_netmap(DEFAULT_ASN,self.__redes)
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
-                nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                #nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                nodos = qprop["nodes"]
                 eliminar = []
                 #print(str(nodos))
                 #print(str(netmap.keys()))
@@ -430,8 +434,8 @@ class TopologyCreator:
             ejes = list(set(ejes))
             #nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
             #print(str(self.VUELTAS))
-            for i in range(len(nodos)):
-                nodos[i] = ('pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodos[i])))
+            #for i in range(len(nodos)):
+            #    nodos[i] = ('pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodos[i])))
             respuesta = str( {'nodes':nodos, 'edges':ejes} )
             #respuesta = str( {'nodes':nodos} )
 
