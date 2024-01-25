@@ -1,0 +1,16 @@
+parameters:
+        sources:
+                #Posible sources: bgp, ietf, tfs. BGP will be the default source.
+                #Cpmpute capabilities will be include later.
+                - ietf
+        output:
+                #Posible outputs: kafka, rabbit, http
+                - http
+        funtionalities:
+                #Extra funtionalities: all-paths, secure, shortest, cost-calendar.
+                #RFC7285 funtionalities will be always implemented.
+                - all-paths
+                - shortest
+interfaces:
+        ip: 127.0.0.1
+        port: 5000

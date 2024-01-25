@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  description: 'API definition for ALTO's TID implementation.''
+  version: 1.0.0
+  title: 'ALTO HTTP API'
+servers:
+  - url: 'http://127.0.0.0:8082'
+    description: 'Test API for european projects and Demos'
+
+paths:
+  /networkmap:
+    get:
+      security: 
+        - bearerAuth: []
+      tags: 
+        - network-map
+      summary: Return an ALTO network-map.
+      description: Obtain a dictionary of networks directly reachables by diferent transport-network nodes.
+      responses:
+        200:
+          description: all good
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/network-map'
+        404:
+          description: resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      security: 
+      - bearerAuth: []
+      tags:
+        - filtered-network-map
+      summary: Return a filtered Network-map.
+      description: Obtain a filtered view of a network map, with just the information associated to the request.
+      responses:
+        200:
+          description: all good
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NetworkMap'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              filter:
+                type: string
+                description: filter to be applied. It can be PIDs or IPs.
+              value:
+                type: array
+                items: strings
+                description: List of PIDs or IPs to be filtered.
+  /costmap:
+    get:
+      security: 
+        - bearerAuth: []
+      tags: 
+        - cost-map
+      summary: Return an ALTO cost-map.
+      description: Obtain a matrix of costs between the different nodes in the transport network.
+      responses:
+        200:
+          description: all good
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cost-map'
+        404:
+          description: resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        500:
+          description: server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    
+    
+components:
+  schemas:
+    NetworkMap:
+      type: object
+      properties:
+        network-map:
+          type: array
+          items:
+            $ref: '#/components/schemas/NetworkMapEntry'
+    NetworkMapEntry:
+      type: object
+      properties:
+        pid:
+          type: string
+        endpoints:
+          type: array
+          items:
+            type: string
+    CostMap:
+      type: object
+      properties:
+        cost-map:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostMapEntry'
+    CostMapEntry:
+      type: object
+      properties:
+        pid:
+          type: string
+        dst-costs:
+          type: array
+          items:
+            $ref: '#/components/schemas/DstCosts'
+    DstCosts:
+      type: object
+      properties:
+        pid:
+          type: string
+        cost:
+          type: number
+  Error:
+    type: object
+    properties:
+      code:
+        description: Error code
+        type: string
+      status:
+        description: httpstatus
+        type: integer
+        format: int32
+      type:
+        type: alto-error
+        description: Error type
+        format: string
+      message:
+        type: string
+        description: Error message   

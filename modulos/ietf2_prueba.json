@@ -1,0 +1,1994 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "0 : 0 : 0",
+        "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "ietf-network-topology:link": [
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/0 - ATN950C-2_HL5-3-1 GigabitEthernet0/2/4"
+          },
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/10 - NE40X2-1_HL4-2-1 50|100GE0/1/0"
+          },
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/2 - NE40X8-3_HL4 GigabitEthernet4/0/1"
+          },
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/8 - ATN950C-1_HL5-1-1 Ethernet0/0/0"
+          },
+          {
+            "link-id": "ATN950C-1_HL5-1-1 Ethernet0/0/0 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/8"
+          },
+          {
+            "link-id": "ATN950C-2_HL5-3-1 GigabitEthernet0/2/4 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/0"
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/0 - HL2-2-1 GigabitEthernet0/0/0/0"
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/1 - HL2-3-1 GigabitEthernet0/0/0/1"
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/2 - HL2-1-2 ge-0/0/2"
+          },
+          {
+            "link-id": "HL2-1-2 ge-0/0/0 - HL2-2-2 ge-0/0/0"
+          },
+          {
+            "link-id": "HL2-1-2 ge-0/0/1 - HL2-3-2 ge-0/0/1"
+          },
+          {
+            "link-id": "HL2-1-2 ge-0/0/2 - HL2-1-1 GigabitEthernet0/0/0/2"
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/0 - HL2-1-1 GigabitEthernet0/0/0/0"
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/1 - HL2-4-1 GigabitEthernet0/0/0/1"
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/2 - HL2-2-2 ge-0/0/2"
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/0 - HL2-1-2 ge-0/0/0"
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/1 - HL2-4-2 ge-0/0/1"
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/2 - HL2-2-1 GigabitEthernet0/0/0/2"
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/0 - HL2-4-1 GigabitEthernet0/0/0/0"
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/1 - HL2-1-1 GigabitEthernet0/0/0/1"
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/2 - HL2-3-2 ge-0/0/2"
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/3 - NE40X8-1_HL3 GigabitEthernet4/0/2"
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/0 - HL2-4-2 ge-0/0/0"
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/1 - HL2-1-2 ge-0/0/1"
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/2 - HL2-3-1 GigabitEthernet0/0/0/2"
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/0 - HL2-3-1 GigabitEthernet0/0/0/0"
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/1 - HL2-2-1 GigabitEthernet0/0/0/1"
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/2 - HL2-4-2 ge-0/0/2"
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/3 - HL3-2-2 GigabitEthernet0/0/0/2"
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/0 - HL2-3-2 ge-0/0/0"
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/1 - HL2-2-2 ge-0/0/1"
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/2 - HL2-4-1 GigabitEthernet0/0/0/2"
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/4 - HL3-2-2 GigabitEthernet0/0/0/1"
+          },
+          {
+            "link-id": "HL3-2-2 GigabitEthernet0/0/0/1 - HL2-4-2 ge-0/0/4"
+          },
+          {
+            "link-id": "HL3-2-2 GigabitEthernet0/0/0/2 - HL2-4-1 GigabitEthernet0/0/0/3"
+          },
+          {
+            "link-id": "NE40X2-1_HL4-2-1 50|100GE0/1/0 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/10"
+          },
+          {
+            "link-id": "NE40X8-3_HL4 GigabitEthernet4/0/1 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/2"
+          }
+        ]
+      },
+      {
+        "network-id": "0 : 0 : 0 ISIS",
+        "network-types": {
+          "ietf-l3-isis-topology:isis-topology": {
+          },
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "1.1.1.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-3-1",
+              "router-id": ["1.1.1.3"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.3/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node-id": "3.3.3.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "NE40X8-1_HL3",
+              "router-id": ["3.3.3.1"],
+              "prefix": [
+                {
+                  "prefix": "3.3.3.1/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet4/0/0.43",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.43.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet4/0/1.35",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.35.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet4/0/2.52",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.52.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "3.3.3.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "NE40X8-2_HL3",
+              "router-id": ["3.3.3.2"],
+              "prefix": [
+                {
+                  "prefix": "3.3.3.2/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet4/0/1.35",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.35.5"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "4.4.4.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "NE40X8-3_HL4",
+              "router-id": ["4.4.4.1"],
+              "prefix": [
+                {
+                  "prefix": "4.4.4.1/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet4/0/0.43",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.43.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet4/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet4/0/1.56",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.4.56.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet4/0/6.41",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.4.41.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "4.4.4.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "NE40X2-1_HL4-2-1",
+              "router-id": ["4.4.4.2"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "50|100GE0/1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "5.5.5.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL5-1-2",
+              "router-id": ["5.5.5.1"],
+              "prefix": [
+                {
+                  "prefix": "99.4.41.5/24"
+                },
+                {
+                  "prefix": "99.5.55.1/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node-id": "5.5.5.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "ATN950C-1_HL5-1-1",
+              "router-id": ["5.5.5.2"],
+              "prefix": [
+                {
+                  "prefix": "98.4.56.2/24"
+                },
+                {
+                  "prefix": "98.4.57.1/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Ethernet0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/1/0.56",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.4.56.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "5.5.5.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "ATN910C-2_HL5-2-1",
+              "router-id": ["5.5.5.3"],
+              "prefix": [
+                {
+                  "prefix": "98.4.41.5/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/10",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/5.54",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.5.54.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/7.41",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.4.41.5"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/8",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "5.5.5.4",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "ATN950C-2_HL5-3-1",
+              "router-id": ["5.5.5.4"],
+              "prefix": [
+                {
+                  "prefix": "98.5.54.3/24"
+                },
+                {
+                  "prefix": "98.5.55.3/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/1/0.54",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.5.54.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/2/4",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "5.5.5.5",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL5-2-2",
+              "router-id": ["5.5.5.5"],
+              "prefix": [
+                {
+                  "prefix": "99.5.55.2/24"
+                },
+                {
+                  "prefix": "99.4.42.5/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "node-id": "5.5.5.6",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "AS7315-30X",
+              "router-id": ["5.5.5.6"],
+              "prefix": [
+                {
+                  "prefix": "98.4.42.5/24"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/5.54 - ATN950C-2_HL5-3-1 GigabitEthernet0/1/0.54",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "ATN910C-2_HL5-2-1 GigabitEthernet0/2/7.41 - NE40X8-3_HL4 GigabitEthernet4/0/6.41",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "30",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "ATN950C-1_HL5-1-1 GigabitEthernet0/1/0.56 - NE40X8-3_HL4 GigabitEthernet4/0/1.56",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "-1",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "ATN950C-2_HL5-3-1 GigabitEthernet0/1/0.54 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/5.54",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "20",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-1_HL3 GigabitEthernet4/0/0.43 - NE40X8-3_HL4 GigabitEthernet4/0/0.43",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-1_HL3 GigabitEthernet4/0/1.35 - NE40X8-2_HL3 GigabitEthernet4/0/1.35",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "20",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-1_HL3 GigabitEthernet4/0/2.52 - HL2-3-1 GigabitEthernet0/0/0/3.52",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "-1",
+              "metric2": "-1",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-2_HL3 GigabitEthernet4/0/1.35 - NE40X8-1_HL3 GigabitEthernet4/0/1.35",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "20",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-3_HL4 GigabitEthernet4/0/0.43 - NE40X8-1_HL3 GigabitEthernet4/0/0.43",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-3_HL4 GigabitEthernet4/0/1.56 - ATN950C-1_HL5-1-1 GigabitEthernet0/1/0.56",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "NE40X8-3_HL4 GigabitEthernet4/0/6.41 - ATN910C-2_HL5-2-1 GigabitEthernet0/2/7.41",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "20",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "0",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "0 : 1 : 0 ISIS",
+        "network-types": {
+          "ietf-l3-isis-topology:isis-topology": {
+          },
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "3.3.3.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "7750SR-7_3",
+              "router-id": ["3.3.3.3"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "to_7750SR7_HL4",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.43.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "to_HL2-3-2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.50.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "4.4.4.4",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "7750SR-7_4",
+              "router-id": ["4.4.4.4"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "to_7750SR7_HL3",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.43.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "7750SR-7_3 to_7750SR7_HL4 - 7750SR-7_4 to_7750SR7_HL3",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "30",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "7750SR-7_4 to_7750SR7_HL3 - 7750SR-7_3 to_7750SR7_HL4",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "0 : 1111 : 0 ISIS",
+        "network-types": {
+          "ietf-l3-isis-topology:isis-topology": {
+          },
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "1.1.1.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-1-1",
+              "router-id": ["1.1.1.1"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.1/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/0.12",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.2.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1.13",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.3.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2.11",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.11.1"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-2-1",
+              "router-id": ["1.1.1.2"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.2/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/0.12",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.2.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1.24",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.4.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2.22",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.22.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-3-1",
+              "router-id": ["1.1.1.3"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.3/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/0.34",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.4.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1.13",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.3.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2.33",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.33.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/3.52",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["98.3.52.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "1.1.1.4",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-4-1",
+              "router-id": ["1.1.1.4"],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.4/32"
+                }
+              ]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/0.34",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.4.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1.24",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.4.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2.44",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.4.44.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/3",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "2.2.2.1",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-1-2",
+              "router-id": ["2.2.2.1"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge-0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/0.12",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.12.11"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1.13",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.13.11"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2.11",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.11.11"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "2.2.2.2",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-2-2",
+              "router-id": ["2.2.2.2"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge-0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/0.12",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.12.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1.24",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.24.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2.22",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.22.22"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "2.2.2.3",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-3-2",
+              "router-id": ["2.2.2.3"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge-0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/0.34",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.34.3"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1.13",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.1.13.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2.33",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.33.33"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/4.50",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.50.2"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "2.2.2.4",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL2-4-2",
+              "router-id": ["2.2.2.4"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "ge-0/0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/0.34",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.34.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/1.24",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.2.24.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/2.44",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.4.44.44"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/4",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "ge-0/0/4.51",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.51.4"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "3.3.3.5",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "HL3-2-2",
+              "router-id": ["3.3.3.5"]
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1.51",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["99.3.51.5"],
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                    "level": "level-2"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "7750SR-7_3 to_HL2-3-2 - HL2-3-2 ge-0/0/4.50",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "40",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/0.12 - HL2-2-1 GigabitEthernet0/0/0/0.12",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "40",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/1.13 - HL2-3-1 GigabitEthernet0/0/0/1.13",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-1-1 GigabitEthernet0/0/0/2.11 - HL2-1-2 ge-0/0/2.11",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-1-2 ge-0/0/0.12 - HL2-2-2 ge-0/0/0.12",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "40",
+              "metric2": "12",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-1-2 ge-0/0/1.13 - HL2-3-2 ge-0/0/1.13",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "20",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/0.12 - HL2-1-1 GigabitEthernet0/0/0/0.12",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/1.24 - HL2-4-1 GigabitEthernet0/0/0/1.24",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-1 GigabitEthernet0/0/0/2.22 - HL2-2-2 ge-0/0/2.22",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "30",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/0.12 - HL2-1-2 ge-0/0/0.12",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "40",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/1.24 - HL2-4-2 ge-0/0/1.24",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-2-2 ge-0/0/2.22 - HL2-2-1 GigabitEthernet0/0/0/2.22",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/0.34 - HL2-4-1 GigabitEthernet0/0/0/0.34",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/1.13 - HL2-1-1 GigabitEthernet0/0/0/1.13",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/2.33 - HL2-3-2 ge-0/0/2.33",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-1 GigabitEthernet0/0/0/3.52 - NE40X8-1_HL3 GigabitEthernet4/0/2.52",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/0.34 - HL2-4-2 ge-0/0/0.34",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/1.13 - HL2-1-2 ge-0/0/1.13",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/2.33 - HL2-3-1 GigabitEthernet0/0/0/2.33",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-3-2 ge-0/0/4.50 - 7750SR-7_3 to_HL2-3-2",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/0.34 - HL2-3-1 GigabitEthernet0/0/0/0.34",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/1.24 - HL2-2-1 GigabitEthernet0/0/0/1.24",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-1 GigabitEthernet0/0/0/2.44 - HL2-4-2 ge-0/0/2.44",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/0.34 - HL2-3-2 ge-0/0/0.34",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/1.24 - HL2-2-2 ge-0/0/1.24",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/2.44 - HL2-4-1 GigabitEthernet0/0/0/2.44",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL2-4-2 ge-0/0/4.51 - HL3-2-2 GigabitEthernet0/0/0/1.51",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          },
+          {
+            "link-id": "HL3-2-2 GigabitEthernet0/0/0/1.51 - HL2-4-2 ge-0/0/4.51",
+            "ietf-l3-unicast-topology:l3-link-attributes": {
+              "metric1": "10",
+              "metric2": "10",
+              "tefsdn-topology:domain-id": "1111",
+              "tefsdn-topology:link-attributes": {
+                "level": "2"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "TEST_Cisco",
+        "network-types": {
+          "ietf-l3-isis-topology:isis-topology": {
+          },
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "['4.4.4.1']",
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "Cisco-R3"
+            },
+            "ietf-ne-commissioning:commissioning-configs": {
+              "system-config": {
+                "openconfig-system:system": {
+                  "ssh-server": {
+                    "state": {
+                      "enable": true,
+                      "protocol-version": "V2"
+                    }
+                  },
+                  "telnet-server": {
+                    "state": {
+                      "enable": false
+                    }
+                  }
+                }
+              }
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0/0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/1"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/2"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/3"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/4"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/5"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0/0/6"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "Loopback76"
+              },
+              {
+                "tp-id": "MgmtEth0/RP0/CPU0/0"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

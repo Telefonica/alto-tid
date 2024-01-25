@@ -1,0 +1,104 @@
+#!/bin/bash
+'
+Progreso actual:
+	Somos capaces de acceder a la información dinámicamente
+Falta realizar:
+	Corregir código py para que no se caiga cada vez que un nodo falla
+	Sinronizarse con una cola kafka
+	Gestión de Kafka para que alguien lo lea
+
+Extra que se podría hacer:
+	Crear el código del cliente ALTO que lo vaya a leer
+	Aumentar el número de mapas disponibles.
+'
+
+
+function actualizar_kafka(){
+
+}
+
+
+
+function monitorizar_fichero_incremental(){
+	#Monitorizamos cíclicamente que no se hayan modificado los mapas
+	while inotifywait -e modify $1 1>/dev/null; do
+		echo "Modificaciones $1:"
+		diff $1 $2
+		cp $1 $2
+		#Actualizamos el topic $1 en la cola Kafka
+
+	done
+}
+
+
+function monitorizar_fichero(){
+        #Monitorizamos cíclicamente que no se hayan modificado los mapas
+        while inotifywait -e modify $1 >/dev/null; do
+                if [[ "$(cat $1)" == "$(cat $2)" ]] ; then
+			echo $1
+                	cp $1 $2
+			actualizar_kafka $1
+		fi
+        done
+}
+
+
+#Creamos un fichero temporal por mapa
+TEMP0=$(mktemp ".tmp.XXXXXXXXXX")
+echo "temp:$TEMP0"
+cp cost_map.json $TEMP0
+
+TEMP1=$(mktemp ".tmp.XXXXXXXXXX")
+echo "temp:$TEMP1"
+cp pid_file.json $TEMP1
+
+
+#realizar el isis.py & y guardar el pid en $PID
+python3.7 cdn-alto/alto/topology_maps_generator_isis.py & 1>/dev/null 2>>houston.log
+PID1=$!
+echo "PID:$PID1"
+
+#Si se mata el proceso, matamos los hijos y destruimos el temp
+trap 'echo END;kill $PID1;rm $TEMP0;rm $TEMP1;exit' SIGINT SIGKILL
+
+#Monitorizamos los ficheros que nos interesan
+monitorizar_fichero "cost_map.json" $TEMP0 &
+monitorizar_fichero "pid_file.json" $TEMP1 &
+
+
+
+
+
+
+while 1; do; done;
+
+
+
+
+
+
+#Restos de código en desuso
+: '
+#Monitorizamos cíclicamente que no se hayan modificado los mapas
+while inotifywait -e modify cost_map.json; do
+        echo "Modificaciones:"
+        diff cost_map.json $TEMPO
+        cp cost_map.json $TEMPO
+done
+
+
+
+function temporales(){
+        #Creamos un fichero temporal por mapa
+        TEMP$i=$(mktemp ".tmp.XXXXXXXXXX")
+        echo "temp:${TEMP$i}"
+        $i=$i+1
+        return ${TEMP$i}
+}
+
+
+
+
+'
+
+echo FIN
