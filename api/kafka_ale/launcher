@@ -2,4 +2,7 @@
 
 bin/zookeeper-server-start.sh config/zookeeper.properties & #1>logs/launcher-ultima-actividad.log 2>>logs/launcher.log &
 sleep 3
-bin/kafka-server-start.sh config/server.properties #1>>logs/launcher-ultima-actividad.log 2>>logs/launcher.log &
+bin/kafka-server-start.sh config/server.properties  #1>>logs/launcher-ultima-actividad.log 2>>logs/launcher.log &
+#bin/kafka-topics.sh --create --topic network-costs --bootstrap-server localhost:9092 
+#bin/kafka-topics.sh --create --topic network-pids --bootstrap-server localhost:9092 
+#bin/kafka-topics.sh --create --topic qkd-properties --bootstrap-server localhost:9092 

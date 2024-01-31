@@ -45,7 +45,7 @@ class TopologyCreator:
         self.__vtag = 0
         self.__respuesta = RespuestasAlto()
         #self.kafka_p = AltoProducer("localhost", "9093")
-        #self.ts = {}
+        self.ts = {}
         self.__endpoints = {}
 
     ######################
@@ -147,8 +147,9 @@ class TopologyCreator:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
-            pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
-            #pid = self.cyphered_pid(router, asn)
+            #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
+            pid = self.obtain_pid(router)
+            print(net_map.keys())
             if len(ipv4):
                 if pid not in net_map.keys():
                     net_map[pid] = {}
@@ -167,15 +168,30 @@ class TopologyCreator:
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
-            #src_pid_name = self.obtain_pid(src)
+            #src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            src_pid_name = self.obtain_pid(src)
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
-                #dst_pid_name = self.obtain_pid(dest_pid)
+                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                dst_pid_name = self.obtain_pid(dest_pid)
                 if src_pid_name not in cost_map:
                     cost_map[src_pid_name] = {}
                 cost_map[src_pid_name][dst_pid_name] = weight
         return cost_map
+    
+    def obtain_pid(self, router):
+        """Returns the hashed PID of the router passed as argument. 
+            If the PID was already mapped, it uses a dictionary to access to it.
+        """
+        tsn = int(datetime.timestamp(datetime.now())*1000000)
+        if len(router.split(":")) > 1:
+            router = router.split(":")[1]
+        rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
+        if rid not in self.ts.keys():
+            self.ts[rid] = tsn
+        else:
+            tsn = self.ts[rid]
+        hash_r = hashlib.sha3_384((router + str(tsn)).encode())
+        return ('pid%d:%s:%d' % (DEFAULT_ASN, hash_r.hexdigest()[:32], tsn))
     
     def compute_pid_endpoint(self, endpoint):
         #Vamos a recibir la IP del
@@ -361,7 +377,7 @@ class TopologyCreator:
     def get_filtered_cost_map(self, filtro):
         if filtro == "qkd":
             topo = self.__topology.copy()
-            print(str(topo.nodes), str(topo.edges))
+            #print(str(topo.nodes), str(topo.edges))
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
                 #nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
@@ -371,10 +387,10 @@ class TopologyCreator:
                 for nodo in topo.nodes:
                     if nodo not in nodos:
                         eliminar.append(nodo)
-                print(str(eliminar))
+                #print(str(eliminar))
                 for nodo in eliminar:
                     topo.remove_node(nodo)
-                print(str(topo.nodes), str(topo.edges))
+                #print(str(topo.nodes), str(topo.edges))
             return self.compute_costmap(topo)
         else:
             return -1
@@ -385,16 +401,18 @@ class TopologyCreator:
             netmap = self.compute_netmap(DEFAULT_ASN,self.__redes)
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
-                nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                #nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                nodos = [ self.obtain_pid(n["node"]) for n in qprop["nodes"]]
                 eliminar = []
                 #print(str(nodos))
-                #print(str(netmap.keys()))
+                print("networkmap keys:", str(netmap.keys()))
                 for n in netmap.keys():
                     if n not in nodos:
                         #print(str(n),str(nodos))
                         eliminar.append(n)
                 for n in eliminar:
-                    netmap.pop(n)    
+                    netmap.pop(n) 
+                    #print(str(netmap.keys()))   
             return str(netmap)
         else:
             return -1
@@ -403,110 +421,8 @@ class TopologyCreator:
     ###    Other auxiliar methods   ###
     ###################################
 
-    ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    def desire6g_graphs(self, data):
-        '''
-            This function returns a sub-graph (defined as two lists, nodes and edges) with all the components that satisfy the requested parameter.
-            In the first version we are just working with latency.
-            Args:
-                Data: JSON with the next structure: { "filter": {"name":STR, "value":FLOAT}, "src-nodes": LIST(STRs)}
-            Returns:
-                Nodes: List of nodes (pid1:23456789).
-                Edges: List of edges ((Node1,Node2,Weight)).
-        '''
-
-        try:
-        #if True:
-            nodos = data["src-nodes"].copy()
-            ejes = []
-            peso = data["filter"]["value"]
-            #print(nodos)
-            #topo_ejes = networkx.generate_edgelist(self.__topology)
-            # Recorremos los nodos 
-            for nodo in data["src-nodes"]:
-                #ejes = ejes + [(u,v,d["weight"]) for (u,v,d) in self.__topology.edges(data=True) if ((d["weight"] <= peso) and (u == nodo or v == nodo))] #This line is to work just with neightbour nodes.
-                self.__evaluate_graph(nodo,peso,ejes,nodos) 
-            
-            ejes = list(set(ejes))
-            #nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
-            #print(str(self.VUELTAS))
-            for i in range(len(nodos)):
-                nodos[i] = ('pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodos[i])))
-            respuesta = str( {'nodes':nodos, 'edges':ejes} )
-            #respuesta = str( {'nodes':nodos} )
-
-            #print(respuesta)
-            return respuesta
-        except:
-        #else:
-            print("Formato incorrecto.")
-            return "{}"
-  
-    ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    def __evaluate_graph(self, nodo, peso, ejes, nodos, iteracion=0):
-        '''
-        Auxiliar function used to archive the recursivity in the mision of the previous function. 
-        The goal is to locate all the nodes and links that are separated from "nodo", "peso" distance or less.
-        Imputs:
-            nodo: node to be evaluated.
-            peso: max distance to nodo.
-            ejes: list of edges to be updated (pointer). Also used to avoid uneded updates.
-            nodos: list of nodes to be updated (pointer). Also used to avoid uneded iterations.
-        '''
-        #print("Peso:", peso, "Iteración:", iteracion)
-        #self.VUELTAS = self.VUELTAS + 1
-        if peso > 0:
-            topo_ejes = self.__topology.edges(data=True) 
-            #print("Adios")
-            for eje in topo_ejes: 
-                #print(nodo,peso,str(eje))
-                if ((eje not in ejes) and (eje[2]["weight"] <= peso) and (eje[0] == nodo)):
-                    #print("sfdk",nodo,str(eje[0:2]))
-                    ejes.append((eje[0],eje[1],eje[2]["weight"]))
-                    if eje[1] not in nodos:
-                        nodos.append(eje[1])
-                        self.__evaluate_graph(eje[1], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
-                elif ((eje not in ejes) and (eje[2]["weight"] <= peso) and (eje[1] == nodo)):
-                    #print("SFDK",nodo,str(eje[0:2]))
-                    ejes.append((eje[0],eje[1],eje[2]["weight"]))
-                    if eje[0] not in nodos:
-                        nodos.append(eje[0])
-                        self.__evaluate_graph(eje[0], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
-        
-    ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    def desire_neighbours(self,data):
-        '''
-        In this function we do something similar to the desire_graph but just with neighbour nodes.
-        It returns the nodes where the separation respect one or more of the received nodes is less than a received weight.
-        In the first version we are just working with latency.
-            Args:
-                Data: JSON with the next structure: { "filter": {"name":STR, "value":FLOAT}, "src-nodes": LIST(STRs)}
-            Returns:
-                Nodes: List of nodes (pid1:23456789).
-                Edges: List of edges ((Node1,Node2,Weight)).
-        '''
-        try:
-        #if True:
-            nodos = data["src-nodes"].copy()
-            ejes = []
-            peso = data["filter"]["value"]
-            #topo_ejes = networkx.generate_edgelist(self.__topology)
-            # Recorremos los nodos
-            for nodo in nodos:
-                ejes = ejes + [(u,v,d["weight"]) for (u,v,d) in self.__topology.edges(data=True) if ((d["weight"] <= peso) and (u == nodo or v == nodo))] #This line is to work just with neightbour nodes.
-
-            nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
-            #print(str(self.VUELTAS))
-            respuesta = str( {'nodes':nodos, 'edges':ejes} )
-            #print(respuesta)
-            return respuesta
-        except:
-        #else:
-            print("Formato incorrecto.")
-            return "{}"
-
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
-    def evaluate_qkd_endpoints(self, node):
+    def evaluate_qkd_endpoints(self, node=None):
         '''
         This funtion evaluates the SDN database with the information of the nodes with QKD capabilities. 
         It should read the nodes, their properties and filter the maps by these nodes.
@@ -517,10 +433,11 @@ class TopologyCreator:
         '''
         with open('./endpoints/qkd-properties.json','r') as archivo:
             qprop = json.load(archivo)
+            if node == None:
+                return str(qprop["nodes"])
             for nodo in qprop["nodes"]:
                 if node == nodo["node"]:
                     return str(nodo["sd-qkd-node"])
-        
         return -1
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -581,7 +498,8 @@ class TopologyCreator:
         filtrado ={}
         for pid in self.__net_map.keys():
             if self.__is_client_net(pid) or self.__is_border_node(pid):
-                filtrado[pid] = self.__net_map[pid]
+                cpid  = self.obtain_pid(pid)
+                filtrado[cpid] = self.__net_map[pid]
         return filtrado
     
     ### Manager function
@@ -619,6 +537,10 @@ class TopologyCreator:
                 #self.__pids = datos["data"]["pids"]
                 #print("Todo correcto Hulio")
                 #self.comput-e_netmap(int(asn), pids)
+                
+                self.__api.envio_alto('network-costs', self.get_filtered_cost_map("qkd"), 0)
+                self.__api.envio_alto('network-pids', self.get_filtered_network_map("qkd"), 0)
+                self.__api.envio_alto('qkd-properties', self.evaluate_qkd_endpoints(), 0)
             else:
             #except:
                 print("Error al procesar:\n", str(topo))
@@ -754,9 +676,9 @@ if __name__ == '__main__':
         
         
         
-        print("Lanzando API REST")
-        t_api = threading.Thread(target=alto.run_api)
-        t_api.start()
+        #print("Lanzando API REST")
+        #t_api = threading.Thread(target=alto.run_api)
+        #t_api.start()
                 #alto.launch_api()
                 
                 
