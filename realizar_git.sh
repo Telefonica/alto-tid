@@ -3,4 +3,4 @@
 git init
 git add $*
 git commit -m $( date +"%s" )
-git push origin desire
+git push origin completo
