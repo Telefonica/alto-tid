@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# © 2024 Telefónica Innovación Digital, All rights reserved
+
 
 import sys
 import json

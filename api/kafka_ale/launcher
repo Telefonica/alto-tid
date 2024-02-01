@@ -1,4 +1,5 @@
 #!/bin/bash
+# © 2024 Telefónica Innovación Digital, All rights reserved
 
 bin/zookeeper-server-start.sh config/zookeeper.properties & #1>logs/launcher-ultima-actividad.log 2>>logs/launcher.log &
 sleep 3

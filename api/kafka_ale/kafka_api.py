@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# © 2024 Telefónica Innovación Digital, All rights reserved
+
 
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
