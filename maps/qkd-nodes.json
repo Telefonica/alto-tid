@@ -1,0 +1,229 @@
+{
+    "qkd_nodes": [
+        {
+            "qkd_node": {
+                "qkd_interfaces": {
+                    "qkd_interface": [
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 1,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        },
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 2,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        }
+                    ]
+                },
+                "qkd_links": {
+                    "qkd_link": [
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                                "qkdi_id": 1
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                                "qkdi_id": 1
+                            }
+                        },
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_aaaaaaaa-oooo-oooo-oooo-aaaaaaaaaaaa",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                                "qkdi_id": 2
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "oooooooo-oooo-oooo-oooo-oooooooooooo",
+                                "qkdi_id": 2
+                            }
+                        }                        
+                    ]
+                },
+                "qkdn_capabilities": {
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true,
+                    "link_stats_support": true
+                },
+                "qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                "qkdn_location_id": "somewhere",
+                "qkdn_status": "OPERATING",
+                "qkdn_version": "1.0"
+            }
+        },
+        {
+            "qkd_node": {
+                "qkd_interfaces": {
+                    "qkd_interface": [
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 1,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        },
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 2,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        }
+                    ]
+                },
+                "qkd_links": {
+                    "qkd_link": [
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                                "qkdi_id": 1
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                                "qkdi_id": 1
+                            }
+                        },
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                                "qkdi_id": 2
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+                                "qkdi_id": 1
+                            }
+                        }
+                    ]
+                },
+                "qkdn_capabilities": {
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true,
+                    "link_stats_support": true
+                },
+                "qkdn_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                "qkdn_location_id": "somewhere",
+                "qkdn_status": "OPERATING",
+                "qkdn_version": "1.0"
+            }
+        },
+        {
+            "qkd_node": {
+                "qkd_interfaces": {
+                    "qkd_interface": [
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 1,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        },
+                        {
+                            "qkdi_capabilities": {
+                                "max_absorption": 10,
+                                "role_support": "TRANSMITTER",
+                                "wavelength_range": "1300-1600"
+                            },
+                            "qkdi_id": 2,
+                            "qkdi_model": "VendorX_ModelY",
+                            "qkdi_status": "ENABLED",
+                            "qkdi_type": "DV-QKD"
+                        }
+                    ]
+                },
+                "qkd_links": {
+                    "qkd_link": [
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+                                "qkdi_id": 1
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                                "qkdi_id": 2
+                            }
+                        },
+                        {
+                            "phys_channel_att": -5,
+                            "phys_qkd_role": "RECEIVER",
+                            "phys_wavelength": "1550",
+                            "qkdl_id": "qkd_link_cccccccc-xxxx-xxxx-xxxx-cccccccccccc",
+                            "qkdl_status": "ACTIVE",
+                            "qkdl_local": {
+                                "qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+                                "qkdi_id": 2
+                            },
+                            "qkdl_type": "PHYS",
+                            "qkdl_remote": {
+                                "qkdn_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                                "qkdi_id": 2
+                            }
+                        }
+                    ]
+                },
+                "qkdn_capabilities": {
+                    "application_stats_support": true,
+                    "key_relay_mode_enable": true,
+                    "link_stats_support": true
+                },
+                "qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+                "qkdn_location_id": "somewhere",
+                "qkdn_status": "OPERATING",
+                "qkdn_version": "1.0"
+            }
+        }
+    ]
+}
