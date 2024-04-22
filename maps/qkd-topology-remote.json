@@ -1,0 +1,45 @@
+{
+    "devices": [
+        {
+            "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "name": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "type": "qkd-device"
+        },
+        {
+            "id": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+            "name": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+            "type": "qkd-device"
+        },
+        {
+            "id": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+            "name": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+            "type": "qkd-device"
+        }
+    ],
+    "links": [
+        {
+            "id": "29272f08-6c68-5258-xxf9-06b8decf0988",
+            "name": "qkd_link_yyyyyyyy-zzzz-zzzz-zzzz-yyyyyyyyyyyy",
+            "source": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+            "target": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"
+        },
+        {
+            "id": "95d3231f-7fd2-501a-b3ad-57f001558076",
+            "name": "qkd_link_xxxxxxxx-yyyy-yyyy-yyyy-xxxxxxxxxxxx",
+            "source": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "target": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy"
+        },
+        {
+            "id": "937e2829-ea12-1234-45bc-91745ab123ef",
+            "name": "qkd_link_zzzzzzzz-xxxx-xxxx-xxxx-zzzzzzzzzzzz",
+            "source": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+            "target": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+        },
+        {
+            "id": "17ea36e1-ea37-cbd0-98d1-932ab71e3f22",
+            "name": "qkd_link_cccccccc-xxxx-xxxx-xxxx-cccccccccccc",
+            "source": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            "target": "cccccccc-cccc-cccc-cccc-cccccccccccc"
+        }
+    ]
+}

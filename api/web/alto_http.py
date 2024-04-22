@@ -1,223 +1,348 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
+import socket
+import json
+from urllib.parse import urlparse, parse_qs
 
-#import threading
-import flask
-from werkzeug.serving import make_server
+ERRORES = {"sintax": "E_SYNTAX", "campo": "E_MISSING_FIELD", "tipo": "E_INVALID_FIELD_TYPE", "valor": "E_INVALID_FIELD_VALUE"}
 
-ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
+class AltoHttp:
 
-#class AltoHttp(threading.Thread):
-class AltoHttp():
-
-    def __init__(self, a, ip="127.0.0.1", port=5000):
-        #threading.Thread.__init__(self)
-        self.app = flask.Flask("http")
-        self.app.config["DEBUG"] = True
+    def __init__(self, a, ip="127.0.0.1", port=8080):
         self.alto = a
         self.port = port
         self.ip = ip
-        self.app.route('/', methods=['GET'])(self.home)
-        self.app.route('/directory', methods=['GET'])(self.api_directory)        
-        self.app.route('/networkmap', methods=['GET','POST'])(self.api_pids)
-        self.app.route('/costmap', methods=['GET','POST'])(self.api_costs)
-        self.app.route('/maps', methods=['GET','POST'])(self.api_maps)       
-        self.app.route('/endpoints/<string:pid>', methods=['GET'])(self.api_endpoint_costs)
-        self.app.route('/properties/<string:pid>', methods=['POST','GET'])(self.api_properties)
-        self.app.route('/qkd-properties/<string:pid>', methods=['GET'])(self.api_qkd_properties)
-        self.app.route('/all/<string:a>/<string:b>', methods=['GET'])(self.api_all)
-        self.app.route('/best/<string:a>/<string:b>', methods=['GET'])(self.api_shortest)
-        self.app.route('/costmap/filter/<string:pid>', methods=['GET'])(self.api_costs_by_pid)
-        self.server = None
+        self.routes = {
+            '/': self.home,
+            '/directory': self.api_directory,
+            '/networkmap': self.api_pids,
+            '/costmap': self.api_costs,
+            '/maps': self.api_maps,
+            '/endpoints': self.api_endpoint_costs,
+            '/properties': self.api_properties,
+            '/qkd-properties': self.api_qkd_properties,
+            '/all': self.api_all,
+            '/best': self.api_shortest,
+            '/costmap/filter': self.api_costs_by_pid,
+            '/get-bordernode': self.api_bordernode,
+            '/graphs/all' : self.api_graphs
+        }
+
+    ####################################
+    ##          APIs functions        ##
+    ####################################
 
     def run(self):
-        #self.app.run(host="127.0.0.1", port=5000)
-        self.server = make_server(self.ip, self.port, self.app)
-        #self.server = make_server('192.168.165.193', 8080, self.app)
-        print("API running on " + "\x1b[1;34m" +"http://127.0.0.1:5000" + "\x1b[1;37;40m")
-        self.server.serve_forever()
-
-    def detener(self):
-        self.server.shutdown()
-
-    #@self.app.route('/', methods=['GET'])
-    def home(self):
         '''
-            <h1>ALTO PoC's API</h1>
-            <h2>Services expossed:</h2>
-            <p><ul>
-            <li>PIDs map: /networkmap </li>            
-            <li>Costs map: /costmap </li>
-            <li>Both maps: /maps </li>
-            <li>Endpoint Costs: /endpoints/&ltstring:pid&gt </li>
-            <li>Endpoints Properties: /properties/&ltstring:pid&gt </li>
-            <li>Endpoints QKD Properties: /qkd-properties/&ltstring:pid&gt </li>
-            <li>All disjunts paths between A & B: <b><tt> /all/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
-            <li>Shortest path between A & B: <b><tt> /best/&ltstring:a&gt/&ltstring:b&gt </b></tt></li>
-            <li>Filtered Cost map: /costmap/filter/&ltstring:pid&gt </li>
-            </ul></p>
+            Creates the API using TCP sockets and executes the functionality workflow.
+            Nor imputs neither outputs.
         '''
-        return '''
-            ALTO PoC's API
-            Services expossed:
-            1.  PIDs map: /networkmap ['GET']
-            1'. NRP PIDs map: /networkmap ['POST']
-            2.  Costs map: /costmap ['GET']
-            2'. NRP Costs map: /costmap ['POST']
-            3.  Both maps: /maps ['GET']
-            3'. NRP Both maps: /maps ['POST']
-            4.  Endpoint Costs: /endpoints/<string:pid>
-            5.  Endpoints Properties: /properties/<string:pid> 
-            6.  Endpoints QKD Properties: /qkd-properties/<string:pid>
-            7.  QKD Properties type: /qkd-properties/yang
-            8.  All disjunts paths between A & B: /all/<string:a>/<string:b>
-            9.  Shortest path between A & B: /best/<string:a>/<string:b>
-            10. Filtered Cost map: /costmap/filter/&ltstring:pid&gt </li>
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind((self.ip, self.port))
+            s.listen(5)
+            print(f"API running on http://{self.ip}:{self.port}/")
+
+            while True:
+                conn, addr = s.accept()
+                with conn:
+                    try:
+                        data = conn.recv(1024).decode('utf-8')
+                        if data:
+                            method, path, body = data.split(' ', 2)
+                            path = urlparse(path).path
+                            print("PATH:", path)
+                            path, params = self.parse_params(path)
+                            if body:
+                                params['data'] = body.split("\r\n\r\n")[1]
+                            print("Parametros:", str(params), "URL:", str(path))
+                            response = self.handle_request(method, path, params)
+                            conn.sendall(response)
+                    except Exception as e:
+                        error_response = self.build_response(500, {"ERROR": "E_SERVER_ERROR", "message": str(e)})
+                        conn.sendall(error_response)
+    
+    def parse_params(self, path):
+        ''' 
+            If a GET API has params, this function extracts them.
+            Imput:
+                Path: URI recived.
+            Output:
+                Path: Resulting path without params.
+                Params: List of params received from the GET request.
         '''
+        params = {}
+        if path.startswith('/costmap/filter/'):
+            params['pid'] = path.split('/')[3]
+            path = "/costmap/filter"
+        elif path.startswith('/qkd-properties/') or path.startswith('/endpoints/'):
+            params['pid'] = path.split('/')[2]
+            path = "/"+path.split('/')[1]
+        elif path.startswith('/all/') or path.startswith('/best/'):
+            params['a'] = path.split('/')[2]
+            params['b'] = path.split('/')[3]
+            path = "/"+path.split('/')[1]
+        return path, params
 
-    ###################################
-    ##                               ##
-    #   Services defined in RFC 7285  #
-    ##                               ##
-    ###################################
-
-    # Map-Filteriong Service
-    #@self.app.route('/costmap/filter/<string:pid>', methods=['GET'])
-    def api_costs_by_pid(self, pid):
-        if pid == None:
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
-        if type(pid) is not str:
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        pid = self.sanitize_input_GET(pid)
-        return flask.jsonify(self.alto.get_costs_map_by_pid(pid))
-    
-    #Endpoint Cost Service
-    #@self.app.route('/costmap/<string:pid>', methods=['GET'])
-    def api_endpoint_costs(self, pid):
-        if pid == None:
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
-        if type(pid) is not str:
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})        
-        pid = self.sanitize_input_GET(pid)
-        return flask.jsonify(self.alto.get_endpoint_costs(pid))
-    
-    #Map Service
-    #@self.app.route('/maps', methods=['GET','POST'])
-    def api_maps(self):
-        if flask.request.method == 'POST':
-            data = flask.request.json
-            filter = data.get('filter',"")
-            if filter == "":
-                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
-            #print(filter)
-            #filter = self.sanitize_input_POST(filter)
-            return flask.jsonify(self.alto.get_maps(filter))
-        return flask.jsonify(self.alto.get_maps())
-    
-    #Network Map service
-    #@self.app.route('/costmap', methods=['GET','POST'])
-    def api_costs(self):
-        if flask.request.method == 'POST':
-            data = flask.request.json
-            filter = data.get('filter',"")
-            if filter == "":
-                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})                
-            filter = self.sanitize_input_POST(filter)
-            return flask.jsonify(self.alto.get_maps(filter))
-        return flask.jsonify(self.alto.get_costs_map())
-    
-    #@self.app.route('/networkmap', methods=['GET','POST'])
-    def api_pids(self):
-        if flask.request.method == 'POST':
-            data = flask.request.json
-            filter = data.get('filter',"")
-            filter = self.sanitize_input_POST(filter)
-            return flask.jsonify(self.alto.get_maps(filter))
-        return flask.jsonify(self.alto.get_net_map())
-        #return flask.jsonify(self.alto.get_pids())
-    
-    #@self.app.route('/directory', methods=['GET'])
-    def api_directory(self):
-        return flask.jsonify(self.alto.get_directory())
-    
-        #@self.app.route('/properties/<string:pid>', methods=['POST'])
-    def api_properties(self,pid):
-        if pid == None:
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
-        if type(pid) is not str:
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        if flask.request.method == 'POST':
-            data = flask.request.json
-            properties = data.get('properties',[])
-            if properties == []:
-                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "Properties field missing."})
-            properties=self.sanitize_input_POST(properties)
-            pid = data.get('pid',"")
-            if pid == "":
-                return flask.jsonify({"ERROR" : ERRORES["campo"], "syntax-error": "PID field missing."})
-            if type(pid) is not str:
-                return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-            print(properties)
-            return flask.jsonify(self.alto.get_properties(pid,properties))
+    def handle_request(self, method, path, params): 
+        '''
+            If the request is associated to an existig route, it returns the functionality.
+            Otherwise, it return a 404 error.
+            All functions receive the same params to help the standardization of the request.
+            Imputs:
+                Method: GET/POST.
+                Path: filtered path without the parameters.
+                Params: params received in the body and/or the URI.
+            Output:
+                Result of the functionality requested.
+        '''       
+        if path in self.routes:
+            return self.routes[path](method, params)
         else:
-            return flask.jsonify({"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})            
+            return self.not_found()
 
-    # #Endpoint Property Service
-    # #@self.app.route('/properties/<string:pid>', methods=['GET'])
-    # def api_properties(self, pid):
-    #     return flask.jsonify(self.alto.get_properties(pid))    
-    
-    
+    def not_found(self):
+        '''
+            404 ERROR handler.
+        '''
+        return self.build_response(404, {"ERROR": ERRORES["sintax"], "syntax-error": "Not Found"})
+
+    def build_response(self, status_code, data):
+        '''
+            HTTP response handler.
+            Imputs:
+                Status_code: HTTP Status Code
+                Data: information to be sent in the body.
+            Output:
+                HTTP response.
+        '''
+        response = f"HTTP/1.1 {status_code}\r\n"
+        response += "Content-Type: application/json\r\n"
+        response += "\r\n"
+        response += json.dumps(data)
+        return response.encode('utf-8')
+
+    # Root request.
+    ##################
+    # TO BE UPDATED  #
+    ##################
+    def home(self, method, params):
+        '''
+            Root request. Returns a service list.
+            Imput:
+                method: GET method. Otherwhise it return a 404 error.
+        '''
+        if method == 'GET':
+            return self.build_response(200, {
+                "message": "ALTO PoC's API",
+                "services": [
+                    {"route": "/networkmap", "methods": ["GET", "POST"]},
+                    {"route": "/costmap", "methods": ["GET", "POST"]},
+                    {"route": "/maps", "methods": ["GET", "POST"]},
+                    {"route": "/endpoints/<string:pid>", "methods": ["GET"]},
+                    {"route": "/properties", "methods": ["POST"]},
+                    {"route": "/qkd-properties/<string:pid>", "methods": ["GET"]},
+                    {"route": "/all/<string:a>/<string:b>", "methods": ["GET"]},
+                    {"route": "/best/<string:a>/<string:b>", "methods": ["GET"]},
+                    {"route": "/costmap/filter/<string:pid>", "methods": ["GET"]}
+                ]
+            })
+        else:
+            return self.build_response(400, {"ERROR": ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})
+
     
     ###################################
-    ##                               ##
-    #           Ampliations           #
-    ##                               ##
+    ##  Services defined in RFC 7285 ##
     ###################################
     
-    
-    #@self.app.route('/qkd-properties/<string:pid>', methods=['GET'])
-    def api_qkd_properties(self,pid):
-        if pid == None:
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
-        if type(pid) is not str:
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        return flask.jsonify(self.alto.get_qkd_properties(pid))
-    
-    #All possible paths between A and B without any common node
-    #@self.app.route('/all/<string:a>/<string:b>', methods=['GET'])
-    def api_all(self, a,b):
-        a = self.sanitize_input_GET(a)
-        b = self.sanitize_input_GET(b)
-        if (a == None) or (b == None):
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
-        if (type(a) is not str) or (type(b) is not str):
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
-        #return flask.jsonify(str(self.alto.all_maps(self.alto.get_topology(), a, b)))
-        return flask.jsonify(self.alto.parseo_yang(str(self.alto.all_maps(self.alto.get_topology(), a, b)),"all-paths"))
-    
-    #Best path between A and B
-    #@self.app.route('/best/<string:a>/<string:b>', methods=['GET'])
-    def api_shortest(self, a,b):
-        a = self.sanitize_input_GET(a)
-        b = self.sanitize_input_GET(b)
-        if (a == None) or (b == None):
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
-        if (type(a) is not str) or (type(b) is not str):
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
-        return flask.jsonify(str(self.alto.shortest_path(a, b)))
+    # Filtered Cost Map.
+    # To be migrated to a POST method.
+    def api_costs_by_pid(self, method, params):
+        ''' 
+            Filtered CostMap where the PID is used as method to filter.
+        '''
+        if method == 'GET':
+            pid = params.get('pid', None)
+            if pid is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
+            if not isinstance(pid, str):
+                return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+            return self.build_response(200, self.alto.get_costs_map_by_pid(pid))
+        else:
+            return self.build_response(400, {"ERROR": ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})            
 
-    def sanitize_input_POST(texto):
+    # Endpoint Cost Service.
+    # To be migrated to a POST method.
+    def api_endpoint_costs(self, method, params):
+        '''
+            Receives an ENDPOINT PID and returns the cost to reach to it from the rest of Endpoints.
+        '''
+        pid = params.get('pid', None)
+        if pid is None:
+            return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
+        if not isinstance(pid, str):
+            return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+        return self.build_response(200, self.alto.get_endpoint_costs(pid))
+
+    # Cost Map and Network Map service. Returns both in one request.
+    def api_maps(self, method, params):
+        if method == 'GET':
+            return self.build_response(200, self.alto.get_maps())
+        elif method == 'POST':
+            d = params.get('data', None)
+            if d is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+            data = json.loads(d)
+            filter = data.get('filter', "")
+            if filter == "":
+                return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing."})
+            return self.build_response(200, self.alto.get_maps(filter))
+
+    # Cost Map service and Filtered Cost Map Service.
+    # To be migrated to Filtered API Cost.
+    def api_costs(self, method, params):
+        if method == 'GET':
+            return self.build_response(200, self.alto.get_costs_map())
+        elif method == 'POST':
+            d = params.get('data', None)
+            if d is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+            data = json.loads(d)
+            filter = data.get('filter', "")
+            node = data.get('node', "")
+            if filter != "":
+                return self.build_response(200, self.alto.get_maps(filter))
+            if node != "":
+                return self.build_response(200, self.alto.get_costs_map_by_pid(node))
+            return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
+
+    # Network Map Service.
+    def api_pids(self, method, params):
+        if method == 'GET':
+            return self.build_response(200, self.alto.get_net_map())
+        elif method == 'POST':
+            d = params.get('data', None)
+            if d is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+            data = json.loads(d)
+            filter = data.get('filter', "")
+            return self.build_response(200, self.alto.get_maps(filter))
+
+    # IRD Service.
+    def api_directory(self, method, params):
+        return self.build_response(200, self.alto.get_directory())
+
+    # Endpoint properties Service.
+    def api_properties(self, method, params):
+        pid = params.get('pid', None)
+        if pid is None:
+            return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
+        if not isinstance(pid, str):
+            return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+        if method == 'POST':
+            d = params.get('data', None)
+            if d is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+            data = json.loads(d)
+            properties = data.get('properties', [])
+            if properties == []:
+                return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing."})
+            pid = data.get('pid', "")
+            if pid == "":
+                return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "PID field missing."})
+            if not isinstance(pid, str):
+                return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+            return self.build_response(200, self.alto.get_properties(pid, properties))
+        else:
+            return self.build_response(400, {"ERROR": ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})
+
+
+    ###################################
+    ##          Ampliations          ##
+    ###################################    
+
+    # # Discretion Ampliation.
+    # def api_qkd_properties(self, method, params):
+    #     '''
+    #         Particular case of Endpoint Properties Service for QKD networks.
+    #     '''
+    #     pid = params.get('pid', None)
+    #     if pid is None:
+    #         return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
+    #     if not isinstance(pid, str):
+    #         return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+    #     return self.build_response(200, self.alto.get_qkd_properties(pid))
+
+    # # Discretion ampliation
+    # def api_bordernode(self,method, params):
+    #     '''
+    #         API used to identify which nodes in pur network can connect with external network nodes.
+    #         Federation Use Cases.
+    #     '''
+    #     if method == 'POST':
+    #         d = params.get('data', None)
+    #         if d is None:
+    #             return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+    #         data = json.loads(d)
+    #         node = data.get('node', "")
+    #         if node != "":
+    #             return self.build_response(200, self.alto.get_bordernode(node))
+    #         return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
+        
+    def api_all(self, method, params):
+        '''
+            Receiving two PIDs returns all disyunts paths that connect them.
+        '''
+        a = params.get('a', None)
+        b = params.get('b', None)
+        if a is None or b is None:
+            return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
+        if not isinstance(a, str) or not isinstance(b, str):
+            return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
+        return self.build_response(200, self.alto.parseo_yang(str(self.alto.all_maps(a, b)), "all-paths"))
+
+    def api_shortest(self, method, params):
+        '''
+            Receiving two network Nodes, returns the shortest path between them.
+        '''
+        a = params.get('a', None)
+        b = params.get('b', None)
+        if a is None or b is None:
+            return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
+        if not isinstance(a, str) or not isinstance(b, str):
+            return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
+        return self.build_response(200, str(self.alto.shortest_path(a, b)))
+
+    # ### Desire6G ampliation
+    # def api_graphs(self, method, params):
+    #     '''
+    #         Returns the different Compute Nodes with at least N characteristics ad connected by less than s latency.
+    #     '''
+    #     if method == 'POST':
+    #         data = params.get('data', None)
+    #         #data = self.sanitize_input_POST(data)
+    #         if data is None:
+    #             return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Missing node PID."})
+    #         else:
+    #             return self.build_response(200, str(self.alto.desire6g_graphs(data)))
+    #     else:
+    #         return self.build_response(400,{"ERROR" : ERRORES["sintax"], "syntax-error": "Method not valid. Required a POST request."})
+
+
+    ####################################
+    ##      Sanitize functions        ##
+    ####################################
+
+    def sanitize_input_POST(self, texto):
         '''
         Characters acepted in the input: a-zA-Z0-9.{}[]",: -
         '''
-        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//","").replace('_','').replace('<','').replace('>','').replace('&','').replace('%','')
+        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//", "").replace('_', '').replace('<', '').replace('>', '').replace('&', '').replace('%', '')
         return texto_sano
-    
-    def sanitize_input_GET(texto):
+
+    def sanitize_input_GET(self, texto):
         '''
         Characters acepted in the input: a-zA-Z0-9.:
         '''
-        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//","").replace('_','').replace('<','').replace('>','').replace('&','').replace('%','').replace("{",'').replace("}","").replace('"',"").replace("-","")
+        texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//", "").replace('_', '').replace('<', '').replace('>', '').replace('&', '').replace('%', '').replace("{", '').replace("}", "").replace('"', "").replace("-", "")
         return texto_sano

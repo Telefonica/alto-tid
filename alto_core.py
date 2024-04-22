@@ -16,7 +16,9 @@ import yaml
 from time import sleep
 from datetime import datetime
 from api.kafka_ale.kafka_api import AltoProducer
+from modulos.topology_alto import TopologyAlto
 from modulos.topology_bgp import TopologyBGP
+from modulos.topology_qkd import TopologyQKD
 from yang_alto import RespuestasAlto
 #from ipaddress import ip_address, IPv4Address
 from modulos.topology_bgp import TopologyBGP
@@ -26,6 +28,7 @@ from api.desire.alto_http import AltoHttp
 
 DEFAULT_ASN = 0
 DEF_PORT = 8080
+REMOTE_PORT = 8080
 DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
@@ -36,6 +39,9 @@ class TopologyCreator:
         self.__topology = networkx.Graph()
         self.__cost_map = {}
         self.__net_map = {}
+        self.bordernodes = {}
+        self.ip = ip
+        self.puerto = puerto
         self.port_module = portm
         # set path where to write result json files
         self.__topology_writer = TopologyFileWriter('/root/')
@@ -46,8 +52,9 @@ class TopologyCreator:
         self.__vtag = 0
         self.__respuesta = RespuestasAlto()
         #self.kafka_p = AltoProducer("localhost", "9093")
-        #self.ts = {}
+        self.ts = {}
         self.__endpoints = {}
+        #self.known_servers = [ ["localhost", 8082], ["localhost",8081]]
 
     ######################
     ### Static Methods ###
@@ -150,6 +157,7 @@ class TopologyCreator:
                 #    print("Invalid IP" + str(ip))
             pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
             #pid = self.cyphered_pid(router, asn)
+            #pid = self.obtain_pid(router)
             if len(ipv4):
                 if pid not in net_map.keys():
                     net_map[pid] = {}
@@ -176,7 +184,31 @@ class TopologyCreator:
                 if src_pid_name not in cost_map:
                     cost_map[src_pid_name] = {}
                 cost_map[src_pid_name][dst_pid_name] = weight
+                # if src in self.nodos:
+                #     if src not in cost_map:
+                #         cost_map[src] = {}
+                #     cost_map[src][dest_pid] = weight
+                # else:
+                #     # Si el nodo no pertenece a nuestra red, significa que es alcanzable a través de un border node nuestro.
+                #     # Mapeamos Nodo_fuera : Nuestro nodo, para saber cuál es el BN con el que podemos alcanzar a ese nodo.
+                #     # Modificar en Multihoming.
+                #     self.bordernodes[src] = dest_pid
         return cost_map
+    
+    def obtain_pid(self, router):
+        """Returns the hashed PID of the router passed as argument. 
+            If the PID was already mapped, it uses a dictionary to access to it.
+        """
+        tsn = int(datetime.timestamp(datetime.now())*1000000)
+        if len(router.split(":")) > 1:
+            router = router.split(":")[1]
+        rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
+        if rid not in self.ts.keys():
+            self.ts[rid] = tsn
+        else:
+            tsn = self.ts[rid]
+        hash_r = hashlib.sha3_384((router + str(tsn)).encode())
+        return ('pid%d:%s:%d' % (DEFAULT_ASN, hash_r.hexdigest()[:32], tsn))
     
     def compute_pid_endpoint(self, endpoint):
         #Vamos a recibir la IP del
@@ -219,6 +251,11 @@ class TopologyCreator:
             mapa = self.__cost_map[pid]
             return self.__respuesta.crear_respuesta("filtro", "networkmap-default", self.__vtag, str(mapa))       
         else:
+            for server in self.known_servers:
+                if (server[1] != self.puerto):# or (server[0] != self.ip):
+                    response = self.ask_other_alto_server(pid, server[0], server[1])
+                    if response != "":
+                        return response                   
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
 
     def get_properties(self, pid, properties=None):
@@ -317,6 +354,62 @@ class TopologyCreator:
 
 
     ### Ampliation functions
+    def get_bordernode(self, node=None):
+        if node != None:
+            if node in self.bordernodes.keys():
+                return self.bordernodes[node]
+            else:
+                for server in self.known_servers:
+                    if (server[1] != self.puerto):# or (server[0] != self.ip):
+                        response = self.ask_other_alto_server(node, server[0], server[1])
+                        if response != {}:
+                            #print("RESPUESTAAA:\t", str(response))
+                            #datos = response.split('\n')
+                            print("DATOS:\t", str(len(response)), response)
+                             #.replace('\t', '').replace('\n', '').strip())
+                            #print("DATOS:\t", type(response))
+                            #datos = dict(dat)
+                            for node in response["cost-maps"].keys():
+                                if node in self.nodos:
+                                    print("NODO:\t", node)
+                                    return node                    
+                            #print(response)
+        return ""
+    
+    def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
+        # Creamos un socket.
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #print("Me cago en mi puta vida 2")
+        # Definimos el mensaje HTTPS que debemos enviar. Primera versión es solamente HTTP.
+        # Construir el cuerpo JSON
+        #data = {"filter": "qkd", "pid": str(pid)}
+        data = {"node": str(pid)}
+        json_data = json.dumps(data)
+        # Construir la solicitud HTTP POST
+        #request = f"POST /costmap HTTP/1.1\r\nHost: alto-server\r\nContent-Type: application/json\r\nContent-Length: {len(json_data)}\r\n\r\n{json_data}"
+        request = f"POST /costmap HTTP/1.0\r\nContent-Type: application/json\r\nContent-Length: {len(json_data)}\r\n\r\n{json_data}"
+        # Establecemos conexión con el otro ALTO server.    
+        try:
+            server_address = (rip, rport)
+            s.settimeout(3)
+            #print("Petición al otro server:\t", str(request))
+            s.connect(server_address)        
+            s.sendall(request.encode())
+            
+            # Recibimos los datos.
+            response = s.recv(8192)
+            datos = response.decode()
+            datos = str(datos.split("\r\n\r\n")[1]).replace('"',"").replace("'", '"').strip()
+            print("DATOSSSSS:\t", datos)
+            result = json.loads(datos)
+            #print("Resultado:\t", str(result))
+        except ConnectionError as e:
+            print(f"Error de conexión: {e}")
+            result = {}            
+        finally:
+            s.close()
+        # Devolvemos los datos. Si hay error devolvemos un vacío dado que sería imposible alcanzar el destino.
+        return result
     
     def shortest_path(self, a, b):
         '''
@@ -387,6 +480,7 @@ class TopologyCreator:
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
                 nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                # nodos = [ self.obtain_pid(n["node"]) for n in qprop["nodes"]]
                 eliminar = []
                 #print(str(nodos))
                 #print(str(netmap.keys()))
@@ -582,7 +676,8 @@ class TopologyCreator:
         filtrado ={}
         for pid in self.__net_map.keys():
             if self.__is_client_net(pid) or self.__is_border_node(pid):
-                filtrado[pid] = self.__net_map[pid]
+                cpid  = self.obtain_pid(pid)                
+                filtrado[cpid] = self.__net_map[pid]
         return filtrado
     
     ### Manager function
@@ -718,7 +813,11 @@ if __name__ == '__main__':
                     modules["bgp"] = TopologyBGP((ipm,portm))
                 if "IETF" in doc["MODULES"]:
                     modules['ietf'] = TopologyIetf((ipm,portm))
-    
+                if "ALTO" in doc["MODULES"]:
+                    modules['alto'] = TopologyAlto((ipm,portm), "./maps/")
+                if "QKD" in doc["MODULES"]:
+                    modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
+                        
             # Una vez comprobados todos los módulos, tenemos que asegurar que por lo menos haya uno. 
             # Módulo por defecto: BGP
             if len(modules.keys()) == 0:
@@ -763,154 +862,5 @@ if __name__ == '__main__':
                 
     print("Lanzando gestor de respuestas")
     alto.mailbox()
-
-
-
-
-
-
-
-
-
-
-
-    #Inclusión de prueba
-    ### Deprecated functions ###
-    # These functions are unused but could be interesting to have them here if we will need them back any time.
-    # These functions will be removed in "production" versions.
-
-    # @staticmethod
-    # def split_router_ids(router_id: str):
-    #     """some router ids come without IP format. ie.e without dots in it
-    #     convert these router_ids to IPs"""
-    #     router_id = str(router_id)
-    #     if '.' in router_id:
-    #         return router_id
-    #     router_groups = re.findall('...', router_id)
-    #     no_zero_groups = []
-    #     for group in router_groups:
-    #         if group.startswith('00'):
-    #             no_zero_groups.append(group[2:])
-    #         elif group.startswith('0'):
-    #             no_zero_groups.append(group[1:])
-    #         else:
-    #             no_zero_groups.append(group)
-    #     return '.'.join(no_zero_groups)
-
-    # @staticmethod
-    # def hex_to_ip(hex_ip):
-    #   hex_ip = hex_ip.strip("0")
-    #   addr_long = int(hex_ip, 16) & 0xFFFFFFFF
-    #   struct.pack("<L", addr_long)
-    #   return socket.inet_ntoa(struct.pack("<L", addr_long))
-
-
-
-    ### Auxiliar methods
-    # def ip_type(self, prefix):
-    #     ip=prefix.split("/")[0]
-    #     return "IPv4" if type(ip_address(ip)) is IPv4Address else "IPv6"
-
-    ### Function created for the Discretion Project.
-    # def obtain_pid(self, router):
-    #     """Returns the hashed PID of the router passed as argument. 
-    #         If the PID was already mapped, it uses a dictionary to access to it.
-    #     """
-    #     tsn = int(datetime.timestamp(datetime.now())*1000000)
-    #     rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
-    #     if rid not in self.ts.keys():
-    #         self.ts[rid] = tsn
-    #     else:
-    #         tsn = self.ts[rid]
-    #     hash_r = hashlib.sha3_384((router + str(tsn)).encode())
-    #     return ('pid%d:%s:%d' % (DEFAULT_ASN, hash_r.hexdigest()[:32], tsn))
-
-    # def create_pid_name(self, lsa, descriptors, area_id):
-    #     """Creates partition ID.
-    #     with AS number + domain_id + area_id + hexadecimal router_id
-    #     """
-    #     routers_id = []
-    #     desc = lsa[descriptors]
-    #     for item in desc:
-    #         if "router-id" in item:
-    #             routers_id.append(item["router-id"])
-    #     autonomous_systems = [item.get("autonomous-system") for item in desc]
-    #     domain_ids = [item.get("domain-id", 0) for item in desc]
-    #     for router_id, autonomous_system, domain_id in zip(routers_id, autonomous_systems, domain_ids):
-    #         pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(router_id) if not self.check_is_hex(router_id) else router_id)
-    #         #pid_name = self.obtain_pid(router_id)
-    #         origin = (autonomous_system, domain_id, area_id, router_id)
-    #         if pid_name not in self.props:
-    #             self.props[pid_name] = []
-    #         self.props[pid_name].append(origin)
-
-    # def get_router_id_from_node_descript_list(self, node_descriptors, key: str):
-    #     result = []
-    #     for descriptor in node_descriptors:
-    #         for key_d, value in descriptor.items():
-    #             if key_d == key:
-    #                 #print(value, key_d)
-    #                 if self.check_if_router_id_is_hex(value):
-    #                     result.append(self.split_router_ids(value))
-    #                 elif "." in value:
-    #                     result.append(value)
-    #                 else:
-    #                     result.append(self.reverse_ip(self.hex_to_ip(value)))
-    #     return result
-
-
-    ### Topology generation and information recopilation functions
-
-    # def load_topology(self, lsa, igp_metric):
-    #     if lsa.get('ls-nlri-type') == 'bgpls-link':
-    #         # Link information
-    #         src = self._get_router_id_from_node_descript_list(lsa['local-node-descriptors'], 'router-id')
-    #         dst = self._get_router_id_from_node_descript_list(lsa['remote-node-descriptors'], 'router-id')
-    #         for i, j in zip(src, dst):
-    #             self.__topology.add_edge(i, j, weight=igp_metric)
-    #     if lsa.get('ls-nlri-type') == 'bgpls-prefix-v4':
-    #         # ToDo verify if prefix info is needed and not already provided by node-descriptors
-    #         # Node information. Groups origin with its prefixes
-    #         origin = self._get_router_id_from_node_descript_list(lsa['node-descriptors'], "router-id")
-    #         prefix = self.split_router_ids(lsa['ip-reach-prefix'])
-    #         for item in origin:
-    #             if item not in self.__topology.nodes():
-    #                 self.__topology.add_node(item)
-    #             if 'prefixes' not in self.__topology.nodes[item]:
-    #                 self.__topology.nodes[item]['prefixes'] = []
-    #             self.__topology.nodes[item]['prefixes'].append(prefix)
-    #     if lsa.get('ls-nlri-type') == "bgpls-node":
-    #         # If ls-nlri-type is not present or is not of type bgpls-link or bgpls-prefix-v4
-    #         # add node to topology if not present
-    #         node_descriptors = self._get_router_id_from_node_descript_list(lsa['node-descriptors'], 'router-id')
-    #         self.router_ids.append(node_descriptors)
-    #         for node_descriptor in node_descriptors:
-    #             if node_descriptor not in self.__topology.nodes():
-    #                 self.__topology.add_node(node_descriptor)
-
-    # def load_pid_prop(self, lsa, ls_area_id):
-    #     if 'node-descriptors' in lsa:
-    #         self.create_pid_name(lsa, descriptors='node-descriptors', area_id=ls_area_id)
-    #     if 'local-node-descriptors' in lsa:
-    #         self.create_pid_name(lsa, descriptors='local-node-descriptors', area_id=ls_area_id)
-    #     if 'remote-node-descriptors' in lsa:
-    #         self.create_pid_name(lsa, descriptors='remote-node-descriptors', area_id=ls_area_id)
-
-    # def load_pids(self, ipv4db):
-    #     # self.__pids stores the result of networkmap
-    #     for rr_bgp in [RR_BGP_0]:
-    #         for prefix, data in ipv4db[rr_bgp]['ipv4'].items():
-    #             pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(data['next-hop']))
-    #             #pid_name = self.obtain_pid(data['next-hop'])
-    #             tipo=self.ip_type(prefix)
-    #             if pid_name not in self.__pids:
-    #                 self.__pids[pid_name] = {}
-    #             if tipo not in self.__pids[pid_name]:
-    #                 self.__pids[pid_name][tipo]=[]
-    #             if prefix not in self.__pids[pid_name][tipo]:
-    #                 self.__pids[pid_name][tipo].append(prefix)
-
-
-
 
 
