@@ -39,8 +39,8 @@ class TopologyQKD(AltoModule):
         #Lista de enlaces
         links = []
         
-        cost_path = os.path.join(self.directory, "qkd_topology.json")
-        #cost_path = os.path.join(self.directory, "qkd_topology_remote.json")
+        #cost_path = os.path.join(self.directory, "qkd-topology.json")
+        cost_path = os.path.join(self.directory, "qkd-topology-remote.json")
         with open(cost_path, 'r') as archivo:
             self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
 

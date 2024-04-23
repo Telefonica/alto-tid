@@ -261,33 +261,33 @@ class AltoHttp:
     ##          Ampliations          ##
     ###################################    
 
-    # # Discretion Ampliation.
-    # def api_qkd_properties(self, method, params):
-    #     '''
-    #         Particular case of Endpoint Properties Service for QKD networks.
-    #     '''
-    #     pid = params.get('pid', None)
-    #     if pid is None:
-    #         return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
-    #     if not isinstance(pid, str):
-    #         return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-    #     return self.build_response(200, self.alto.get_qkd_properties(pid))
+    # Discretion Ampliation.
+    def api_qkd_properties(self, method, params):
+        '''
+            Particular case of Endpoint Properties Service for QKD networks.
+        '''
+        pid = params.get('pid', None)
+        if pid is None:
+            return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "PID not found."})
+        if not isinstance(pid, str):
+            return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+        return self.build_response(200, self.alto.get_qkd_properties(pid))
 
-    # # Discretion ampliation
-    # def api_bordernode(self,method, params):
-    #     '''
-    #         API used to identify which nodes in pur network can connect with external network nodes.
-    #         Federation Use Cases.
-    #     '''
-    #     if method == 'POST':
-    #         d = params.get('data', None)
-    #         if d is None:
-    #             return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
-    #         data = json.loads(d)
-    #         node = data.get('node', "")
-    #         if node != "":
-    #             return self.build_response(200, self.alto.get_bordernode(node))
-    #         return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
+    # Discretion ampliation
+    def api_bordernode(self,method, params):
+        '''
+            API used to identify which nodes in pur network can connect with external network nodes.
+            Federation Use Cases.
+        '''
+        if method == 'POST':
+            d = params.get('data', None)
+            if d is None:
+                return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
+            data = json.loads(d)
+            node = data.get('node', "")
+            if node != "":
+                return self.build_response(200, self.alto.get_bordernode(node))
+            return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
         
     def api_all(self, method, params):
         '''
