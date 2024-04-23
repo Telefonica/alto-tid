@@ -12,16 +12,25 @@
 
 
 ### General Description
-This code is an ALTO's special implementation ussed by TID in different european and Mineco projects.
+This code is an ALTO's special implementation ussed by TID in DISCRETION european project. This work has been partial funded by the European Union through the European Defence Industrial Development Programme (EDIDP)’s DISCRETION project, with grant agreement No SI2.858093.
 
 Application Layer Traffic Optimisation Protocol (ALTO) is a network protocol standardised by the Internet Engineering Task Force (IETF) that provides information about network topology and the location of network resources based on the hops required to access each node. The ALTO protocol allows applications to make informed decisions on how to optimise the use of network resources and reduce congestion. For example, a video streaming application could use the ALTO protocol to obtain information about the location of content servers and select the server that is closest to the user and has the least traffic load at that time.
+In this project, ALTO server will work as a Federation technology to help a SD-QKD Controller to identify how to reach to a node outside it's administration domain. 
+There will be two main functionallities:
+* ALTO to exposse information about the optimal Bordernode to be used (decide by the lowest hop-count).
+* ALTO to exposse QKD link information to stablish connection with the other SD-QKD BorderNode.
 
-Currently we have 5 active branches:
-1. Completo. Main branch, here we integrate the code already tested from the rest of the branches.
-2. Discretion. Branch dedicated to the code developed under the DISCRETION project (GA: ). The main feature here is the secure expossition of QKD capabilities in the network. There are two activities lines: the data expossure limitation and the QKD information integration and expossure.
-3. Desire. Branch dedicated to the code developed under the Desire6G project (GA:). The main functionalities are related to the expossition of paths and graphs for be used by a AI-based deployment module.
-4. Energy. Branch dedicated to the code developed under the 6Green project (GA:). The main functionalities are related with the integration and expossition of power metrics.
-5. Multimetrica. Branch dedicated to the code developed under the Optimaix project (GA:). This code includes the funtionalities of Cost Calendar and the expossition of more than one metric as the client requests.
+#### APIs to be used
+Considering an API service running at 10.0.0.11:8080/. There are the next requests to be realized:
+
+* http://10.0.0.11:8080/  : Request for information about available APIs to be used.
+	* curl http://10.0.0.11:8080/
+* http://10.0.0.11:8080/get-bordernode : If a node is not in our administration domain, this API can ask others ALTO servers for information about a requested node:
+	* curl -X POST -d '{ "node" : "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz" }' -H "Content-Type: application/json" http://10.0.0.11:8080/get-bordernode
+* http://10.0.0.11:8080/qkd-properties : Request for QKD link propperties. 
+	* curl -X POST -d '{ "node":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" }' -H "Content-Type: application/json" http://10.0.0.11:8080/qkd-properties
+
+
 
 ### Files list
 
@@ -40,41 +49,42 @@ Currently we have 5 active branches:
 
 
 
-### Versions
+### Installation
+In each repository, it is needed to download the code from discretion branch:
+```
+mkdir alto-dis
+git clone git@github.com:Telefonica/alto-tid.git alto-dis/ && cd alto-dis
+git checkout discretion
+```
+Once the code is downloaded, in config.yaml it is needed to configure the port to be used to exposse the ALTO server:
+API_PORT: 8082
+Then, in alto_core.py configure the list of known_servers (__init__ function). 
+For example, if one server is running at 10.0.0.11:8080 and the other at 10.0.0.12:8080, it has to modify it as following:
+```
+self.known_servers = [ ["10.0.0.11", 8080], ["10.0.0.12",8080]]
+```
+Also, there should be saved the next docs at maps/ folder:
+* qkd-topology.json : Topology with the devices and links. 
+* qkd-nodes.json    : Information about interfaces, nodes, links and capabillities.
 
-All versions are related over the main branch (completo):
-
-v1.0
-Version with the main capabilities expossed in RFC7285:
-* Map-Filtering Service: Retunr a view of the resources firtering them by a parameter indicated by the client.
-* Endpoint Property Service: It returns the properties of a indicated endpoint.
-* Endpoint Cost Service: Returns the cost to a endpoint.
-* Map Service: Default service, it returns the two main resources expossed by ALTO: the network-map and the cost-map. They are also available separated.
-
-- Modified the networkmap format to indicate not only the IPs, but also the IP type, as specified in RFC7285.
-- Created a file to serve as a json-yang encoder. Missing:
-	- Cases that are not yet implemented are also not formatted (out of laziness, by proxy I could have done it).
-	- Testing with more than 1 prefix per PID in the networkmap.
-	- Keep checking RFC conditions.
-
-v1.1
-Including the module to read IETF topology.
-
-v1.2
-
+Currently there are two different versions as example: 
+* qkd-topology.json/qkd-nodes.json               : Includes information about nodes and links in a 1st domain with 3 nodes: A, B and C.
+* qkd-topology-remote.json/qkd-nodes-remote.json : Includes information about nodes and links in a 2nd domain with 3 nodes: X, Y and Z.
 
 ### Execution
 
-Terminal 1:
+Terminal 1, machine 1:
 ```
-$ cd alto-ofc/
+$ cd alto-dis/
 $ python3 alto_core.py
 ```
 
-Terminal 2:
+Terminal 1, machine 2:
 ```
-$ curl 127.0.0.1:8082/ 
+$ cd alto-dis/
+$ python3 alto_core.py
 ```
+
 
 ### Contact
 

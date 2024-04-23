@@ -7,9 +7,9 @@
 
 #Modules available: BGP, IETF, 
 MODULES: 
-  - IETF
+  - QKD
 MODULES_IP: localhost
-MODULES_PORT: 5001
+MODULES_PORT: 5002
 #APIS available: HTTP, KAFKA, DESIRE6G, IETF (por hacer)
 API: HTTP
 #DEFAULT port  = 8080; DEFAULT IP = 127.0.0.1
