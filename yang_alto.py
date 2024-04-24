@@ -71,7 +71,7 @@ class RespuestasAlto:
         meta = {'dependent-vtags': [{'resource-id': str(rid), 'tag': str(vtag)}]}
         cuerpo = {'endpoint-properties' : contenido}
         #resp = "{'meta':{'Content-Type':'" + self.tipos[tipo] + "','dependent-vtag':[{'resource-id':'" + str(rid) + "','tag': '" + str(vtag) +"'}],'cost-type': {'cost-mode' : 'numerical','cost-metric' : 'routingcost'}},'cost-map':" + str(costmap) + "}"    
-        return "{'header':" + str(cabecera) + ", 'meta':"+ str(meta) + ", 'cost-map': " + str(contenido) + '}'
+        return "{'header':" + str(cabecera) + ", 'meta':"+ str(meta) + ", 'property': " + str(contenido) + '}'
     
     def respuestar_endpoint_costs(self, rid, vtag, costmap):
         return ""

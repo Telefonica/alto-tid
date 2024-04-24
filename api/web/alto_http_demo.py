@@ -45,7 +45,7 @@ class AltoHttp:
             while True:
                 conn, addr = s.accept()
                 with conn:
-                    try:
+                    if 1:
                         data = conn.recv(1024).decode('utf-8')
                         if data:
                             method, path, body = data.split(' ', 2)
@@ -57,9 +57,6 @@ class AltoHttp:
                             print("Parametros:", str(params), "URL:", str(path))
                             response = self.handle_request(method, path, params)
                             conn.sendall(response)
-                    except Exception as e:
-                        error_response = self.build_response(500, {"ERROR": "E_SERVER_ERROR", "message": str(e)})
-                        conn.sendall(error_response)
     
     def parse_params(self, path):
         ''' 

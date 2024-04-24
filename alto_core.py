@@ -23,8 +23,9 @@ from yang_alto import RespuestasAlto
 #from ipaddress import ip_address, IPv4Address
 from modulos.topology_bgp import TopologyBGP
 from modulos.topology_ietf import TopologyIetf
-from api.desire.alto_http import AltoHttp
 #from api.web.alto_http import AltoHttp
+from api.web.alto_http_demo import AltoHttp
+
 
 DEFAULT_ASN = 0
 DEF_PORT = 8080
@@ -39,6 +40,7 @@ class TopologyCreator:
         self.__topology = networkx.Graph()
         self.__cost_map = {}
         self.__net_map = {}
+        self.nodos = []
         self.bordernodes = {}
         self.ip = ip
         self.puerto = puerto
@@ -155,9 +157,9 @@ class TopologyCreator:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
-            pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
+            #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
             #pid = self.cyphered_pid(router, asn)
-            #pid = self.obtain_pid(router)
+            pid = self.obtain_pid(router)
             if len(ipv4):
                 if pid not in net_map.keys():
                     net_map[pid] = {}
@@ -176,23 +178,26 @@ class TopologyCreator:
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            #src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
             #src_pid_name = self.obtain_pid(src)
+            src_pid_name = src
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
                 #dst_pid_name = self.obtain_pid(dest_pid)
-                if src_pid_name not in cost_map:
-                    cost_map[src_pid_name] = {}
-                cost_map[src_pid_name][dst_pid_name] = weight
-                # if src in self.nodos:
-                #     if src not in cost_map:
-                #         cost_map[src] = {}
-                #     cost_map[src][dest_pid] = weight
-                # else:
+                dst_pid_name = dest_pid
+                if src_pid_name in self.nodos:
+                    if src_pid_name not in cost_map:
+                        cost_map[src_pid_name] = {}
+                    cost_map[src_pid_name][dst_pid_name] = weight
+                    # if src in self.nodos:
+                    #     if src not in cost_map:
+                    #         cost_map[src] = {}
+                    #     cost_map[src][dest_pid] = weight
+                # elif dst_pid_name in self.nodos:
                 #     # Si el nodo no pertenece a nuestra red, significa que es alcanzable a través de un border node nuestro.
                 #     # Mapeamos Nodo_fuera : Nuestro nodo, para saber cuál es el BN con el que podemos alcanzar a ese nodo.
                 #     # Modificar en Multihoming.
-                #     self.bordernodes[src] = dest_pid
+                #     self.bordernodes[src] = dst_pid_name
         return cost_map
     
     def obtain_pid(self, router):
@@ -249,13 +254,14 @@ class TopologyCreator:
             #print(str(self.__pids))
             #print(str(self.__cost_map))
             mapa = self.__cost_map[pid]
-            return self.__respuesta.crear_respuesta("filtro", "networkmap-default", self.__vtag, str(mapa))       
+            return self.__respuesta.crear_respuesta("cost-map", "costmapfilter",  "my-default-network-map", self.__vtag, str(mapa))       
         else:
             for server in self.known_servers:
                 if (server[1] != self.puerto):# or (server[0] != self.ip):
                     response = self.ask_other_alto_server(pid, server[0], server[1])
                     if response != "":
                         return response                   
+
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
 
     def get_properties(self, pid, properties=None):
@@ -338,7 +344,7 @@ class TopologyCreator:
 
     def get_qkd_properties(self, node=None):
         if node == None:
-            return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
+            return str({"ERROR" : ERRORES["valor"], "syntax-error": "Null Link-ID is not valid."})
         if type(node) is not str:
             return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
         if len(node.split(":"))>0:
@@ -353,11 +359,30 @@ class TopologyCreator:
         return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, props)
 
 
+    def get_qkd_link_properties(self, link=None):
+        if link == None:
+            return str({"ERROR" : ERRORES["valor"], "syntax-error": "Link-ID ."})
+        if type(link) is not str:
+            return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The Link-ID type is incorrect. We need a string."})   
+        qkdl_remote = self.__get_qlink_information(link)                 
+        if qkdl_remote == {}:
+            return str({"ERROR" : ERRORES["valor"], "syntax-error": "Link-ID not found."})
+        return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, qkdl_remote)        
+
+    def __get_qlink_information(self, link):
+        with open('./maps/qkd-nodes.json','r') as archivo:
+            qprop = json.load(archivo)
+            for node in qprop["qkd_nodes"]:
+                for qlink in node["qkd_node"]["qkd_links"]["qkd_link"]:
+                    if qlink["qkdl_id"] == link:
+                        return qlink["qkdl_remote"]
+        return {}
+
     ### Ampliation functions
     def get_bordernode(self, node=None):
         if node != None:
             if node in self.bordernodes.keys():
-                return self.bordernodes[node]
+                return str({"border-node":self.bordernodes[node], "remote" : node}) 
             else:
                 for server in self.known_servers:
                     if (server[1] != self.puerto):# or (server[0] != self.ip):
@@ -365,14 +390,17 @@ class TopologyCreator:
                         if response != {}:
                             #print("RESPUESTAAA:\t", str(response))
                             #datos = response.split('\n')
-                            print("DATOS:\t", str(len(response)), response)
+                            print("DATOS:\t", response)
                              #.replace('\t', '').replace('\n', '').strip())
                             #print("DATOS:\t", type(response))
                             #datos = dict(dat)
-                            for node in response["cost-maps"].keys():
-                                if node in self.nodos:
-                                    print("NODO:\t", node)
-                                    return node                    
+                            for node2 in response["cost-map"].keys():
+                                if node2 in self.nodos:
+                                    print("NODO:\t", node2)
+                                    # Potential Optimization problem. Ussing By default: remote node will be the first one saved. Just one Connection between networks.
+                                    for node3 in self.bordernodes.keys():
+                                        if self.bordernodes[node3] == node2:
+                                            return str({"border-node":node2, "remote" : node3})                    
                             #print(response)
         return ""
     
@@ -400,7 +428,7 @@ class TopologyCreator:
             response = s.recv(8192)
             datos = response.decode()
             datos = str(datos.split("\r\n\r\n")[1]).replace('"',"").replace("'", '"').strip()
-            print("DATOSSSSS:\t", datos)
+            #print("DATOSSSSS:\t", datos)
             result = json.loads(datos)
             #print("Resultado:\t", str(result))
         except ConnectionError as e:
@@ -697,18 +725,21 @@ class TopologyCreator:
             if 1:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
-                nodos = datos["data"]["nodes-list"]
+                self.nodos = datos["data"]["nodes-list"]
                 self.__redes = datos["data"]["prefixes"]
                 #print(str(self.__redes))
-                for nodo in nodos:
+                for nodo in self.nodos:
                     self.__topology.add_node(nodo)
                 for eje in ejes:
                     #print(eje)
                     leje = eval(eje.replace("(","[").replace(")","]"))
                     self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
+                    if leje[1] not in self.nodos:
+                        self.bordernodes[leje[1]] = leje[0]
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
-                print(self.__vtag)
-                self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
+                print("Topology loaded:\t", str(self.__vtag))
+                print("Border Nodes:\t", self.bordernodes)
+                #self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
                 self.__cost_map = self.compute_costmap(self.__topology)
                 #print(datos["data"]["pids"])
                 #self.compute_netmap()
@@ -843,6 +874,7 @@ if __name__ == '__main__':
 
 
     print("Creando ALTO CORE")
+    print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(DEF_IP),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
     alto = TopologyCreator(modules, mode, DEF_IP, DEF_PORT, portm)
     threads = list()
     for modulo in modules.keys():
