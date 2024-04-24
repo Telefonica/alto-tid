@@ -22,9 +22,9 @@ class TopologyQKD(AltoModule):
     def manage_topology_updates(self):
         ccambios = 0
         while 1:
-            #sleep(15)
+            sleep(1)
             ccambios = self.manage_updates(ccambios)
-            sleep(5)
+            sleep(4)
             
     def manage_updates(self, cambios):
         """

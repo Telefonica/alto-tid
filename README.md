@@ -24,11 +24,25 @@ There will be two main functionallities:
 Considering an API service running at 10.0.0.11:8080/. There are the next requests to be realized:
 
 * http://10.0.0.11:8080/  : Request for information about available APIs to be used.
-	* curl http://10.0.0.11:8080/
+	* ```	$ curl http://10.0.0.11:8080/
+			$ {
+			"message": "ALTO PoC's API", 
+			"services": "
+				ALTO PoC's API
+				Services expossed:
+				    1. Costs map: /costmap ['GET']           
+					2. Filtered Cost map: /costmap ['POST']             -> Parameters: Node-ID as node            
+					3. QKD Link Properties: /qkd-properties ['POST']    -> Parameters: QKD Link Properties as link            
+					4. Border Node Information: /get-bordernode ['POST']-> Parameters: Node-ID as node
+		        "
+			}	
+	```
 * http://10.0.0.11:8080/get-bordernode : If a node is not in our administration domain, this API can ask others ALTO servers for information about a requested node:
-	* curl -X POST -d '{ "node" : "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz" }' -H "Content-Type: application/json" http://10.0.0.11:8080/get-bordernode
+	* ```	$ curl -X POST -d '{ "node" : "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz" }' -H "Content-Type: application/json" http://10.0.0.11:8080/get-bordernode
+			$ "{'border-node': 'cccccccc-cccc-cccc-cccc-cccccccccccc', 'remote': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'}" ```
 * http://10.0.0.11:8080/qkd-properties : Request for QKD link propperties. 
-	* curl -X POST -d '{ "node":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" }' -H "Content-Type: application/json" http://10.0.0.11:8080/qkd-properties
+	* ```	$ curl -X POST -d '{ "node":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" }' -H "Content-Type: application/json" http://10.0.0.11:8080/qkd-properties
+			$ {'header':{'Content-Type': 'application/alto-endpointprop+json'}, 'meta':{'dependent-vtags': [{'resource-id': 'networkmap-default', 'tag': '1713949998033325'}]}, 'property': {'qkdn_id': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'qkdi_id': 2}}	```
 
 
 
