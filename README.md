@@ -56,13 +56,12 @@ Considering an API service running at 10.0.0.11:8080/. There are the next reques
 * [alto_core.py](alto_core.py): Main document of the git. It includes the logic of ALTO protocol.
 * [config.yaml](config.yaml): Includes the diferent variables of ALTO code. It allows modifying IPs, ports and add-ons.
 * [yang_alto.py](yang_alto.py): Standardises the output of information following an ALTO schema and in JSON format.
-* [api/desire/alto_http.py](api/desire/alto_http.py): Provides an API for HTTP access to the services defined in RFC7285 and the ampliations offered in our PoC.
+* [api/web/alto_http.py](api/web/alto_http.py): Provides an API for HTTP access to the services defined in RFC7285 and the ampliations offered in our PoC.
 * [modulos/alto_module.py](modulos/alto_module.py): Abstract class that defines the behaviour of the different ALTO modules. The objective is to have a joint API so that all modules have the same base and the same main functions to export the information received.
-* [modulos/topology_bgp.py](modulos/topology_bgp.py): ALTO module that processes the information received via BGP.
-* [modulos/topology_ietf.py](modulos/topology_ietf.py): ALTO module that processes the information received from the Network Controller.
-* [modulos/bgp/manage_bgp_speaker.py](modulos/bgp/manage_bgp_speaker.py): BGP protocol speaker. It implements the exabgp process to collect network information. It has not been modified but we should be aware of it as we depend on it.
-* [pruebas/](pruebas/): Folder with results obtained during the experimentations. Example of the results to be obtained.
-* [endpoints/properties.json](endpoints/properties.json): Documment with the nodes' properties used as input to obtain the DC information.
+* [modulos/topology_qkd.py](modulos/topology_qkd.py): ALTO module that processes the information received from the SD-QKD Controller.
+* [maps/](maps/): Folder with other local files with information required to provide services.
+* [maps/qkd-topology.py](maps/qkd-topology.py): JSON with the topology information from the local network.
+* [endpoints/qkd-nodes.json](endpoints/qkd-nodes.json): Documment with the nodes' properties used as input to obtain the SD-QKD Nodes' information.
 
 
 
