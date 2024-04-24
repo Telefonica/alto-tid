@@ -370,7 +370,7 @@ class TopologyCreator:
         return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, qkdl_remote)        
 
     def __get_qlink_information(self, link):
-        with open('./maps/qkd-nodes.json','r') as archivo:
+        with open('./endpoints/qkd-nodes.json','r') as archivo:
             qprop = json.load(archivo)
             for node in qprop["qkd_nodes"]:
                 for qlink in node["qkd_node"]["qkd_links"]["qkd_link"]:
