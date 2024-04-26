@@ -45,7 +45,7 @@ Considering an API service running at 10.0.0.11:8080/. There are the next reques
 		```
 * http://10.0.0.11:8080/qkd-properties : Request for QKD link propperties. 
 	* ``` shell	
-		$ curl -X POST -d '{ "node":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" }' -H "Content-Type: application/json" http://10.0.0.11:8080/qkd-properties
+		$ curl -X POST -d '{ "link":"qkd_link_cccccccc-xxxx-xxxx-xxxx-cccccccccccc" }' -H "Content-Type: application/json" http://10.0.0.11:8080/qkd-properties
 		$ {'header':{'Content-Type': 'application/alto-endpointprop+json'}, 'meta':{'dependent-vtags': [{'resource-id': 'networkmap-default', 'tag': '1713949998033325'}]}, 'property': {'qkdn_id': 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', 'qkdi_id': 2}}	
 		```
 
