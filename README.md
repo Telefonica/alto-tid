@@ -75,7 +75,7 @@ git clone git@github.com:Telefonica/alto-tid.git alto-dis/ && cd alto-dis
 git checkout discretion
 ```
 Once the code is downloaded, in config.yaml it is needed to configure the port to be used to exposse the ALTO server:
-API_PORT: 8082
+API_PORT: 8080
 Then, in alto_core.py configure the list of known_servers (__init__ function). 
 For example, if one server is running at 10.0.0.11:8080 and the other at 10.0.0.12:8080, it has to modify it as following:
 ```
