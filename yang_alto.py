@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
-
-import json
-from datetime import datetime
-
 COSTE = "routingcost"
 
 class RespuestasAlto:
