@@ -34,6 +34,7 @@ ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVA
 class TopologyCreator:
 
     def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000):
+        # Necesita que depuremos las variables: Qué es necesario? Faltan algunas? Cómo referenciar las APIs et al?
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -59,7 +60,7 @@ class TopologyCreator:
     ######################
     ### Static Methods ###
     ######################
-    
+    # Relacionadas con BGP. Hay que migrarlas al módulo de BGP pero conservando que los chequeos se realicen.
     @staticmethod
     def get_hex_id(ip):
         """Get hexadecimal value for certain IP
@@ -111,6 +112,7 @@ class TopologyCreator:
     ######################
     ### Public methods ###
     ######################
+
 
     def get_router_id(self, value):
         if self.check_if_router_id_is_hex(value):
@@ -336,6 +338,7 @@ class TopologyCreator:
     def get_directory(self):
         return self.__respuesta.indice()
 
+    # Mover a un documento que sea de funciones qkd, y estas funciones serían importadas desde otro lugar.
     def get_qkd_properties(self, node=None):
         if node == None:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
@@ -352,7 +355,7 @@ class TopologyCreator:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "Properties not found for such PID."})
         return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, props)
 
-
+    # Mover a un documento que sea de funciones qkd, y estas funciones serían importadas desde otro lugar.
     ### Ampliation functions
     def get_bordernode(self, node=None):
         if node != None:
@@ -376,6 +379,8 @@ class TopologyCreator:
                             #print(response)
         return ""
     
+    # Mover a un documento que sea de funciones qkd, y estas funciones serían importadas desde otro lugar.
+    # Ver cómo esta función pueda servir también para una federación entre servidores ALTO.
     def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
         # Creamos un socket.
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -497,6 +502,10 @@ class TopologyCreator:
     ###################################
     ###    Other auxiliar methods   ###
     ###################################
+
+    # Crear un fichero de funcionalidades asociado a cada uno de los proyectos.
+    # Cuando se cargue el código desde ese proyecto, se realizará con las funcionalidades asociadas.
+    # Las funcionalidades que se estandaricen en RFQs pueden quedarse aquí, indicando tanto el proyecto como el RFQ.
 
     ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
     def desire6g_graphs(self, data):
@@ -792,6 +801,10 @@ if __name__ == '__main__':
     topology_creator = TopologyCreator(exabgp_process,0)
     topology_creator.manage_ietf_speaker_updates()
     '''
+    
+    ## Necesita depuración.
+    
+    
     mode = 0
     modules = {}
     with open("config.yaml", "r") as stream:
