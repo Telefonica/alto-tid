@@ -67,7 +67,7 @@ v1.2
 
 Terminal 1:
 ```
-$ cd alto-ofc/
+$ cd alto/
 $ python3 alto_core.py
 ```
 
@@ -75,6 +75,11 @@ Terminal 2:
 ```
 $ curl 127.0.0.1:8082/ 
 ```
+
+### Esquemas
+
+
+
 
 ### Contact
 
