@@ -78,6 +78,8 @@ $ curl 127.0.0.1:8082/
 
 ### Esquemas
 
+[ALTO topology](https://github.com/Telefonica/alto-tid/blob/completo/images/ALTO-example-topology.png)
+[ALTO elements](https://github.com/Telefonica/alto-tid/blob/completo/images/ALTO-elements.png)
 
 
 
