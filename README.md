@@ -37,9 +37,6 @@ Currently we have 5 active branches:
 * [endpoints/properties.json](endpoints/properties.json): Documment with the nodes' properties used as input to obtain the DC information.
 
 
-
-
-
 ### Versions
 
 All versions are related over the main branch (completo):
@@ -89,6 +86,14 @@ Three main elements in ALTO maps:
 
 Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
 Luis Miguel Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
+
+
+### Our team
+
+Alejandro Muñiz Da Costa
+Luis Miguel Contreras Murillo
+Paula Aguado De Cabo
+Alberto Solano (ex partner)
 
 
 ## License 
