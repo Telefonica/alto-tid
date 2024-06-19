@@ -86,8 +86,6 @@ Three main elements in ALTO maps:
 
 Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
 
-Luis Miguel Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
-
 
 ### Our team
 
