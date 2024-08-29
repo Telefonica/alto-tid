@@ -15,14 +15,14 @@ import yaml
 
 from time import sleep
 from datetime import datetime
-from api.kafka_ale.kafka_api import AltoProducer
+#from api.kafka_ale.kafka_api import AltoProducer
 from modulos.topology_alto import TopologyAlto
 from modulos.topology_bgp import TopologyBGP
 from modulos.topology_qkd import TopologyQKD
 from yang_alto import RespuestasAlto
 #from ipaddress import ip_address, IPv4Address
-from modulos.topology_bgp import TopologyBGP
-from modulos.topology_ietf import TopologyIetf
+#from modulos.topology_bgp import TopologyBGP
+#from modulos.topology_ietf import TopologyIetf
 #from api.web.alto_http import AltoHttp
 from api.web.alto_http_demo import AltoHttp
 
@@ -56,7 +56,7 @@ class TopologyCreator:
         #self.kafka_p = AltoProducer("localhost", "9093")
         self.ts = {}
         self.__endpoints = {}
-        self.known_servers = [ ["localhost", 8082], ["localhost",8081]]
+        self.known_servers = [["192.168.159.83",8080]]
 
     ######################
     ### Static Methods ###
@@ -385,13 +385,14 @@ class TopologyCreator:
                 return str({"border-node":self.bordernodes[node], "remote" : node}) 
             else:
                 for server in self.known_servers:
-                    if (server[1] != self.puerto):# or (server[0] != self.ip):
+                   try:
+                        # if ((server[1] != self.puerto) or (server[0] != self.ip)):
                         response = self.ask_other_alto_server(node, server[0], server[1])
                         if response != {}:
                             #print("RESPUESTAAA:\t", str(response))
                             #datos = response.split('\n')
                             print("DATOS:\t", response)
-                             #.replace('\t', '').replace('\n', '').strip())
+                            #.replace('\t', '').replace('\n', '').strip())
                             #print("DATOS:\t", type(response))
                             #datos = dict(dat)
                             for node2 in response["cost-map"].keys():
@@ -402,7 +403,9 @@ class TopologyCreator:
                                         if self.bordernodes[node3] == node2:
                                             return str({"border-node":node2, "remote" : node3})                    
                             #print(response)
-        return ""
+                   except:
+                       continue
+        return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
     
     def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
         # Creamos un socket.
@@ -874,8 +877,8 @@ if __name__ == '__main__':
 
 
     print("Creando ALTO CORE")
-    print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(DEF_IP),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
-    alto = TopologyCreator(modules, mode, DEF_IP, DEF_PORT, portm)
+    print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(ipa),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm)
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)
