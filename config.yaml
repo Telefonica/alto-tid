@@ -9,12 +9,12 @@
 MODULES: 
   - QKD
 MODULES_IP: localhost
-MODULES_PORT: 5002
+MODULES_PORT: 5001
 #APIS available: HTTP, KAFKA, DESIRE6G, IETF (por hacer)
 API: HTTP
 #DEFAULT port  = 8080; DEFAULT IP = 127.0.0.1
 API_IP: "0.0.0.0"
-API_PORT: 8082
+API_PORT: 8081
 #Metrics used: hopcount(default), rutingcost, energy, latency
 METRIC: 
   - hopcount
