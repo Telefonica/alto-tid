@@ -20,17 +20,18 @@ class TopologyQKD(AltoModule):
 
     ### Manager function
     def manage_topology_updates(self):
-        ccambios = 0
-        while 1:
+        something_changed = 0
+        while True:
             sleep(1)
-            ccambios = self.manage_updates(ccambios)
+            something_changed = self.manage_updates(something_changed)
             sleep(4)
             
     def manage_updates(self, cambios):
         """
-        Reads stdout of process exabgp. It reads line by line
-        Decoded update messages from exabgp are used to build the netwokmap and costmap
-        :return:
+        Reads stdout of process exabgp.  Decoded update messages from exabgp 
+        are used to build the network map and cost map.
+        :param previous_hash: The hash of the last processed topology file
+        :return: The new hash after processing the topology file
         """
         #List of Nodes IDs
         nodos = []

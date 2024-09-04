@@ -13,7 +13,7 @@ MODULES_PORT: 5002
 #APIS available: HTTP, KAFKA, DESIRE6G, IETF (por hacer)
 API: HTTP
 #DEFAULT port  = 8080; DEFAULT IP = 127.0.0.1
-API_IP: "192.168.159.74"
+API_IP: "0.0.0.0"
 API_PORT: 8080
 #Metrics used: hopcount(default), rutingcost, energy, latency
 METRIC: 
