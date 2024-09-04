@@ -46,7 +46,7 @@ class TopologyCreator:
         self.__respuesta = RespuestasAlto()
         self.ts = {}
         self.__endpoints = {}
-        self.known_servers = [["192.168.159.83",8080]]
+        self.known_servers = [["192.168.159.74",8080]]
 
     ######################
     ### Static Methods ###
