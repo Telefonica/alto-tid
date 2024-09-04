@@ -601,8 +601,7 @@ class TopologyCreator:
             topo = s.recv(16384)
             print("Received:" + str(len(topo)) + " Bytes")
             topo = topo.decode()
-            #try:
-            if 1:
+            try:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
@@ -617,17 +616,15 @@ class TopologyCreator:
                     if leje[1] not in self.nodos:
                         self.bordernodes[leje[1]] = leje[0]
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
-                print("Topology loaded:\t", str(self.__vtag))
-                print("Border Nodes:\t", self.bordernodes)
-                #self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
+                #print("Topology loaded:\t", str(self.__vtag))
+                #print("Border Nodes:\t", self.bordernodes)
                 self.__cost_map = self.compute_costmap(self.__topology)
                 #print(datos["data"]["pids"])
                 #self.compute_netmap()
                 #self.__pids = datos["data"]["pids"]
                 #print("Todo correcto Hulio")
                 #self.comput-e_netmap(int(asn), pids)
-            else:
-            #except:
+            except:
                 print("Error al procesar:\n", str(topo))
             #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
             #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
