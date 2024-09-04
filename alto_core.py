@@ -15,15 +15,11 @@ import yaml
 
 from time import sleep
 from datetime import datetime
-#from api.kafka_ale.kafka_api import AltoProducer
 from modulos.topology_alto import TopologyAlto
 from modulos.topology_bgp import TopologyBGP
 from modulos.topology_qkd import TopologyQKD
+from modulos.topology_ietf import TopologyIetf
 from yang_alto import RespuestasAlto
-#from ipaddress import ip_address, IPv4Address
-#from modulos.topology_bgp import TopologyBGP
-#from modulos.topology_ietf import TopologyIetf
-#from api.web.alto_http import AltoHttp
 from api.web.alto_http_demo import AltoHttp
 
 
@@ -45,15 +41,9 @@ class TopologyCreator:
         self.ip = ip
         self.puerto = puerto
         self.port_module = portm
-        # set path where to write result json files
-        self.__topology_writer = TopologyFileWriter('/root/')
-        if mode:
-            self.__api = AltoProducer("localhost", "9092")
-        else:
-            self.__api = AltoHttp(self, ip, puerto)        
+        self.__api = AltoHttp(self, ip, puerto)        
         self.__vtag = 0
         self.__respuesta = RespuestasAlto()
-        #self.kafka_p = AltoProducer("localhost", "9093")
         self.ts = {}
         self.__endpoints = {}
         self.known_servers = [["192.168.159.83",8080]]
@@ -151,12 +141,6 @@ class TopologyCreator:
                 if not ip["prefix"].endswith("/3", -3, -1):
                     #print(ip[-3:-1])
                     ipv4.append(str(ipaddress.IPv4Network(ip["prefix"], strict=False)))
-                #try:
-                #    if type(ipaddress.ip_network(ip)) is IPv4Network:clear
-                #else:
-                #        ipv6.append(ip)
-                #except:
-                #    print("Invalid IP" + str(ip))
             #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
             #pid = self.cyphered_pid(router, asn)
             pid = self.obtain_pid(router)
@@ -525,112 +509,6 @@ class TopologyCreator:
         else:
             return -1
 
-    ###################################
-    ###    Other auxiliar methods   ###
-    ###################################
-
-    # ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    # def desire6g_graphs(self, data):
-    #     '''
-    #         This function returns a sub-graph (defined as two lists, nodes and edges) with all the components that satisfy the requested parameter.
-    #         In the first version we are just working with latency.
-    #         Args:
-    #             Data: JSON with the next structure: { "filter": {"name":STR, "value":FLOAT}, "src-nodes": LIST(STRs)}
-    #         Returns:
-    #             Nodes: List of nodes (pid1:23456789).
-    #             Edges: List of edges ((Node1,Node2,Weight)).
-    #     '''
-
-    #     try:
-    #     #if True:
-    #         nodos = data["src-nodes"].copy()
-    #         ejes = []
-    #         peso = data["filter"]["value"]
-    #         #print(nodos)
-    #         #topo_ejes = networkx.generate_edgelist(self.__topology)
-    #         # Recorremos los nodos 
-    #         for nodo in data["src-nodes"]:
-    #             #ejes = ejes + [(u,v,d["weight"]) for (u,v,d) in self.__topology.edges(data=True) if ((d["weight"] <= peso) and (u == nodo or v == nodo))] #This line is to work just with neightbour nodes.
-    #             self.__evaluate_graph(nodo,peso,ejes,nodos) 
-            
-    #         ejes = list(set(ejes))
-    #         #nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
-    #         #print(str(self.VUELTAS))
-    #         for i in range(len(nodos)):
-    #             nodos[i] = ('pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodos[i])))
-    #         respuesta = str( {'nodes':nodos, 'edges':ejes} )
-    #         #respuesta = str( {'nodes':nodos} )
-
-    #         #print(respuesta)
-    #         return respuesta
-    #     except:
-    #     #else:
-    #         print("Formato incorrecto.")
-    #         return "{}"
-  
-    # ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    # def __evaluate_graph(self, nodo, peso, ejes, nodos, iteracion=0):
-    #     '''
-    #     Auxiliar function used to archive the recursivity in the mision of the previous function. 
-    #     The goal is to locate all the nodes and links that are separated from "nodo", "peso" distance or less.
-    #     Imputs:
-    #         nodo: node to be evaluated.
-    #         peso: max distance to nodo.
-    #         ejes: list of edges to be updated (pointer). Also used to avoid uneded updates.
-    #         nodos: list of nodes to be updated (pointer). Also used to avoid uneded iterations.
-    #     '''
-    #     #print("Peso:", peso, "Iteración:", iteracion)
-    #     #self.VUELTAS = self.VUELTAS + 1
-    #     if peso > 0:
-    #         topo_ejes = self.__topology.edges(data=True) 
-    #         #print("Adios")
-    #         for eje in topo_ejes: 
-    #             #print(nodo,peso,str(eje))
-    #             if ((eje not in ejes) and (eje[2]["weight"] <= peso) and (eje[0] == nodo)):
-    #                 #print("sfdk",nodo,str(eje[0:2]))
-    #                 ejes.append((eje[0],eje[1],eje[2]["weight"]))
-    #                 if eje[1] not in nodos:
-    #                     nodos.append(eje[1])
-    #                     self.__evaluate_graph(eje[1], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
-    #             elif ((eje not in ejes) and (eje[2]["weight"] <= peso) and (eje[1] == nodo)):
-    #                 #print("SFDK",nodo,str(eje[0:2]))
-    #                 ejes.append((eje[0],eje[1],eje[2]["weight"]))
-    #                 if eje[0] not in nodos:
-    #                     nodos.append(eje[0])
-    #                     self.__evaluate_graph(eje[0], (peso-eje[2]["weight"]), ejes, nodos, iteracion+1)
-        
-    # ### Desire6G function. This work is part of the contributions of TID tto the Desire6G project. GA: 
-    # def desire_neighbours(self,data):
-    #     '''
-    #     In this function we do something similar to the desire_graph but just with neighbour nodes.
-    #     It returns the nodes where the separation respect one or more of the received nodes is less than a received weight.
-    #     In the first version we are just working with latency.
-    #         Args:
-    #             Data: JSON with the next structure: { "filter": {"name":STR, "value":FLOAT}, "src-nodes": LIST(STRs)}
-    #         Returns:
-    #             Nodes: List of nodes (pid1:23456789).
-    #             Edges: List of edges ((Node1,Node2,Weight)).
-    #     '''
-    #     try:
-    #     #if True:
-    #         nodos = data["src-nodes"].copy()
-    #         ejes = []
-    #         peso = data["filter"]["value"]
-    #         #topo_ejes = networkx.generate_edgelist(self.__topology)
-    #         # Recorremos los nodos
-    #         for nodo in nodos:
-    #             ejes = ejes + [(u,v,d["weight"]) for (u,v,d) in self.__topology.edges(data=True) if ((d["weight"] <= peso) and (u == nodo or v == nodo))] #This line is to work just with neightbour nodes.
-
-    #         nodos = list(set([a for (a,b,c) in ejes] + [b for (a,b,c) in ejes]))
-    #         #print(str(self.VUELTAS))
-    #         respuesta = str( {'nodes':nodos, 'edges':ejes} )
-    #         #print(respuesta)
-    #         return respuesta
-    #     except:
-    #     #else:
-    #         print("Formato incorrecto.")
-    #         return "{}"
-
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
     def evaluate_qkd_endpoints(self, node):
         '''
@@ -646,7 +524,6 @@ class TopologyCreator:
             for nodo in qprop["nodes"]:
                 if node == nodo["node"]:
                     return str(nodo["sd-qkd-node"])
-        
         return -1
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -792,31 +669,6 @@ class TopologyFileWriter:
 
     def write_same_ips(self, content):
         self.write_file(self.__same_node_ips, content)
-
-
-### Aux clases ###
-class TopologyUpdateThread(threading.Thread):
-
-    def __init__(self, topo_manager):
-        threading.Thread.__init__(self)
-        self.__tp_mng = topo_manager
-
-    def run (self):
-        t,a,p,c = self.__tp_mng.manage_bgp_speaker_updates()
-        return t,a,p,c
-
-### Aux clases ###
-class TopologyExpoThread(threading.Thread):
-
-    def __init__(self, a):
-        threading.Thread.__init__(self)
-        self.__api = AltoHttp(a)
-
-    def run (self):
-        self.__api.run()
-
-
-
 
 
 if __name__ == '__main__':
