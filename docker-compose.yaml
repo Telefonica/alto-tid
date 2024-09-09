@@ -1,0 +1,9 @@
+version: '3'
+services:
+  federation-server:
+    build: .
+    container_name: federation-server
+    ports:
+      - "9999:9999"
+      - "8080:8080"
+    restart: always
