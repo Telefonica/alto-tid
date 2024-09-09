@@ -1,0 +1,213 @@
+<!--
+ Copyright 2022-2023 ETSI TeraFlowSDN - TFS OSG (https://tfs.etsi.org/)
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+
+  <!doctype html>
+  <!--
+   Copyright 2022-2023 ETSI TeraFlowSDN - TFS OSG (https://tfs.etsi.org/)
+  
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+  
+        http://www.apache.org/licenses/LICENSE-2.0
+  
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+  
+  <html lang="en">
+    <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+      <link rel="shortcut icon" href="https://tfs.etsi.org/images/logos/tfs_logo_small.png" type="image/png" />
+  
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  
+      <title>ETSI TeraFlowSDN Controller</title>
+    </head>
+    <body>
+        <div id="teraflow-branding">
+          <a href="/webui/" title="Home" rel="home" id="main-logo" class="site-logo site-logo-pages">
+            <img src="/webui/static/TeraFlow%20SDN%20Logo%20ScreenColour%20with%20Slogan.png" width="400" type="image/png"> 
+          </a>
+          <a href="https://discretion-eu.com/" title="Home" rel="home" id="main-logo" class="site-logo site-logo-pages">
+              <img src="https://discretion-eu.com/wp-content/uploads/2022/10/cropped-discretion-logo-1-large.png" width="150" type="image/png"> 
+          </a>
+        </div>
+  
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="margin-bottom: 10px;">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="/webui/">
+              <img src="https://teraflow-h2020.eu/sites/teraflow/files/public/favicon.png" alt="" width="30" height="24" class="d-inline-block align-text-top"/>
+              TeraFlow
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  
+                  <a class="nav-link active" aria-current="page" href="/webui/">Home</a>
+                  
+                </li>
+                <li class="nav-item">
+                  
+                  <a class="nav-link" href="/webui/device/">Device</a>
+                  
+                </li>
+                <li class="nav-item">
+                  
+                  <a class="nav-link" href="/webui/link/">Link</a>
+                  
+                </li>
+                <li class="nav-item">
+                  
+                  <a class="nav-link" href="/webui/service/">Service</a>
+                  
+                </li>
+                <li class="nav-item">
+                  
+                  <a class="nav-link" href="/webui/slice/">Slice</a>
+                  
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/grafana" id="grafana_link" target="grafana">Grafana</a>
+                </li>
+  
+                <li class="nav-item">
+                  <a class="nav-link" href="/webui/debug">Debug</a>
+                </li>
+  
+                <!-- <li class="nav-item">
+                  <a class="nav-link" href="#">Context</a>
+                </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Monitoring</a>
+                </li> -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/webui/about">About</a>
+                </li>
+              </ul>
+              <span class="navbar-text" style="color: #fff;">
+                Current Context(<b>---</b>)/Topology(<b>---</b>)
+              </span>
+            </div>
+          </div>
+        </nav>
+  
+        <main class="container">
+          <div class="row">
+            <div class="col-md-12">
+              
+                
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xxl-12">
+            
+    <h2>ETSI TeraFlowSDN Controller</h2>
+
+    
+
+    <form id="select_context" method="POST" enctype="multipart/form-data">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="IjFkNjMzN2VjMjI2NWYwMTNlMjQ5MzE5YjA1NGU4MTJkZjBlNWMxMTki.Zt7o_g.L42DSv0FMhgh2-yo2TLIvmpQGXI">
+        <fieldset class="form-group">
+            <legend>Select the desired Context/Topology</legend>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="context_topology">Ctx/Topo</label>
+                <div class="col-sm-5">
+                    
+                        <select class="form-select" id="context_topology" name="context_topology" required><option value="">Select...</option></select>
+                    
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Submit">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <form id="upload_descriptors" method="POST" enctype="multipart/form-data">
+        <input id="csrf_token" name="csrf_token" type="hidden" value="IjFkNjMzN2VjMjI2NWYwMTNlMjQ5MzE5YjA1NGU4MTJkZjBlNWMxMTki.Zt7o_g.L42DSv0FMhgh2-yo2TLIvmpQGXI">
+        <fieldset class="form-group">
+            <legend>Upload a JSON descriptors file</legend>
+            <div class="row mb-3">
+                <label class="col-sm-1 col-form-label" for="descriptors">Descriptors</label>
+                <div class="col-sm-5">
+                    
+                        <input class="form-control" id="descriptors" name="descriptors" type="file">
+                    
+                </div>
+                <div class="col-sm-2">
+                    <input class="btn btn-primary" id="submit" name="submit" type="submit" value="Submit">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <div id="topology"></div>
+    <script src="/webui/js/topology.js"></script>
+
+
+            </div>
+          </div>
+        </main>
+  
+        <footer class="footer" style="background-color: darkgrey; margin-top: 30px; padding-top: 20px;">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <p class="text-center" style="color: white;">&copy; 2021-2023</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <p>This project has received funding from the European Union's Horizon 2020 research and innovation programme under grant agreement No 101015857.</p>
+              </div>
+              <div class="col-md-6">
+                <img src="https://teraflow-h2020.eu/sites/teraflow/files/public/content-images/media/2021/logo%205G-ppp%20eu.png" width="310" alt="5g ppp EU logo" loading="lazy" typeof="foaf:Image">
+              </div>
+            </div>
+          </div>
+        </footer>
+  
+      <!-- Optional JavaScript; choose one of the two! -->
+  
+      <!-- Option 1: Bootstrap Bundle with Popper -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+      <!-- <script src="/webui/static/site.js"/> -->
+      <!-- <script>
+        document.getElementById("grafana_link").href = window.location.protocol + "//" + window.location.hostname + ":30300"
+      </script> -->
+      <!-- Option 2: Separate Popper and Bootstrap JS -->
+      <!--
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.min.js" integrity="sha384-PsUw7Xwds7x08Ew3exXhqzbhuEYmA2xnwc8BuD6SEr+UmEHlX8/MCltYEodzWA4u" crossorigin="anonymous"></script>
+      -->
+    </body>
+  </html>
