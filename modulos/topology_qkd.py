@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
-import os
 import json
+import requests
 import hashlib
 
 from time import sleep
@@ -13,10 +13,53 @@ DEFAULT_ASN = 0
 
 class TopologyQKD(AltoModule):
 
-    def __init__(self, mb, ruta):
+    def __init__(self, mb, ruta, sdn):
         super().__init__(mb)
-        self.directory = ruta
+        self.topology_file = ruta
+        self.topology_file2 = "qkd-topology.json"
+        self.sdn_api = sdn
 
+
+    # Get Topology
+    def get_topology(self, prueba=False):
+        try:
+            # Si es prueba, lee del archivo local
+            if prueba:
+                with open(self.topology_file, 'r') as file:
+                    data = json.load(file)
+            else:
+                # Realiza la petición HTTP
+                url = self.sdn_api + "/webui/qkd/topology"
+                response = requests.get(url)
+                response.raise_for_status()  # Lanza una excepción si el estatus no es 200
+                data = response.json()  # Parsear la respuesta a JSON
+            return data
+        except (requests.exceptions.RequestException, json.JSONDecodeError, FileNotFoundError, IOError):
+            # Devuelve un diccionario vacío en caso de cualquier error
+            print("Error en la ejecución.")
+            return {}
+        
+    # Get Devices
+    def get_device(self, nodo, prueba=False):
+        try:
+            # Si es prueba, lee del archivo local
+            if prueba:
+                with open("./maps/qkd-devices.json", 'r') as file:
+                    nodos = json.load(file)
+                    data = nodos[nodo]
+                    links = data["qkd_node"]["qkd_links"]["qkd_link"]
+            else:
+                # Realiza la petición HTTP
+                url = self.sdn_api + "/webui/qkd/device/" + str(nodo)
+                response = requests.get(url)
+                response.raise_for_status()  # Lanza una excepción si el estatus no es 200
+                data = response.json()  # Parsear la respuesta a JSON
+                links = data["qkd_node"]["qkd_links"]["qkd_link"]
+            return links
+        except (requests.exceptions.RequestException, json.JSONDecodeError, FileNotFoundError, IOError):
+            # Devuelve un diccionario vacío en caso de cualquier error
+            print("Error en la ejecución.")
+            return {}
 
     ### Manager function
     def manage_topology_updates(self):
@@ -40,21 +83,22 @@ class TopologyQKD(AltoModule):
         #Lista de enlaces
         links = []
         
-        #cost_path = os.path.join(self.directory, "qkd-topology.json")
-        cost_path = os.path.join(self.directory, "qkd-topology-remote.json")
-        with open(cost_path, 'r') as archivo:
-            self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
+        d_json = self.get_topology(True)
+        self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
 
-            #while True:
-            deluro = archivo.read()
-            d_json = json.loads(str(deluro))
-
+        if d_json != {}:
+            deluro = str(d_json)
             if cambios != hashlib.sha3_384(deluro.encode()).hexdigest():
                 cambios = hashlib.sha3_384(deluro.encode()).hexdigest()
                 # Load nodes
                 nodos = [ nodo["id"] for nodo in d_json["devices"] ]
                 # Load links
-                links = [ (n["source"], n["target"], 1) for n in d_json["links"] ]        
+                for nodo in nodos:
+                    nlinks = self.get_device(nodo)
+                    for nlink in nlinks:
+                        link = (nlink["qkdl_local"]["qkdn_id"], nlink["qkdl_remote"]["qkdn_id"], 1)
+                        links.append(link)
+                #links = [ (n["source"], n["target"], 1) for n in d_json["links"] ]        
                 # Load networks --> Not in this version
                 prefijos = {}
                       
@@ -66,5 +110,4 @@ class TopologyQKD(AltoModule):
                 data = '{"pids":'+ '""' +',"nodes-list": '+snodos+',"costs-list": '+ str(links) +',"prefixes": '+prefijos+"}"
                 print(data)
                 self.return_info(2,0,1, data)
-            
-            return cambios
+        return cambios
