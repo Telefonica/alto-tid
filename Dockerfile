@@ -1,5 +1,5 @@
 # Usa una imagen base de Python (o la que necesites)
-FROM python:3.10-buster
+FROM python:3.10-alpine
 
 # Establece el directorio de trabajo
 WORKDIR /app
@@ -22,8 +22,9 @@ RUN pip3 install -r requirements.txt
 COPY . /app
 
 # Expone los puertos necesarios
-EXPOSE 8080
+EXPOSE 8080 9999
 
 # Comando para ejecutar la aplicación
+CMD ["python3", "api/web/federation.py", "&"]
 CMD ["python3", "alto_core.py"]
 

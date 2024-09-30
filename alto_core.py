@@ -11,14 +11,12 @@ import socket
 import threading
 import ipaddress
 import hashlib
-import yaml
 
-from time import sleep
+# from time import sleep
 from datetime import datetime
-from modulos.topology_alto import TopologyAlto
-from modulos.topology_bgp import TopologyBGP
+# from modulos.topology_bgp import TopologyBGP
 from modulos.topology_qkd import TopologyQKD
-from modulos.topology_ietf import TopologyIetf
+# from modulos.topology_ietf import TopologyIetf
 from yang_alto import RespuestasAlto
 from api.web.alto_http_demo import AltoHttp
 
@@ -30,7 +28,7 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.83",8080]]):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -46,7 +44,7 @@ class TopologyCreator:
         self.__respuesta = RespuestasAlto()
         self.ts = {}
         self.__endpoints = {}
-        self.known_servers = [["192.168.159.83",8080]]
+        self.known_servers = servers
 
     ######################
     ### Static Methods ###
@@ -675,59 +673,25 @@ if __name__ == '__main__':
     topology_creator = TopologyCreator(exabgp_process,0)
     topology_creator.manage_ietf_speaker_updates()
     '''
-    mode = 0
-    modules = {}
-    with open("config.yaml", "r") as stream:
-        try:
-            doc  = yaml.safe_load(stream)
-            
-            #Cargamos los parámetros de los módulos
-            if "MODULES_IP" in doc.keys():
-                ipm = doc["MODULES_IP"]
-            else:
-                ipm = "127.0.0.1"
-            if "MODULES_PORT" in doc.keys():
-                portm = doc["MODULES_PORT"]
-            else:
-                portm = 5001    
-            #Cargamos los módulos
-            if "MODULES" in doc.keys():
-                if "BGP" in doc["MODULES"]:
-                    modules["bgp"] = TopologyBGP((ipm,portm))
-                if "IETF" in doc["MODULES"]:
-                    modules['ietf'] = TopologyIetf((ipm,portm))
-                if "ALTO" in doc["MODULES"]:
-                    modules['alto'] = TopologyAlto((ipm,portm), "./maps/")
-                if "QKD" in doc["MODULES"]:
-                    modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
-                        
-            # Una vez comprobados todos los módulos, tenemos que asegurar que por lo menos haya uno. 
-            # Módulo por defecto: BGP
-            if len(modules.keys()) == 0:
-                modules["bgp"] = TopologyBGP((ipm,portm))
     
-            # Cargamos los parámetros de las APIs
-            if "API_PORT" in doc.keys():
-                DEF_PORT = doc["API_PORT"]
-            if "API_IP" in doc.keys():
-                ipa = doc["API_IP"]
-            else:
-                ipa = "127.0.0.1"
-                
-            if "API" in doc.keys():
-                if "KAFKA" in doc["API"]:   
-                    mode = 1
-            
-        except yaml.YAMLError as exc:
-            print("No se ha podido cargar el documento. Error: ", exc)
-            modules={}
-            #modules['bgp'] = TopologyBGP(('localhost',8081))
-            modules['ietf'] = TopologyIetf(('localhost',"5000"))
 
+    mode = 0
+
+    modules = {}
+    ipm = "localhost" 
+    ipa = "0.0.0.0"
+    DEF_PORT = 8080
+    portm = 5001
+    ruta = "./maps/" + "qkd-topology.json"
+    modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
+    ## Let's delete the config section to make it easier to dockerase it.
 
     print("Creando ALTO CORE")
     print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(ipa),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm)
+    
+
+
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83",8080]])
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)
