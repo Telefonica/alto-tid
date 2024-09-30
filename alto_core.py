@@ -12,12 +12,11 @@ import threading
 import ipaddress
 import hashlib
 
-from time import sleep
+# from time import sleep
 from datetime import datetime
-from modulos.topology_alto import TopologyAlto
-from modulos.topology_bgp import TopologyBGP
+# from modulos.topology_bgp import TopologyBGP
 from modulos.topology_qkd import TopologyQKD
-from modulos.topology_ietf import TopologyIetf
+# from modulos.topology_ietf import TopologyIetf
 from yang_alto import RespuestasAlto
 from api.web.alto_http_demo import AltoHttp
 
@@ -29,7 +28,7 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.83",8080]]):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -45,7 +44,7 @@ class TopologyCreator:
         self.__respuesta = RespuestasAlto()
         self.ts = {}
         self.__endpoints = {}
-        self.known_servers = [["192.168.159.74",8080]]
+        self.known_servers = servers
 
     ######################
     ### Static Methods ###
@@ -683,6 +682,7 @@ if __name__ == '__main__':
     ipa = "0.0.0.0"
     DEF_PORT = 8080
     portm = 5001
+    ruta = "./maps/" + "qkd-topology.json"
     modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
     ## Let's delete the config section to make it easier to dockerase it.
 
@@ -691,7 +691,7 @@ if __name__ == '__main__':
     
 
 
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm)
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83",8080]])
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)
