@@ -13,14 +13,15 @@ class FederationApi:
 
     # Función para manejar peticiones federadas
     def handle_federated_request(self, request):
-        self.clean_expired_requests()  # Eliminar peticiones expiradas antes de buscar coincidencias
+        # self.clean_expired_requests()  # Eliminar peticiones expiradas antes de buscar coincidencias
         for req in self.requests:
-            if (request['client_app_id'][0] == req['server_app_id'] and 
-                request['server_app_id'] == req['client_app_id'][0] and 
-                self.compare_qos(request['qos'], req['qos']) and
-                datetime.datetime.now(datetime.timezone.utc) < req['expiration_time']):
+            if (request['client_app_id'][0] == req['client_app_id'] and 
+                request['server_app_id'] == req['server_app_id'] and 
+                self.compare_qos(request['qos'], req['qos']) ): # and
+                #datetime.datetime.now(datetime.timezone.utc) < req['expiration_time']):
                 self.requests.remove(req)  # Eliminar la solicitud coincidente localmente                
                 return req  # Devolver la solicitud coincidente si hay match
+            print(request['client_app_id'][0] , req['client_app_id'] ,request['server_app_id'] , req['server_app_id'] , self.compare_qos(request['qos'], req['qos']))
         return None
 
     # Función para enviar petición a servidores federados
@@ -63,20 +64,21 @@ class FederationApi:
                 request = json.loads(body)
                 
                 # Parsear el campo expiration_time a un objeto datetime
-                expiration_time = datetime.strptime(request['expiration_time'], '%Y-%m-%dT%H:%M:%S.%fZ')
+                expiration_time = datetime.datetime.strptime(request['expiration_time'], '%Y-%m-%dT%H:%M:%S.%fZ')
                 
                 # Verificar si hay una coincidencia en las solicitudes
                 # Verificar si hay una coincidencia en las solicitudes locales
                 match = self.handle_federated_request(request)
 
                 if match:
+                    print(match)
                     # Enviar el id de la solicitud coincidente
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{match['id']}'}}\n"
                     client_socket.send(response.encode('utf-8'))
 
                     # Enviar el id de la solicitud actual a la solicitud coincidente
                     matching_socket = match['socket']
-                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['id']}'}}\n"
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['local_qkdn_id']}'}}\n"
                     matching_socket.send(response.encode('utf-8'))
 
                     # Cerrar ambos sockets
@@ -87,19 +89,20 @@ class FederationApi:
                     # self.requests.remove(match)
                     return
                 else:
+                    print("NO MATCH")
                     # Si no hay coincidencia local, buscar en servidores federados
-                    if self.send_to_federated_servers(request):
-                        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found in federated server'}}\n"
-                        client_socket.send(response.encode('utf-8'))
-                        client_socket.close()
-                        return
+                    #if self.send_to_federated_servers(request):
+                    #    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found in federated server'}}\n"
+                    #    client_socket.send(response.encode('utf-8'))
+                    #    client_socket.close()
+                    #    return
 
                     # Si no se encontró coincidencia en servidores federados, guardar la solicitud localmente
                     self.requests.append({
                         'client_app_id': request['client_app_id'][0],
                         'server_app_id': request['server_app_id'],
                         'qos': request['qos'],
-                        'id': request['id'],
+                        'id': request['local_qkdn_id'],
                         'socket': client_socket,
                         'expiration_time': expiration_time
                     })
