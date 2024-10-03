@@ -13,7 +13,7 @@ DEFAULT_ASN = 0
 
 class TopologyQKD(AltoModule):
 
-    def __init__(self, mb, ruta, sdn):
+    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="127.0.0.1"):
         super().__init__(mb)
         self.topology_file = ruta
         self.topology_file2 = "qkd-topology.json"
@@ -21,7 +21,7 @@ class TopologyQKD(AltoModule):
 
 
     # Get Topology
-    def get_topology(self, prueba=False):
+    def get_topology(self, prueba=True):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
@@ -40,7 +40,7 @@ class TopologyQKD(AltoModule):
             return {}
         
     # Get Devices
-    def get_device(self, nodo, prueba=False):
+    def get_device(self, nodo, prueba=True):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
