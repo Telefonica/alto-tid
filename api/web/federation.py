@@ -6,7 +6,7 @@ import json
 class FederationApi:
     def __init__(self):
         self.requests = []
-        self.federados = ["192.168.12.3:9999"]        
+        self.federados = ["192.168.159.74:9999"]        
     # Función para comparar QoS
     def compare_qos(self, qos1, qos2):
         return all(qos1.get(k) == qos2.get(k) for k in qos1)
