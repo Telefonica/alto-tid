@@ -1,0 +1,39 @@
+curl -X POST http://192.168.159.74:8080/get-bordernode -H "Content-Type: application/json" -d '{"node": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}'
+curl -X POST http://192.168.159.74:8080/get-bordernode -H "Content-Type: application/json" -d '{"node": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"}'
+curl -X POST http://192.168.159.74:9999/app-federation \
+-H "Content-Type: application/json" \
+-d '{
+  "client_app_id": ["qkd://Application1@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa:123/?oauth-token=9bc04678a0b11c"],
+  "expiration_time": "2024-10-10T12:30:50.52Z",
+  "local_qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+  "priority": 0,
+  "qos": {
+    "clients_shared_keys_required": true,
+    "clients_shared_path_enable": true,
+    "jitter": 10,
+    "max_bandwidth": 64,
+    "min_bandwidth": 32,
+    "ttl": 10
+  },
+  "server_app_id": "qkd://Application2@zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz:456/?oauth-token=9bc04678a0b11c",
+  "type": "CLIENT"
+}'
+curl -X POST http://192.168.159.74:9999/app-federation \
+-H "Content-Type: application/json" \
+-d '{
+  "client_app_id": ["qkd://Application1@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa:123/?oauth-token=9bc04678a0b11c"],
+  "expiration_time": "2024-10-10T12:30:50.52Z",
+  "local_qkdn_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+  "priority": 0,
+  "qos": {
+    "clients_shared_keys_required": true,
+    "clients_shared_path_enable": true,
+    "jitter": 10,
+    "max_bandwidth": 64,
+    "min_bandwidth": 32,
+    "ttl": 10
+  },
+  "server_app_id": "qkd://Application2@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa:456/?oauth-token=9bc04678a0b11c",
+  "type": "CLIENT"
+}'
+
