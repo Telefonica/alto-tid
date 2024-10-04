@@ -42,12 +42,12 @@
                         "qkdl_status": "ACTIVE", 
                         "qkdl_local": { 
                             "qkdn_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
-                            "qkdi_id": 2 
+                            "qkdi_id": 20
                         }, 
                         "qkdl_type": "PHYS", 
                         "qkdl_remote": { 
                             "qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", 
-                            "qkdi_id": 2 
+                            "qkdi_id": 23 
                         } 
                     }   
                 ]

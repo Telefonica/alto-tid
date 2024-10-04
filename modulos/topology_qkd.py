@@ -98,9 +98,15 @@ class TopologyQKD(AltoModule):
                     for nlink in nlinks:
                         link = (nlink["qkdl_local"]["qkdn_id"], nlink["qkdl_remote"]["qkdn_id"], 1)
                         links.append(link)
+                        if nlink["qkdl_local"]["qkdn_id"] not in prefijos.keys():
+                            prefijos[nlink["qkdl_local"]["qkdn_id"]] = {}
+                        prefijos[nlink["qkdl_local"]["qkdn_id"]][nlink["qkdl_remote"]["qkdn_id"]] = nlink["qkdl_local"]["qkdi_id"]
+                        if nlink["qkdl_remote"]["qkdn_id"] not in prefijos.keys():
+                            prefijos[nlink["qkdl_remote"]["qkdn_id"]] = {}
+                        prefijos[nlink["qkdl_remote"]["qkdn_id"]][nlink["qkdl_local"]["qkdn_id"]] = nlink["qkdl_remote"]["qkdi_id"]
                 #links = [ (n["source"], n["target"], 1) for n in d_json["links"] ]        
                 # Load networks --> Not in this version
-                prefijos = {}
+                #prefijos = {}
                       
                 snodos = str(nodos).replace("'", '"')
                 prefijos = str(prefijos).replace("'", '"')

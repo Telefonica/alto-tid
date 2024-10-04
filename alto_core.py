@@ -364,7 +364,8 @@ class TopologyCreator:
     def get_bordernode(self, node=None):
         if node != None:
             if node in self.bordernodes.keys():
-                return str({"border-node":self.bordernodes[node], "remote" : node}) 
+                return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
+                #return str({"border-node":self.bordernodes[node], "remote" : node}) 
             else:
                 for server in self.known_servers:
                    try:
@@ -382,8 +383,9 @@ class TopologyCreator:
                                     print("NODO:\t", node2)
                                     # Potential Optimization problem. Ussing By default: remote node will be the first one saved. Just one Connection between networks.
                                     for node3 in self.bordernodes.keys():
-                                        if self.bordernodes[node3] == node2:
-                                            return str({"border-node":node2, "remote" : node3})                    
+                                        if self.bordernodes[node3]["node"] == node2:
+                                            return str({"local": {"qkdn_id": self.bordernodes[node3]["node"], "qkdi_id": self.bordernodes[node3]["local_id"]}, "remote": {"qkdn_id": node3, "qkdi_id": self.bordernodes[node3]["remote_id"]}})
+                                            #return str({"border-node":node2, "remote" : node3})                    
                             #print(response)
                    except:
                        continue
@@ -603,7 +605,7 @@ class TopologyCreator:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
-                self.__redes = datos["data"]["prefixes"]
+                self.apis = datos["data"]["prefixes"]
                 #print(str(self.__redes))
                 for nodo in self.nodos:
                     self.__topology.add_node(nodo)
@@ -612,7 +614,7 @@ class TopologyCreator:
                     leje = eval(eje.replace("(","[").replace(")","]"))
                     self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
                     if leje[1] not in self.nodos:
-                        self.bordernodes[leje[1]] = leje[0]
+                        self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
                 #print("Topology loaded:\t", str(self.__vtag))
                 #print("Border Nodes:\t", self.bordernodes)
