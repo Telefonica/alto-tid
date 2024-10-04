@@ -26,6 +26,8 @@ class FederationApi:
 
     # Función para enviar petición a servidores federados
     def send_to_federated_servers(self, request):
+        if isinstance(request, str):    
+            request = json.loads(request)
         if 'federated_hop_count' not in request:
             request['federated_hop_count'] = 0  # Inicializar si no existe
         request['federated_hop_count'] += 1
