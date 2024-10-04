@@ -683,7 +683,7 @@ if __name__ == '__main__':
     DEF_PORT = 8080
     portm = 5001
     ruta = "./maps/" + "qkd-topology.json"
-    modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
+    modules['qkd'] = TopologyQKD((ipm,portm))
     ## Let's delete the config section to make it easier to dockerase it.
 
     print("Creando ALTO CORE")
