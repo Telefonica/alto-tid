@@ -13,7 +13,8 @@ DEFAULT_ASN = 0
 
 class TopologyQKD(AltoModule):
 
-    def __init__(self, mb, ruta= "./maps/qkd-topology-remote.json", sdn="192.168.159.205"):
+
+    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="192.168.159.236"):
         super().__init__(mb)
         self.topology_file = ruta
         self.topology_file = "./maps/qkd-topology-remote.json"
