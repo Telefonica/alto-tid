@@ -159,7 +159,7 @@
                         "qkdl_type": "PHYS", 
                         "qkdl_remote": { 
                             "qkdn_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx", 
-                            "qkdi_id": 20 
+                            "qkdi_id": 20
                         } 
                     }  
                 ]
