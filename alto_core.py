@@ -676,7 +676,7 @@ if __name__ == '__main__':
     topology_creator.manage_ietf_speaker_updates()
     '''
     
-
+  
     mode = 0
 
     modules = {}

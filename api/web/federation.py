@@ -82,6 +82,8 @@ class FederationApi:
                 print(f"Error connecting to federado {federado}: {e}")
         return False
 
+
+
     # Eliminar solicitudes expiradas
     def clean_expired_requests(self):
         current_time = datetime.datetime.now(datetime.timezone.utc)
