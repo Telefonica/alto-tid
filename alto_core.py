@@ -27,7 +27,7 @@ DEF_PORT = 8888
 DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 time_interval_size = 120 #seconds
-number_of_intervals = 5
+number_of_intervals = 3
 
 class TopologyCreator:
 
@@ -378,6 +378,93 @@ class TopologyCreator:
             else:    
                 self.__d_modules[fuente].manage_topology_updates()
 
+    def graph_to_topology_json(self, topology, time):
+        # Obtener la hora actual para el campo "calendar_start_time"
+        calendar_start_time = time.isoformat()
+        
+        # Lista de nodos y enlaces
+        nodes = []
+        links = []
+        
+        # Procesar nodos
+        for node_id, data in topology.nodes(data=True):
+            node = {
+                "node-id": node_id,
+                "ietf-l3-unicast-topology:l3-node-attributes": {
+                    "name": data.get("name", ""),
+                    "router-id": [node_id],
+                    "prefix": [{"prefix": prefix} for prefix in data.get("prefixes", [])]
+                },
+                "ietf-ne-commissioning:commissioning-configs": {
+                    "system-config": {
+                        "openconfig-system:system": {
+                            "ssh-server": {
+                                "state": {
+                                    "enable": data.get("ssh_enabled", "True"),
+                                    "protocol-version": "V2"
+                                }
+                            },
+                            "telnet-server": {
+                                "state": {
+                                    "enable": data.get("telnet_enabled", "False")
+                                }
+                            }
+                        }
+                    }
+                },
+                "ietf-network-topology:termination-point": [
+                    {
+                        "tp-id": tp_id,
+                        "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                            "ip-address": [tp.get("ip_address")] if tp.get("ip_address") else [],
+                            "ietf-l3-isis-topology:isis-termination-point-attributes": {
+                                "level": tp.get("level", "level-2")
+                            }
+                        }
+                    } for tp_id, tp in data.get("termination_points", {}).items()
+                ]
+            }
+            nodes.append(node)
+        
+        # Procesar enlaces
+        for u, v, data in topology.edges(data=True):
+            link = {
+                "link-id": f"{data.get('link_name', f'{u}-{v}')}",
+                "ietf-l3-unicast-topology:l3-link-attributes": {
+                    "metric1": str(data.get("metric1", 10)),
+                    "metric2": str(data.get("metric2", 100)),
+                    "tefsdn-topology:domain-id": data.get("domain_id", "0"),
+                    "tefsdn-topology:link-attributes": {
+                        "level": data.get("level", "2")
+                    }
+                }
+            }
+            links.append(link)
+        
+        # Estructura final
+        topology_json = {
+            "calendar_start_time": calendar_start_time,
+            "ietf-network:networks": {
+                "network": [
+                    {
+                        "network-id": "0 : 0 : 0 ISIS",
+                        "network-types": {
+                            "ietf-l3-isis-topology:isis-topology": {},
+                            "ietf-l3-unicast-topology:l3-unicast-topology": {}
+                        },
+                        "node": nodes,
+                        "ietf-network-topology:link": links
+                    }
+                ]
+            }
+        }
+        #print(topology_json)        
+        return topology_json
+
+
+
+
+
     def mailbox(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind(('localhost',self.port_module))
@@ -417,6 +504,13 @@ class TopologyCreator:
                         self.list_topologies[0] = self.__topology
                         
                     self.compute_costcalendar()
+                    
+                    topos = []
+                    tiempo  = self.init_time
+                    for topo in self.list_topologies:
+                        topos.append(self.graph_to_topology_json(topo, tiempo))
+                        tiempo = tiempo + timedelta(seconds=time_interval_size)
+                    print(topos)
                 #print(datos["data"]["pids"])
                 #self.compute_netmap()
                 #self.__pids = datos["data"]["pids"]
