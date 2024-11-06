@@ -24,11 +24,8 @@ class AltoHttp():
         self.app.route('/costmap', methods=['GET','POST'])(self.api_costs)
         self.app.route('/maps', methods=['GET','POST'])(self.api_maps)       
         self.app.route('/endpoints/<string:pid>', methods=['GET'])(self.api_endpoint_costs)
-        self.app.route('/properties/<string:pid>', methods=['POST','GET'])(self.api_properties)
-        self.app.route('/qkd-properties/<string:pid>', methods=['GET'])(self.api_qkd_properties)
-        self.app.route('/all/<string:a>/<string:b>', methods=['GET'])(self.api_all)
-        self.app.route('/best/<string:a>/<string:b>', methods=['GET'])(self.api_shortest)
         self.app.route('/costmap/filter/<string:pid>', methods=['GET'])(self.api_costs_by_pid)
+        self.app.route('/costcalendar', methods=['GET'])(self.api_cost_calendar)
         self.server = None
 
     def run(self):
@@ -177,36 +174,14 @@ class AltoHttp():
     ###################################
     
     
-    #@self.app.route('/qkd-properties/<string:pid>', methods=['GET'])
-    def api_qkd_properties(self,pid):
-        if pid == None:
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
-        if type(pid) is not str:
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        return flask.jsonify(self.alto.get_qkd_properties(pid))
-    
-    #All possible paths between A and B without any common node
-    #@self.app.route('/all/<string:a>/<string:b>', methods=['GET'])
-    def api_all(self, a,b):
-        a = self.sanitize_input_GET(a)
-        b = self.sanitize_input_GET(b)
-        if (a == None) or (b == None):
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
-        if (type(a) is not str) or (type(b) is not str):
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
-        #return flask.jsonify(str(self.alto.all_maps(self.alto.get_topology(), a, b)))
-        return flask.jsonify(self.alto.parseo_yang(str(self.alto.all_maps(self.alto.get_topology(), a, b)),"all-paths"))
-    
-    #Best path between A and B
-    #@self.app.route('/best/<string:a>/<string:b>', methods=['GET'])
-    def api_shortest(self, a,b):
-        a = self.sanitize_input_GET(a)
-        b = self.sanitize_input_GET(b)
-        if (a == None) or (b == None):
-            return flask.jsonify({"ERROR" : ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
-        if (type(a) is not str) or (type(b) is not str):
-            return flask.jsonify({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
-        return flask.jsonify(str(self.alto.shortest_path(a, b)))
+
+    def api_cost_calendar(self):
+        # FORMAT OF COST_CALENDAR_START_TIME Y PID
+        #node --> 5.5.5.6
+        #cost_calendar_start_time --> 2024, 1, 25, 10, 10, 20 # year, month, day, hour, minutes, seconds
+        #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))
+        return flask.jsonify(self.alto.get_costcalendar())
+
 
     def sanitize_input_POST(texto):
         '''

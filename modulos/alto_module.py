@@ -2,6 +2,7 @@
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
 
+import json
 import sys
 import re
 import networkx
@@ -231,12 +232,14 @@ class AltoModule(ABC):
     
     def return_info(self, src, tipo, costs, msn):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        meta = '{"source":'+str(src)+', "action":'+str(tipo)+', "costs":'+str(costs)+"}"
-        msg = '{"meta":' + str(meta) +', "data":' + str(msn) + "}"
-        msg = msg.replace("(", '"(')
-        msg = msg.replace(")", ')"')
+        meta = {"source":src, "action":tipo, "costs":costs}
+        msg = {"meta": meta, "data":msn }
+        #msg = msg.replace("(", '"(')
+        #msg = msg.replace(")", ')"')
         print("Sending data to: " + str(self.mailbox))
-        s.sendto(msg.encode(), self.mailbox)
+        smsg = json.dumps(msg)
+        print(f"MESG:{smsg}")
+        s.sendto(smsg.encode('utf-8'), self.mailbox)
 
     ### Manager function
     @abstractmethod
