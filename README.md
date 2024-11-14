@@ -11,19 +11,54 @@
 6. [License](#license)
 
 
-### General Description
-This code is an ALTO's special implementation ussed by TID in different european and Mineco projects.
+## General Description
 
-Application Layer Traffic Optimisation Protocol (ALTO) is a network protocol standardised by the Internet Engineering Task Force (IETF) that provides information about network topology and the location of network resources based on the hops required to access each node. The ALTO protocol allows applications to make informed decisions on how to optimise the use of network resources and reduce congestion. For example, a video streaming application could use the ALTO protocol to obtain information about the location of content servers and select the server that is closest to the user and has the least traffic load at that time.
+### What is the ALTO Protocol?
 
-Currently we have 5 active branches:
-1. Completo. Main branch, here we integrate the code already tested from the rest of the branches.
-2. Discretion. Branch dedicated to the code developed under the DISCRETION project (GA: ). The main feature here is the secure expossition of QKD capabilities in the network. There are two activities lines: the data expossure limitation and the QKD information integration and expossure.
-3. Desire. Branch dedicated to the code developed under the Desire6G project (GA:). The main functionalities are related to the expossition of paths and graphs for be used by a AI-based deployment module.
-4. Energy. Branch dedicated to the code developed under the 6Green project (GA:). The main functionalities are related with the integration and expossition of power metrics.
-5. Multimetrica. Branch dedicated to the code developed under the Optimaix project (GA:). This code includes the funtionalities of Cost Calendar and the expossition of more than one metric as the client requests.
+The Application-Layer Traffic Optimization (ALTO) protocol, defined in [RFC 7285](https://www.rfc-editor.org/info/rfc7285), is designed to help applications optimize their network traffic by providing them with abstracted, high-level network information from the perspective of network operators. Typically, applications such as content delivery networks (CDNs) or peer-to-peer (P2P) sharing systems need to make decisions about which endpoints to connect to for efficiency and performance. The ALTO protocol supports this by offering a view of the network topology and cost structure, helping applications select the best endpoints based on network conditions.
 
-### Files list
+### How ALTO Works
+
+ALTO provides applications with two main types of information:
+
+1. **Network Maps**: These maps represent the network topology and group endpoints by location within the provider’s network, using Provider-defined Identifiers (PIDs). Each PID can represent specific IP ranges, enabling applications to understand the broader layout of the network without detailed topology exposure.
+   
+2. **Cost Maps**: Cost maps specify the cost metrics between pairs of PIDs or endpoints. These costs can include factors such as latency, bandwidth, or general routing costs. Cost maps give applications the ability to select optimal paths or endpoints based on the criteria set by network operators.
+
+The ALTO protocol follows a RESTful design and uses JSON for data encoding, making it straightforward for applications to request network maps and cost information from an ALTO server. ALTO allows applications to balance performance with network efficiency by choosing paths that avoid congested or costly network segments.
+
+---
+
+### What is Time-Variant Routing (TVR)?
+
+Time-Variant Routing (TVR) addresses situations where network routing changes over time due to predictable events, such as scheduled maintenance, network upgrades, or known periods of high traffic. TVR captures these anticipated routing changes and makes them available so applications and systems can adjust proactively.
+
+#### The Problem of TVR
+
+In dynamic network environments, routing and connectivity often vary across time. For example, during network maintenance, certain paths may become unavailable or have reduced performance. If applications are not aware of these changes in advance, they may experience degraded performance or even failures in connectivity. TVR aims to make these time-based routing changes predictable and available to applications so they can adapt their behavior accordingly.
+
+TVR can integrate with network controllers to schedule and manage changes, and these controllers may use algorithms or simulations (like network digital twins) to predict and evaluate the impacts of routing adjustments. However, TVR also requires a mechanism to share this time-variant information with external applications.
+
+---
+
+#### How ALTO Can Help Expose TVR-Related Changes
+
+ALTO can serve as a tool to expose the future changes in routing that TVR manages, providing applications with a way to become aware of these scheduled routing modifications. The ALTO protocol includes a feature known as the **ALTO cost calendar** (specified in [RFC 8896](https://www.rfc-editor.org/info/rfc8896)), which allows the ALTO server to present cost information over time.
+
+#### Using ALTO Cost Calendars for TVR
+
+The ALTO cost calendar enables applications to view upcoming network costs and routing changes in a structured time-based format. This feature provides time-related attributes such as:
+
+- **Calendar Start Time**: The date and time when the cost calendar begins.
+- **Time Interval Size**: The duration of each time interval in seconds.
+- **Number of Intervals**: The number of entries in the calendar.
+- **Repeated**: An optional attribute indicating how many times the calendar values repeat.
+
+By using these attributes, the ALTO cost calendar can expose anticipated changes in routing metrics due to TVR events. This setup allows applications to adjust routing decisions based on upcoming network conditions, helping them avoid potential performance issues by routing around affected paths. ALTO thus acts as a bridge for TVR, facilitating time-variant routing information access for applications and supporting better network and application performance.
+
+---
+
+## Files list
 
 * [alto_core.py](alto_core.py): Main document of the git. It includes the logic of ALTO protocol.
 * [config.yaml](config.yaml): Includes the diferent variables of ALTO code. It allows modifying IPs, ports and add-ons.
@@ -37,10 +72,7 @@ Currently we have 5 active branches:
 * [endpoints/properties.json](endpoints/properties.json): Documment with the nodes' properties used as input to obtain the DC information.
 
 
-
-
-
-### Versions
+## Versions
 
 All versions are related over the main branch (completo):
 
@@ -63,21 +95,26 @@ Including the module to read IETF topology.
 v1.2
 
 
-### Execution
+## Execution and testing
 
-Terminal 1:
+The testing comands can vary depending on the deep desired, although, in here we are proposing a minimum set of commands to test the main workflow:
+
 ```
-$ cd alto-ofc/
-$ python3 alto_core.py
+python3 alto_core.py 
+curl localhost:8888/costmap # In other terminal
+curl localhost:8888/costcalendar
+TIMESTAMP=$(date -d "+5 minutes" +"[%Y, %m, %d, %H, %M, %S]")
+topology=$(cat topology_metrics.json)
+curl -X POST -d '{"calendar_start_time":'$TIMESTAMP',"update_topology":'$topology'"}' -H "Content-Type: application/json" http://localhost:9999/update-expected-topology
 ```
 
-Terminal 2:
-```
-$ curl 127.0.0.1:8082/ 
-```
+These commands are also available in [test.sh](test.sh) file.
 
-### Contact
+## Contact
 
 Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
 Luis Miguel Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
 
+### Acknoledgmends
+
+Paula Aguado de Cabo
