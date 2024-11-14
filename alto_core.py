@@ -19,6 +19,7 @@ from yang_alto import RespuestasAlto
 #from ipaddress import ip_address, IPv4Address
 from modulos.topology_ndt import TopologyNDT
 from modulos.topology_ietf import TopologyIetf
+from modulos.topology_bgp import TopologyBGP
 #from api.desire.alto_http import AltoHttp
 from api.web.alto_http import AltoHttp
 
@@ -31,7 +32,7 @@ number_of_intervals = 3
 
 class TopologyCreator:
 
-    def __init__(self, modules, ip="127.0.0.1", puerto=8000, portm=5000):
+    def __init__(self, modules, ip="127.0.0.1", puerto=8000, portm=5000, output = "./topology_metrics.json"):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -50,6 +51,9 @@ class TopologyCreator:
         self.cost_calendar = {}
         self.init_time = datetime.now()
         #self.create_costcalendar()
+        
+        # Writer
+        self.saver = TopologyFileWriter("./topology_metrics.json")
 
 
 
@@ -152,7 +156,8 @@ class TopologyCreator:
                 #        ipv6.append(ip)
                 #except:
                 #    print("Invalid IP" + str(ip))
-            pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
+            #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
+            pid = router
             #pid = self.cyphered_pid(router, asn)
             if len(ipv4):
                 if pid not in net_map.keys():
@@ -172,10 +177,12 @@ class TopologyCreator:
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
-            src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
-            #src_pid_name = self.obtain_pid(src)
+            src_pid_name = src
+            # src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+            # src_pid_name = self.obtain_pid(src)
             for dest_pid, weight in dest_pids.items():
-                dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                dst_pid_name = dest_pid
                 #dst_pid_name = self.obtain_pid(dest_pid)
                 if src_pid_name not in cost_map:
                     cost_map[src_pid_name] = {}
@@ -313,11 +320,13 @@ class TopologyCreator:
         for i in range(number_of_intervals):
             shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(self.list_topologies[i]))
             for src, dest_pids in shortest_paths.items():
-                src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
-                #src_pid_name = self.obtain_pid(src)
+                src_pid_name = src
+                # src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
+                # src_pid_name = self.obtain_pid(src)
                 for dest_pid, weight in dest_pids.items():
-                    dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
-                    #dst_pid_name = self.obtain_pid(dest_pid)
+                    dst_pid_name = dest_pid
+                    # dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
+                    # dst_pid_name = self.obtain_pid(dest_pid)
                     if src_pid_name not in self.cost_calendar:
                         self.cost_calendar[src_pid_name] = {}
                     if dst_pid_name not in self.cost_calendar[src_pid_name]:
@@ -431,8 +440,7 @@ class TopologyCreator:
             link = {
                 "link-id": f"{data.get('link_name', f'{u}-{v}')}",
                 "ietf-l3-unicast-topology:l3-link-attributes": {
-                    "metric1": str(data.get("metric1", 10)),
-                    "metric2": str(data.get("metric2", 100)),
+                    "routingcost": str(data.get("metric1", -1)),
                     "tefsdn-topology:domain-id": data.get("domain_id", "0"),
                     "tefsdn-topology:link-attributes": {
                         "level": data.get("level", "2")
@@ -461,8 +469,13 @@ class TopologyCreator:
         #print(topology_json)        
         return topology_json
 
-
-
+    def calendar_2_ietf(self):
+        topos = []
+        tiempo  = self.init_time
+        for topo in self.list_topologies:
+            topos.append(self.graph_to_topology_json(topo, tiempo))
+            tiempo = tiempo + timedelta(seconds=time_interval_size)
+        return topos
 
 
     def mailbox(self):
@@ -476,12 +489,13 @@ class TopologyCreator:
             #try:
             if 1:
                 datos = json.loads(topo)
-                print(f"DATOS:\t{datos}")
+                print(f"DATOOS:\t{datos}")
                 if datos["meta"]["source"] == 5:
                     new_topology = datos["data"]["topology"]
                     update_time = datos["data"]["start-time"]
                     self.update_topology(update_time, new_topology)
                 else:
+                    print("Entramos en el BGP")
                     ejes = datos["data"]["costs-list"]
                     nodos = datos["data"]["nodes-list"]
                     self.__redes = datos["data"]["prefixes"]
@@ -504,18 +518,11 @@ class TopologyCreator:
                         self.list_topologies[0] = self.__topology
                         
                     self.compute_costcalendar()
-                    
-                    topos = []
-                    tiempo  = self.init_time
-                    for topo in self.list_topologies:
-                        topos.append(self.graph_to_topology_json(topo, tiempo))
-                        tiempo = tiempo + timedelta(seconds=time_interval_size)
-                    print(topos)
-                #print(datos["data"]["pids"])
-                #self.compute_netmap()
-                #self.__pids = datos["data"]["pids"]
-                #print("Todo correcto Hulio")
-                #self.comput-e_netmap(int(asn), pids)
+
+                    topos = self.calendar_2_ietf()
+                    self.saver.write_file("", topos)                    
+                    #print(topos)
+
             else:
             #except:
                 print("Error al procesar:\n", str(topo))
@@ -539,7 +546,7 @@ class TopologyCreator:
 
 class TopologyFileWriter:
 
-    def __init__(self, output_path):
+    def __init__(self, output_path="./"):
         self.__output_path = output_path
         self.__pid_file = 'pid_file.json'
         self.__cost_map_file = 'cost_map.json'
@@ -547,7 +554,10 @@ class TopologyFileWriter:
 
     def write_file(self, file_name, content_to_write):
         """Writes file_name in output_file"""
-        full_path = os.path.join(self.__output_path, file_name)
+        if len(file_name) > 0:
+            full_path = os.path.join(self.__output_path, file_name)
+        else:
+            full_path = self.__output_path
         with open(full_path, 'w') as out_file:
             json.dump(content_to_write, out_file, indent=4)
 
@@ -587,37 +597,30 @@ class TopologyExpoThread(threading.Thread):
 
 
 if __name__ == '__main__':
-    '''speaker_bgp = ManageBGPSpeaker()
-    exabgp_process = speaker_bgp.check_tcp_connection()
+
     
-    topology_creator = TopologyCreator(exabgp_process,0)
-    topology_creator.manage_ietf_speaker_updates()
-    '''
     modules = {}
-    portm = 5000
+    #portm = 5000
 
 
-    modules['ietf'] = TopologyIetf(('localhost',5000))
+    modules['bgp'] = TopologyBGP(('localhost',5000))
     modules['ndt'] = TopologyNDT(('localhost',5000))
 
 
 
     print("Creando ALTO CORE")
-    alto = TopologyCreator(modules, DEF_IP, DEF_PORT, portm)
+    alto = TopologyCreator(modules, DEF_IP, DEF_PORT, portm=5000)
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)
         x = threading.Thread(target=alto.gestiona_info, args=(modulo,))#, daemon=True)
         threads.append(x)
         x.start()    
-        
-        
-        
-        
-        print("Lanzando API REST")
-        t_api = threading.Thread(target=alto.run_api)
-        t_api.start()
-                #alto.launch_api()
+            
+    print("Lanzando API REST")
+    t_api = threading.Thread(target=alto.run_api)
+    t_api.start()
+    #alto.launch_api()
                 
                 
     print("Lanzando gestor de respuestas")

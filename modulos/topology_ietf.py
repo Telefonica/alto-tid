@@ -66,12 +66,7 @@ class TopologyIetf(AltoModule):
                             for tp in nodo["ietf-network-topology:termination-point"]:
                                 tps[nodo["node-id"]].append(str(nodos_actual[nodo["node-id"]]) + ' ' + str(tp["tp-id"]))
 
-                        # Cambia el nombre basado en el tipo de topología
-                        if topology_type == 'ietf2_prueba':
-                            pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
-                        elif topology_type == 'ietf_compute':
-                            pid_name = 'ane%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
-
+                        pid_name = nodo["node-id"]
                         if pid_name not in self.pids:
                             self.pids[pid_name] = {}
                         if 'ipv4' not in self.pids[pid_name]:
@@ -113,7 +108,8 @@ class TopologyIetf(AltoModule):
         tps = {}
         #Lista de enlaces
         links = []
-        full_path = os.path.join("./", "ietf2_prueba.json")
+        # full_path = os.path.join("./", "ietf2_prueba.json")
+        full_path = os.path.join("./", "topology.json")
         with open(full_path, 'r') as archivo:
             self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
             #while True:
@@ -135,7 +131,8 @@ class TopologyIetf(AltoModule):
                         if "ietf-network-topology:termination-point" in nodo.keys():
                             for tp in nodo["ietf-network-topology:termination-point"]:
                                 tps[nodo["node-id"]].append(str(nodos[nodo["node-id"]]) + ' ' +  str(tp["tp-id"]))
-                        pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
+                        #pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
+                        pid_name = nodo["node-id"]
                         if pid_name not in self.pids:
                             self.pids[pid_name] = {}
                         if 'ipv4' not in self.pids[pid_name]:
@@ -146,11 +143,11 @@ class TopologyIetf(AltoModule):
                     
                     # Falta listar los enlaces y guardarlos.
                     for link in net["ietf-network-topology:link"]:
-                        a,b = link["link-id"].split(" - ")
+                        a,b = link["link-id"].split("-")
                         if a == '' or b == '':
                             break
-                        a1 = a.split(' ')[0]
-                        b1 = b.split(' ')[0]
+                        a1 = a.split('_')[0]
+                        b1 = b.split('_')[0]
                         for k in nodos.keys():
                             if nodos[k] == a1:
                                 a = k
@@ -169,7 +166,7 @@ class TopologyIetf(AltoModule):
             # Hay que revisar qué diccionarios seguirían haciendo falta.
             # Dado que bgp lo representa con node-id - node-id, quizás es importante unificar la representación que se muestre. (done)
             # Qué hacemos con las interfaces? Las mostramos en los ejes o no hace falta? Guardamos una lista de enlaces donde se vean cómo se conectan?
-            self.compute_costmap()
+            # self.compute_costmap()
             datos = str(self.pids).replace("'", '"')
             nodos = list(set(self.topology.nodes()))
             snodos = str(nodos).replace("'", '"')

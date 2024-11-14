@@ -238,7 +238,7 @@ class AltoModule(ABC):
         #msg = msg.replace(")", ')"')
         print("Sending data to: " + str(self.mailbox))
         smsg = json.dumps(msg)
-        print(f"MESG:{smsg}")
+        #print(f"MESG:{smsg}")
         s.sendto(smsg.encode('utf-8'), self.mailbox)
 
     ### Manager function

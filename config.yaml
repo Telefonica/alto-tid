@@ -7,7 +7,7 @@
 
 #Modules available: BGP, IETF, 
 MODULES: 
-  - IETF
+  - BGP
 MODULES_IP: localhost
 MODULES_PORT: 5001
 #APIS available: HTTP, KAFKA, DESIRE6G, IETF (por hacer)

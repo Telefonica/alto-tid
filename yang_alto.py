@@ -100,8 +100,7 @@ class RespuestasAlto:
                      "tag": str(vtag),
                      },
                 },
-            "time-cost-calendar":
-                str(costcalendar)
+            "time-cost-calendar":costcalendar
         }
         return respuesta
 

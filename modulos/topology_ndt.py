@@ -9,7 +9,6 @@ from modulos.alto_module import AltoModule
 from werkzeug.serving import make_server
 
 
-DEFAULT_ASN = 1
 RR_BGP_0 = "50.50.50.1"
 #RR_BGP = BGP_INFO['bgp']['ip']
 MAX_VAL = 16777214
@@ -71,7 +70,7 @@ class TopologyNDT(AltoModule):
             cost_calendar_start_time = data.get('calendar_start_time', [])
             #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))
             update_topology = data.get('update_topology', "")
-            print(f"Info received:\t{data}")
+            print(f"Info received:\t{update_topology}")
             self.manage_updates(cost_calendar_start_time, update_topology)
         return jsonify("Costcalendar Created")
 
