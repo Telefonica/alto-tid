@@ -112,8 +112,8 @@ These commands are also available in [test.sh](test.sh) file.
 
 ## Contact
 
-Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
-Luis Miguel Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
+- Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
+- Luis Miguel Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
 
 ### Acknoledgmends
 
