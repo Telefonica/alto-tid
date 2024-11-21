@@ -25,7 +25,7 @@ from api.web.alto_http import AltoHttp
 
 DEFAULT_ASN = 0
 DEF_PORT = 8888
-DEF_IP = "127.0.0.1"
+DEF_IP = "0.0.0.0"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 time_interval_size = 120 #seconds
 number_of_intervals = 3
@@ -499,13 +499,14 @@ class TopologyCreator:
                     ejes = datos["data"]["costs-list"]
                     nodos = datos["data"]["nodes-list"]
                     self.__redes = datos["data"]["prefixes"]
+                    nodos_nombre = datos["data"]["pids"]
                     #print(str(self.__redes))
                     for nodo in nodos:
-                        self.__topology.add_node(nodo)
+                        self.__topology.add_node(nodos_nombre[nodo])
                     for eje in ejes:
                         #print(eje)
                         #leje = eval(eje.replace("(","[").replace(")","]"))
-                        self.__topology.add_edge(eje[0], eje[1], weight=eje[2])
+                        self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], weight=eje[2])
                     self.__vtag = str(int(datetime.now().timestamp()*1e6))
                     print(self.__vtag)
                     
@@ -543,6 +544,12 @@ class TopologyCreator:
                 #print(str(user))
                 self.__endpoints[user["ipv4"][0]]=user
 
+    def get_topology(self):
+        with open('./topology.json', 'r') as source:
+            jason = source.read()
+            jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
+            return json.loads(str(jason))
+        return '{}'
 
 class TopologyFileWriter:
 
@@ -603,7 +610,8 @@ if __name__ == '__main__':
     #portm = 5000
 
 
-    modules['bgp'] = TopologyBGP(('localhost',5000))
+    #modules['bgp'] = TopologyBGP(('localhost',5000))
+    modules['ietf'] = TopologyIetf(('localhost',5000))
     modules['ndt'] = TopologyNDT(('localhost',5000))
 
 

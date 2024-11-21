@@ -1,6 +1,6 @@
 [
     {
-        "calendar_start_time": "2024-11-13T18:10:52.633303",
+        "calendar_start_time": "2024-11-21T17:06:29.312397",
         "ietf-network:networks": {
             "network": [
                 {
@@ -11,11 +11,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "10.10.10.1",
+                            "node-id": "xrv18",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.1"
+                                    "xrv18"
                                 ],
                                 "prefix": []
                             },
@@ -39,11 +39,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.5",
+                            "node-id": "xrv15",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.5"
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -67,11 +67,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.3",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.3"
+                                    "xrv14"
                                 ],
                                 "prefix": []
                             },
@@ -95,11 +95,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.2",
+                            "node-id": "xrv13",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.2"
+                                    "xrv13"
                                 ],
                                 "prefix": []
                             },
@@ -123,11 +123,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.4",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.4"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -151,11 +151,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.6",
+                            "node-id": "xrv17",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.6"
+                                    "xrv17"
                                 ],
                                 "prefix": []
                             },
@@ -179,11 +179,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.7",
+                            "node-id": "xrv12",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.7"
+                                    "xrv12"
                                 ],
                                 "prefix": []
                             },
@@ -207,11 +207,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.8",
+                            "node-id": "xrv11",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.8"
+                                    "xrv11"
                                 ],
                                 "prefix": []
                             },
@@ -237,7 +237,7 @@
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "10.10.10.1-10.10.10.5",
+                            "link-id": "xrv18-xrv14",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -247,7 +247,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.1-10.10.10.3",
+                            "link-id": "xrv18-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -257,7 +257,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.5-10.10.10.2",
+                            "link-id": "xrv15-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -267,7 +267,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.6",
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -277,7 +277,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.4",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -287,7 +287,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.2-10.10.10.4",
+                            "link-id": "xrv13-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -297,7 +297,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.4-10.10.10.8",
+                            "link-id": "xrv13-xrv16",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -307,17 +307,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.6-10.10.10.7",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "10.10.10.7-10.10.10.8",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -332,7 +322,7 @@
         }
     },
     {
-        "calendar_start_time": "2024-11-13T18:12:52.633303",
+        "calendar_start_time": "2024-11-21T17:08:29.312397",
         "ietf-network:networks": {
             "network": [
                 {
@@ -343,11 +333,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "10.10.10.1",
+                            "node-id": "xrv18",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.1"
+                                    "xrv18"
                                 ],
                                 "prefix": []
                             },
@@ -371,11 +361,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.5",
+                            "node-id": "xrv15",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.5"
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -399,11 +389,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.3",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.3"
+                                    "xrv14"
                                 ],
                                 "prefix": []
                             },
@@ -427,11 +417,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.2",
+                            "node-id": "xrv13",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.2"
+                                    "xrv13"
                                 ],
                                 "prefix": []
                             },
@@ -455,11 +445,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.4",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.4"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -483,11 +473,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.6",
+                            "node-id": "xrv17",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.6"
+                                    "xrv17"
                                 ],
                                 "prefix": []
                             },
@@ -511,11 +501,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.7",
+                            "node-id": "xrv12",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.7"
+                                    "xrv12"
                                 ],
                                 "prefix": []
                             },
@@ -539,11 +529,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.8",
+                            "node-id": "xrv11",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.8"
+                                    "xrv11"
                                 ],
                                 "prefix": []
                             },
@@ -569,7 +559,7 @@
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "10.10.10.1-10.10.10.5",
+                            "link-id": "xrv18-xrv14",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -579,7 +569,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.1-10.10.10.3",
+                            "link-id": "xrv18-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -589,7 +579,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.5-10.10.10.2",
+                            "link-id": "xrv15-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -599,7 +589,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.6",
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -609,7 +599,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.4",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -619,7 +609,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.2-10.10.10.4",
+                            "link-id": "xrv13-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -629,7 +619,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.4-10.10.10.8",
+                            "link-id": "xrv13-xrv16",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -639,17 +629,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.6-10.10.10.7",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "10.10.10.7-10.10.10.8",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -664,7 +644,7 @@
         }
     },
     {
-        "calendar_start_time": "2024-11-13T18:14:52.633303",
+        "calendar_start_time": "2024-11-21T17:10:29.312397",
         "ietf-network:networks": {
             "network": [
                 {
@@ -675,11 +655,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "10.10.10.1",
+                            "node-id": "xrv18",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.1"
+                                    "xrv18"
                                 ],
                                 "prefix": []
                             },
@@ -703,11 +683,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.5",
+                            "node-id": "xrv15",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.5"
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -731,11 +711,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.3",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.3"
+                                    "xrv14"
                                 ],
                                 "prefix": []
                             },
@@ -759,11 +739,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.2",
+                            "node-id": "xrv13",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.2"
+                                    "xrv13"
                                 ],
                                 "prefix": []
                             },
@@ -787,11 +767,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.4",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.4"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -815,11 +795,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.6",
+                            "node-id": "xrv17",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.6"
+                                    "xrv17"
                                 ],
                                 "prefix": []
                             },
@@ -843,11 +823,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.7",
+                            "node-id": "xrv12",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.7"
+                                    "xrv12"
                                 ],
                                 "prefix": []
                             },
@@ -871,11 +851,11 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "10.10.10.8",
+                            "node-id": "xrv11",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "10.10.10.8"
+                                    "xrv11"
                                 ],
                                 "prefix": []
                             },
@@ -901,7 +881,7 @@
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "10.10.10.1-10.10.10.5",
+                            "link-id": "xrv18-xrv14",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -911,7 +891,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.1-10.10.10.3",
+                            "link-id": "xrv18-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -921,7 +901,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.5-10.10.10.2",
+                            "link-id": "xrv15-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -931,7 +911,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.6",
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -941,7 +921,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.3-10.10.10.4",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -951,7 +931,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.2-10.10.10.4",
+                            "link-id": "xrv13-xrv11",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -961,7 +941,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.4-10.10.10.8",
+                            "link-id": "xrv13-xrv16",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -971,17 +951,7 @@
                             }
                         },
                         {
-                            "link-id": "10.10.10.6-10.10.10.7",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "10.10.10.7-10.10.10.8",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",

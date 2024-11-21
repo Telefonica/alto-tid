@@ -140,7 +140,8 @@ class TopologyIetf(AltoModule):
                         if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
                             self.pids[pid_name]['ipv4'].append( nodo['node-id'])
                         self.topology.add_node(nodo['node-id'])
-                    
+                   
+                    # print("NODOS:\t", nodos)
                     # Falta listar los enlaces y guardarlos.
                     for link in net["ietf-network-topology:link"]:
                         a,b = link["link-id"].split("-")
@@ -153,7 +154,7 @@ class TopologyIetf(AltoModule):
                                 a = k
                             elif nodos[k] == b1:
                                 b = k
-                        links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["metric1"]))
+                        links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["routingcost"]))
                 #print("Numero de enlaces:  ",len(links))        
                 # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
                 # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
@@ -168,13 +169,13 @@ class TopologyIetf(AltoModule):
             # Qué hacemos con las interfaces? Las mostramos en los ejes o no hace falta? Guardamos una lista de enlaces donde se vean cómo se conectan?
             # self.compute_costmap()
             datos = str(self.pids).replace("'", '"')
-            nodos = list(set(self.topology.nodes()))
-            snodos = str(nodos).replace("'", '"')
+            # nodos = list(set(self.topology.nodes()))
+            # snodos = str(nodos).replace("'", '"')
             #prefijos = str(prefijos).replace("'", '"')
             print("Nº de enlaces cargados:  " + str(len(self.topology.edges)))
             z_ejes = [(tupla[0], tupla[1], self.ejes[tupla]) for tupla in self.ejes]
             #print(str(z_ejes))
-            data = {"pids":self.pids,"nodes-list":nodos,"costs-list": z_ejes,"prefixes": prefijos}
+            data = {"pids":nodos,"nodes-list":list(set(self.topology.nodes())),"costs-list": z_ejes,"prefixes": prefijos}
             #data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"
             self.return_info(2,0,1, data)
                         

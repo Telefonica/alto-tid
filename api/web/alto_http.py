@@ -25,16 +25,17 @@ class AltoHttp:
         self.port = port
         self.ip = ip
         self.routes = {
-            '/': self.home,
-            '/directory': self.api_directory,
-            '/networkmap': self.api_pids,
-            '/costmap': self.api_costs,
-            '/maps': self.api_maps,
-            '/endpoints': self.api_endpoint_costs,
-            '/all': self.api_all,
-            '/best': self.api_shortest,
-            '/costmap/filter': self.api_costs_by_pid,
-            '/costcalendar': self.api_cost_calendar
+            '/' : self.home,
+            '/directory' : self.api_directory,
+            '/networkmap' : self.api_pids,
+            '/costmap' : self.api_costs,
+            '/maps' : self.api_maps,
+            '/endpoints' : self.api_endpoint_costs,
+            '/all' : self.api_all,
+            '/best' : self.api_shortest,
+            '/costmap/filter' : self.api_costs_by_pid,
+            '/costcalendar' : self.api_cost_calendar,
+            '/get-topology' : self.api_topology
         }
 
     ####################################
@@ -128,6 +129,7 @@ class AltoHttp:
         response += "Content-Type: application/json\r\n"
         response += "\r\n"
         response += json.dumps(data)
+        response += "\r\n"
         return response.encode('utf-8')
 
     # Root request.
@@ -153,7 +155,8 @@ class AltoHttp:
                     {"route": "/all/<string:a>/<string:b>", "methods": ["GET"]},
                     {"route": "/best/<string:a>/<string:b>", "methods": ["GET"]},
                     {"route": "/costmap/filter/<string:pid>", "methods": ["GET"]},
-                    {"route": "/costcalendar", "methods" : ["GET"]}
+                    {"route": "/costcalendar", "methods" : ["GET"]},
+                    {"route": "/get-topology", "method" : ["GET"]}
                 ]
             })
         else:
@@ -292,16 +295,19 @@ class AltoHttp:
             return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Two PIDs are needed."})
         if not isinstance(a, str) or not isinstance(b, str):
             return self.build_response(400, {"ERROR": ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need two strings."})
-        return self.build_response(200, str(self.alto.shortest_path(a, b)))
+        return self.build_response(200, self.alto.shortest_path(a, b))
     
     
-    def api_cost_calendar(self):
+    def api_cost_calendar(self, method, params):
         # FORMAT OF COST_CALENDAR_START_TIME Y PID
         #node --> 5.5.5.6
         #cost_calendar_start_time --> 2024, 1, 25, 10, 10, 20 # year, month, day, hour, minutes, seconds
         #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))
-        return self.build_response(200, str(self.alto.get_costcalendar()))
+        return self.build_response(200, self.alto.get_costcalendar())
 
+
+    def api_topology(self, method, params):
+        return self.build_response(200, self.alto.get_topology())
 
     ####################################
     ##      Sanitize functions        ##

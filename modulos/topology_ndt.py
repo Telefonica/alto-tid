@@ -3,7 +3,6 @@
 
 
 import networkx
-from flask import Flask, request, jsonify
 from time import sleep
 from modulos.alto_module import AltoModule
 import socket
@@ -27,7 +26,7 @@ class TopologyNDT(AltoModule):
         self.props = {}
         self.pids = {}'''
         self.ip="0.0.0.0"
-        self.port="9999"
+        self.port=9999
         self.topology = networkx.Graph()
         self.cost_map = {}
         self.router_ids = []

@@ -1,6 +1,5 @@
 {
-  "calendar_start_time": "2024-11-13T18:10:52.633303",
-  "ietf-network:networks": {
+      "ietf-network:networks": {
       "network": [
           {
               "network-id": "0 : 0 : 0 ISIS",
@@ -12,7 +11,7 @@
                   {
                       "node-id": "10.10.10.1",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv11",
                           "router-id": [
                               "10.10.10.1"
                           ],
@@ -40,7 +39,7 @@
                   {
                       "node-id": "10.10.10.5",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv15",
                           "router-id": [
                               "10.10.10.5"
                           ],
@@ -68,7 +67,7 @@
                   {
                       "node-id": "10.10.10.3",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv13",
                           "router-id": [
                               "10.10.10.3"
                           ],
@@ -96,7 +95,7 @@
                   {
                       "node-id": "10.10.10.2",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv12",
                           "router-id": [
                               "10.10.10.2"
                           ],
@@ -124,7 +123,7 @@
                   {
                       "node-id": "10.10.10.4",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv14",
                           "router-id": [
                               "10.10.10.4"
                           ],
@@ -152,7 +151,7 @@
                   {
                       "node-id": "10.10.10.6",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv16",
                           "router-id": [
                               "10.10.10.6"
                           ],
@@ -180,7 +179,7 @@
                   {
                       "node-id": "10.10.10.7",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv17",
                           "router-id": [
                               "10.10.10.7"
                           ],
@@ -208,7 +207,7 @@
                   {
                       "node-id": "10.10.10.8",
                       "ietf-l3-unicast-topology:l3-node-attributes": {
-                          "name": "",
+                          "name": "xrv18",
                           "router-id": [
                               "10.10.10.8"
                           ],
@@ -238,7 +237,7 @@
                   {
                       "link-id": "10.10.10.1-10.10.10.5",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -248,7 +247,7 @@
                   {
                       "link-id": "10.10.10.1-10.10.10.3",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -258,7 +257,7 @@
                   {
                       "link-id": "10.10.10.5-10.10.10.2",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -268,7 +267,7 @@
                   {
                       "link-id": "10.10.10.3-10.10.10.6",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -278,7 +277,7 @@
                   {
                       "link-id": "10.10.10.2-10.10.10.4",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -288,7 +287,7 @@
                   {
                       "link-id": "10.10.10.4-10.10.10.8",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -298,7 +297,7 @@
                   {
                       "link-id": "10.10.10.6-10.10.10.7",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -308,7 +307,7 @@
                   {
                       "link-id": "10.10.10.7-10.10.10.8",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "-1",
+                          "routingcost": "10",
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
