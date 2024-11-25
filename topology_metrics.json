@@ -1,6 +1,6 @@
 [
     {
-        "calendar_start_time": "2024-11-21T17:06:29.312397",
+        "calendar_start_time": "2024-11-25T11:50:19.125785",
         "ietf-network:networks": {
             "network": [
                 {
@@ -11,67 +11,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "xrv18",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv18"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv15",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv15"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv14",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv14"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -123,11 +67,95 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "xrv16",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv16"
+                                    "xrv14"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv11",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv11"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv18",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv18"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv15",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -205,39 +233,11 @@
                                 }
                             },
                             "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv11",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv11"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
                         }
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "xrv18-xrv14",
+                            "link-id": "xrv16-xrv13",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -247,37 +247,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv18-xrv17",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv11",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv12",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv14-xrv12",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -297,7 +267,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv13-xrv16",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -307,7 +277,37 @@
                             }
                         },
                         {
-                            "link-id": "xrv16-xrv17",
+                            "link-id": "xrv14-xrv18",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv11-xrv15",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv18-xrv17",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -322,7 +322,7 @@
         }
     },
     {
-        "calendar_start_time": "2024-11-21T17:08:29.312397",
+        "calendar_start_time": "2024-11-25T11:52:19.125785",
         "ietf-network:networks": {
             "network": [
                 {
@@ -333,67 +333,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "xrv18",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv18"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv15",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv15"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv14",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv14"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -445,11 +389,95 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "xrv16",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv16"
+                                    "xrv14"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv11",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv11"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv18",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv18"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv15",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -527,39 +555,11 @@
                                 }
                             },
                             "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv11",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv11"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
                         }
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "xrv18-xrv14",
+                            "link-id": "xrv16-xrv13",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -569,37 +569,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv18-xrv17",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv11",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv12",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv14-xrv12",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -619,7 +589,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv13-xrv16",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -629,7 +599,37 @@
                             }
                         },
                         {
-                            "link-id": "xrv16-xrv17",
+                            "link-id": "xrv14-xrv18",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv11-xrv15",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv18-xrv17",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -644,7 +644,7 @@
         }
     },
     {
-        "calendar_start_time": "2024-11-21T17:10:29.312397",
+        "calendar_start_time": "2024-11-25T11:54:19.125785",
         "ietf-network:networks": {
             "network": [
                 {
@@ -655,67 +655,11 @@
                     },
                     "node": [
                         {
-                            "node-id": "xrv18",
+                            "node-id": "xrv16",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv18"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv15",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv15"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv14",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv14"
+                                    "xrv16"
                                 ],
                                 "prefix": []
                             },
@@ -767,11 +711,95 @@
                             "ietf-network-topology:termination-point": []
                         },
                         {
-                            "node-id": "xrv16",
+                            "node-id": "xrv14",
                             "ietf-l3-unicast-topology:l3-node-attributes": {
                                 "name": "",
                                 "router-id": [
-                                    "xrv16"
+                                    "xrv14"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv11",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv11"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv18",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv18"
+                                ],
+                                "prefix": []
+                            },
+                            "ietf-ne-commissioning:commissioning-configs": {
+                                "system-config": {
+                                    "openconfig-system:system": {
+                                        "ssh-server": {
+                                            "state": {
+                                                "enable": "True",
+                                                "protocol-version": "V2"
+                                            }
+                                        },
+                                        "telnet-server": {
+                                            "state": {
+                                                "enable": "False"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "ietf-network-topology:termination-point": []
+                        },
+                        {
+                            "node-id": "xrv15",
+                            "ietf-l3-unicast-topology:l3-node-attributes": {
+                                "name": "",
+                                "router-id": [
+                                    "xrv15"
                                 ],
                                 "prefix": []
                             },
@@ -849,39 +877,11 @@
                                 }
                             },
                             "ietf-network-topology:termination-point": []
-                        },
-                        {
-                            "node-id": "xrv11",
-                            "ietf-l3-unicast-topology:l3-node-attributes": {
-                                "name": "",
-                                "router-id": [
-                                    "xrv11"
-                                ],
-                                "prefix": []
-                            },
-                            "ietf-ne-commissioning:commissioning-configs": {
-                                "system-config": {
-                                    "openconfig-system:system": {
-                                        "ssh-server": {
-                                            "state": {
-                                                "enable": "True",
-                                                "protocol-version": "V2"
-                                            }
-                                        },
-                                        "telnet-server": {
-                                            "state": {
-                                                "enable": "False"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "ietf-network-topology:termination-point": []
                         }
                     ],
                     "ietf-network-topology:link": [
                         {
-                            "link-id": "xrv18-xrv14",
+                            "link-id": "xrv16-xrv13",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -891,37 +891,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv18-xrv17",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv11",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv15-xrv12",
-                            "ietf-l3-unicast-topology:l3-link-attributes": {
-                                "routingcost": "-1",
-                                "tefsdn-topology:domain-id": "0",
-                                "tefsdn-topology:link-attributes": {
-                                    "level": "2"
-                                }
-                            }
-                        },
-                        {
-                            "link-id": "xrv14-xrv12",
+                            "link-id": "xrv16-xrv17",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -941,7 +911,7 @@
                             }
                         },
                         {
-                            "link-id": "xrv13-xrv16",
+                            "link-id": "xrv14-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",
@@ -951,7 +921,37 @@
                             }
                         },
                         {
-                            "link-id": "xrv16-xrv17",
+                            "link-id": "xrv14-xrv18",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv11-xrv15",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv18-xrv17",
+                            "ietf-l3-unicast-topology:l3-link-attributes": {
+                                "routingcost": "-1",
+                                "tefsdn-topology:domain-id": "0",
+                                "tefsdn-topology:link-attributes": {
+                                    "level": "2"
+                                }
+                            }
+                        },
+                        {
+                            "link-id": "xrv15-xrv12",
                             "ietf-l3-unicast-topology:l3-link-attributes": {
                                 "routingcost": "-1",
                                 "tefsdn-topology:domain-id": "0",

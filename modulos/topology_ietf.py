@@ -41,58 +41,65 @@ class TopologyIetf(AltoModule):
             sleep(500)
 
 
-    def process_topology(self, topology_data, topology_type):
+    def process_topology(self, topology_data):
             # Diccionario nodo-id:nombre para cada topología
-            nodos_prueba = {}
-            nodos_compute = {}
+            nodos = {}
             # Diccionario Nodo-id:prefijos
             prefijos = {}
             # Diccionario nodo-id:[(interfaz, ip)]
             tps = {}
             # Lista de enlaces
             links = []
-
-            for net in topology_data["network"]:
+            self.topology = networkx.Graph()
+            ietf_networks = topology_data["ietf-network:networks"]
+            if ietf_networks == '':
+                return
+            #Creo un diccionario con todas las redes que hay y lo recorro para buscar las válidas
+            for net in ietf_networks["network"]:
                 if "node" in net.keys() and "ietf-network-topology:link" in net.keys():
                     for nodo in net["node"]:
-                        # Realizo un macheo de los IDs de los nodos con el nombre y el/los prefijo/s.
-                        nodos_actual = nodos_prueba if topology_type == 'ietf2_prueba' else nodos_compute
-                        nodos_actual[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["name"]
-
+                        #Realizo un macheo de los IDs de los nodos con el nombre y el/los prefijo/s.
+                        nodos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["name"]
                         tps[nodo["node-id"]] = []
                         if "prefix" in nodo["ietf-l3-unicast-topology:l3-node-attributes"].keys():
                             prefijos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["prefix"]
                         if "ietf-network-topology:termination-point" in nodo.keys():
                             for tp in nodo["ietf-network-topology:termination-point"]:
-                                tps[nodo["node-id"]].append(str(nodos_actual[nodo["node-id"]]) + ' ' + str(tp["tp-id"]))
-
+                                tps[nodo["node-id"]].append(str(nodos[nodo["node-id"]]) + ' ' +  str(tp["tp-id"]))
+                        #pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
                         pid_name = nodo["node-id"]
                         if pid_name not in self.pids:
                             self.pids[pid_name] = {}
                         if 'ipv4' not in self.pids[pid_name]:
-                            self.pids[pid_name]['ipv4'] = []
+                            self.pids[pid_name]['ipv4']=[]
                         if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
-                            self.pids[pid_name]['ipv4'].append(nodo['node-id'])
-                        self.topology.add_node(nodo['node-id'])
+                            self.pids[pid_name]['ipv4'].append( nodo['node-id'])
+                        # print
+                        self.topology.add_node(nodos[nodo['node-id']])
 
+                    # print("NODOS:\t", nodos)
                     # Falta listar los enlaces y guardarlos.
                     for link in net["ietf-network-topology:link"]:
-                        a, b = link["link-id"].split(" - ")
+                        a,b = link["link-id"].split("-")
                         if a == '' or b == '':
                             break
-                        a1 = a.split(' ')[0]
-                        b1 = b.split(' ')[0]
-                        for k in nodos_actual.keys():
-                            if nodos_actual[k] == a1:
-                                a = k
-                            elif nodos_actual[k] == b1:
-                                b = k
-                        links.append(((a, b), link["ietf-l3-unicast-topology:l3-link-attributes"]["metric1"]))
+                        a1 = a.split('_')[0]
+                        b1 = b.split('_')[0]
+                        for k in nodos.keys():
+                            if k == a1:
+                                a = nodos[k]
+                            elif k == b1:
+                                b = nodos[k]
+                        links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["routingcost"]))
+                #print("Numero de enlaces:  ",len(links))
+                # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
+                # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
+            for link in links:
+                if int(link[1])>=0:
+                    self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
+                    self.ejes[(link[0][0], link[0][1])] = int(link[1])
 
-                    for link in links:
-                        if int(link[1]) >= 0:
-                            self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
-                            self.ejes[(link[0][0], link[0][1])] = int(link[1])
+
 
     def manage_updates(self):
         '''
@@ -181,6 +188,7 @@ class TopologyIetf(AltoModule):
                         
     def manage_update_topology(self, update_topology):
         d_json = update_topology
+        # print(d_json)
         self.process_topology(d_json)
         return self.topology
 

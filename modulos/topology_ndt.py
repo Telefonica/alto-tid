@@ -50,7 +50,7 @@ class TopologyNDT(AltoModule):
                 conn, addr = s.accept()
                 with conn:
                     try:
-                        data = conn.recv(1024).decode('utf-8')
+                        data = conn.recv(16384).decode('utf-8')
                         if data:
                             method, path, body = data.split(' ', 2)
                             path = urlparse(path).path
@@ -58,7 +58,7 @@ class TopologyNDT(AltoModule):
                             path, params = self.parse_params(path)
                             if body:
                                 params['data'] = body.split("\r\n\r\n")[1]
-                            print("Parametros:", str(params), "URL:", str(path))
+                            # print("Parametros:", str(params), "URL:", str(path))
                             response = self.handle_request(method, path, params)
                             conn.sendall(response)
                     except Exception as e:
@@ -74,7 +74,8 @@ class TopologyNDT(AltoModule):
                 Path: Resulting path without params.
                 Params: List of params received from the GET request.
         '''
-        return path
+        params = {}
+        return path, params
 
     def handle_request(self, method, path, params): 
         '''
@@ -112,6 +113,7 @@ class TopologyNDT(AltoModule):
         response += "Content-Type: application/json\r\n"
         response += "\r\n"
         response += json.dumps(data)
+        response += "\r\n"
         return response.encode('utf-8')
 
     
@@ -123,19 +125,19 @@ class TopologyNDT(AltoModule):
             self.manage_updates()
 
     def api_cost_calendar_cs(self, method, params):
-        print(f"Info recibida:\t{request}")
         if method == 'POST':
             d = params.get('data', None)
             if d is None:
                 return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
-            data = json.loads(d)
-            # data = request.json
+            # print("Info recibida:\t", d)
+            data = json.loads(d.replace("'",'"').replace("\n","").replace("\t",""))
+            #data = request.json
             cost_calendar_start_time = data.get('calendar_start_time', [])
             #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))
             update_topology = data.get('update_topology', "")
-            print(f"Info received:\t{update_topology}")
+            # print(f"Info received:\t{update_topology}")
             self.manage_updates(cost_calendar_start_time, update_topology)
-        return jsonify("Costcalendar Created")
+        return self.build_response(200, {"MESSAGE": "Costcalendar Created"})
 
 
 

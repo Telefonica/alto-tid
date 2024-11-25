@@ -315,7 +315,7 @@ class TopologyCreator:
         # shortest_paths is a dict by source and target that contains the shortest path length for
         # that source and destination. This procedure we have as many times as there are topologies in list_topologies
         # As result we obtain a topology with an array of weights of each topology
-
+        self.cost_calendar = {}
         i=0
         for i in range(number_of_intervals):
             shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(self.list_topologies[i]))

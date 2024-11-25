@@ -8,7 +8,7 @@ import socket
 import subprocess
 import shlex
 
-IP_BGP_RR = ['50.50.50.1', '60.60.60.1']
+IP_BGP_RR = ['10.95.90.153']
 BGP_PORT = 179
 
 

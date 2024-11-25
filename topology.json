@@ -313,6 +313,16 @@
                               "level": "2"
                           }
                       }
+                  },
+		  {
+                      "link-id": "10.10.10.3-10.10.10.4",
+                      "ietf-l3-unicast-topology:l3-link-attributes": {
+                          "routingcost": "10",
+                          "tefsdn-topology:domain-id": "0",
+                          "tefsdn-topology:link-attributes": {
+                              "level": "2"
+                          }
+                      }
                   }
               ]
           }

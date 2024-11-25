@@ -34,9 +34,9 @@ class TopologyBGP(AltoModule):
 
     def __init__(self, mb):
         super().__init__(mb)
-        self.simulador = BGPSimulator(NODOS, LINKS)
+        #self.simulador = BGPSimulator(NODOS, LINKS)
         self.nodos = []
-        #self.exabgp_process = ManageBGPSpeaker().check_tcp_connection()
+        self.exabgp_process = ManageBGPSpeaker().check_tcp_connection()
        
 
     ### Topology generation and information recopilation functions
@@ -80,15 +80,15 @@ class TopologyBGP(AltoModule):
         counter = 0
         pids_to_load = {RR_BGP_0: {'ipv4': {}}}
         while True:
-            if counter:
-                #line = self.exabgp_process.stdout.readline().strip()
-                line = self.simulador.generate_bgp_updates()
-            else:
-                line = self.simulador.generate_initial_topology_view()
-                counter = 1
+            #if counter:
+            line = self.exabgp_process.stdout.readline().strip()
+            #    line = self.simulador.generate_bgp_updates()
+            #else:
+            #    line = self.simulador.generate_initial_topology_view()
+            #    counter = 1
             tipo = -1
             if b'decoded UPDATE' in line and b'json' in line:
-                #print(line)
+                print(line)
                 self.__vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
                 decode_line = json.loads(line.split(b'json')[1])
                 neighbor_ip_address = decode_line['neighbor']['address']['peer']
