@@ -146,6 +146,10 @@ class AltoModule(ABC):
     
     def get_info_from_node_descript_list(self, node_descriptors, key: str, rid=''):
         result = []
+        if isinstance(node_descriptors,dict):
+            if key in node_descriptors.keys():
+                result.append(node_descriptors[key])
+            return result
         for descriptor in node_descriptors:
             for key_d, value in descriptor.items():
                 if key_d == key:

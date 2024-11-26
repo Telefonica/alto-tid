@@ -161,14 +161,21 @@ class TopologyIetf(AltoModule):
                                 a = k
                             elif nodos[k] == b1:
                                 b = k
-                        links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["routingcost"]))
+                        properties = {"weight" : 10}
+                        for elemento, peso in link["ietf-l3-unicast-topology:l3-link-attributes"].items():
+                            if elemento == "routingcost": 
+                                properties["weight"] = peso 
+                            elif isinstance(elemento, str) and (len(elemento.split(":")) < 2): 
+                                properties[elemento] = peso 
+                        links.append(((a,b),properties))
                 #print("Numero de enlaces:  ",len(links))        
                 # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
                 # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
             for link in links:
-                if int(link[1])>=0:
-                    self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
-                    self.ejes[(link[0][0], link[0][1])] = int(link[1])
+                #if int(link[1]["weight"])>=0:
+                print("EJE:\t", link[0][0], link[0][1], link[1])
+                self.topology.add_edge(link[0][0], link[0][1], **link[1])
+                self.ejes[(link[0][0], link[0][1])] = int(link[1]["weight"])
                     #print("Hola Mundo")
                     #self.ejes.append((link[0][0], link[0][1], int(link[1])))
             # Hay que revisar qué diccionarios seguirían haciendo falta.
@@ -180,7 +187,7 @@ class TopologyIetf(AltoModule):
             # snodos = str(nodos).replace("'", '"')
             #prefijos = str(prefijos).replace("'", '"')
             print("Nº de enlaces cargados:  " + str(len(self.topology.edges)))
-            z_ejes = [(tupla[0], tupla[1], self.ejes[tupla]) for tupla in self.ejes]
+            z_ejes = [(tupla[0], tupla[1], self.topology.get_edge_data(tupla[0], tupla[1])) for tupla in self.ejes]
             #print(str(z_ejes))
             data = {"pids":nodos,"nodes-list":list(set(self.topology.nodes())),"costs-list": z_ejes,"prefixes": prefijos}
             #data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"

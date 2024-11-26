@@ -12,6 +12,8 @@ import socket
 import threading
 import ipaddress
 import yaml
+import logging
+
 
 from time import sleep
 from datetime import datetime, timedelta
@@ -27,12 +29,13 @@ DEFAULT_ASN = 0
 DEF_PORT = 8888
 DEF_IP = "0.0.0.0"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
+TPS = {"xrv11":{"xrv13":"Gi0/0/0/0","xrv15":"Gi0/0/0/2"},"xrv12":{"xrv14":"Gi0/0/0/0","xrv15":"Gi0/0/0/1"},"xrv13":{"xrv11":"Gi0/0/0/0","xrv14":"Gi0/0/0/1","xrv16":"Gi0/0/0/2"},"xrv14":{"xrv12":"Gi0/0/0/0","xrv13":"Gi0/0/0/1","xrv18":"Gi0/0/0/2"},"xrv15":{"xrv11":"Gi0/0/0/2","xrv12":"Gi0/0/0/1"},"xrv16":{"xrv13":"Gi0/0/0/2","xrv17":"Gi0/0/0/0"},"xrv17":{"xrv16":"Gi0/0/0/0","xrv18":"Gi0/0/0/1"},"xrv18":{"xrv14":"Gi0/0/0/2","xrv17":"Gi0/0/0/1"}}
 time_interval_size = 120 #seconds
 number_of_intervals = 3
 
 class TopologyCreator:
 
-    def __init__(self, modules, ip="127.0.0.1", puerto=8000, portm=5000, output = "./topology_metrics.json"):
+    def __init__(self, modules, ip="127.0.0.1", puerto=8000, portm=5000, output="./topology_metrics.json"):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -53,7 +56,16 @@ class TopologyCreator:
         #self.create_costcalendar()
         
         # Writer
-        self.saver = TopologyFileWriter("./topology_metrics.json")
+        self.saver = TopologyFileWriter(output)
+
+        # Loggs
+        logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        timestamp = int(datetime.now().timestamp())
+        self.filename = "./logs/alto.log"
+        with open(self.filename, "w", encoding='utf-8') as f:
+            f.write(f"Starting ALTO: {timestamp}")
 
 
 
@@ -332,7 +344,8 @@ class TopologyCreator:
                     if dst_pid_name not in self.cost_calendar[src_pid_name]:
                         self.cost_calendar[src_pid_name][dst_pid_name]=[-1 for _ in range(number_of_intervals)] 
                     self.cost_calendar[src_pid_name][dst_pid_name][i]=weight
-        print("COST CALENDAR:\t:", self.cost_calendar)
+        self.logger.info("COST CALENDAR:\t %s", str(self.cost_calendar))
+        self.logger.info("Timestamp:\t %s", str(datetime.now()))
 
     # curl -X POST -H "Content-Type: application/json" -d @new_topology.json localhost:9999/update-expected-topology
     def update_topology(self, new_time, new_topology):
@@ -343,22 +356,23 @@ class TopologyCreator:
             
         time = self.init_time + timedelta(seconds=time_interval_size)
         end_update = self.init_time + timedelta(seconds=(number_of_intervals*time_interval_size))
-        print(f'la hora de actualizacion es  {update_time} y time es  {time}')
+        self.logger.info(f'la hora de actualizacion es  {update_time} y time es  {time}')
+        self.logger.info("Timestamp:\t %s", str(datetime.now()))
         if update_time < self.init_time and update_time > end_update: # confirm far past--> else
-            print('Estoy en if')
+            self.logger.debug('Estoy en if')
             self.compute_costcalendar()
         elif update_time < time: # far past
-            print('Estoy en elif')
+            self.logger.debug('Estoy en elif')
             self.compute_costcalendar()
         else: # update costcalendar
            i=0
-           print('Estoy en else')
+           self.logger.debug('Estoy en else')
            time_dif = update_time - self.init_time
            update_column =  math.floor(time_dif.total_seconds()/time_interval_size)
-           print(update_column)
-           print(self.__topology.nodes(), 'antes de actualizar')
+           self.logger.debug(update_column)
+           self.logger.debug(self.__topology.nodes(), 'antes de actualizar')
            updated_topology = self.__d_modules["ietf"].manage_update_topology(new_topology)
-           print(updated_topology.nodes(), 'despues de actualizar')
+           self.logger.debug(updated_topology.nodes(), 'despues de actualizar')
 
            for i in range(number_of_intervals):
                if i >= update_column:
@@ -387,6 +401,12 @@ class TopologyCreator:
             else:    
                 self.__d_modules[fuente].manage_topology_updates()
 
+    def get_tps(self, nodo):
+        tps = []
+        for dest, tp in TPS[nodo].items():
+            tps.append({"tp-id":tp})
+        return tps
+
     def graph_to_topology_json(self, topology, time):
         # Obtener la hora actual para el campo "calendar_start_time"
         calendar_start_time = time.isoformat()
@@ -401,7 +421,8 @@ class TopologyCreator:
                 "node-id": node_id,
                 "ietf-l3-unicast-topology:l3-node-attributes": {
                     "name": data.get("name", ""),
-                    "router-id": [node_id],
+                    "router-id": node_id,
+                    "termination-point":self.get_tps(node_id),
                     "prefix": [{"prefix": prefix} for prefix in data.get("prefixes", [])]
                 },
                 "ietf-ne-commissioning:commissioning-configs": {
@@ -438,9 +459,19 @@ class TopologyCreator:
         # Procesar enlaces
         for u, v, data in topology.edges(data=True):
             link = {
-                "link-id": f"{data.get('link_name', f'{u}-{v}')}",
+                "link-id": f"{data.get('link_name', f'{u}-{TPS[u][v]}-{v}-{TPS[v][u]}')}",
+                "source":{
+                    "source-node":u,
+                    "source-tp":TPS[u][v]
+                },
+                "destination":{
+                    "dest-node":v,
+                    "dest-tp":TPS[v][u]
+                },
                 "ietf-l3-unicast-topology:l3-link-attributes": {
-                    "routingcost": str(data.get("metric1", -1)),
+                    "routingcost": data.get("weight", -1),
+                    "latency": data.get("latency", -1),
+                    "bandwidth": data.get("bandwidth", -1),
                     "tefsdn-topology:domain-id": data.get("domain_id", "0"),
                     "tefsdn-topology:link-attributes": {
                         "level": data.get("level", "2")
@@ -481,21 +512,22 @@ class TopologyCreator:
     def mailbox(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind(('localhost',self.port_module))
-        print("Waiting...")      
+        self.logger.debug("Waiting...")      
         while 1:
             topo = s.recv(16384)
-            print("Received:" + str(len(topo)) + " Bytes")
+            self.logger.debug("Received:" + str(len(topo)) + " Bytes")
             topo = topo.decode()
-            #try:
+            # try:
             if 1:
                 datos = json.loads(topo)
-                print(f"DATOOS:\t{datos}")
+                self.logger.info(f"DATOS RECIBIDOS:\t{datos}")
+                self.logger.info("Timestamp:\t %s", str(datetime.now()))
                 if datos["meta"]["source"] == 5:
                     new_topology = datos["data"]["topology"]
                     update_time = datos["data"]["start-time"]
                     self.update_topology(update_time, new_topology)
                 else:
-                    print("Entramos en el BGP")
+                    # print("Entramos en el BGP")
                     ejes = datos["data"]["costs-list"]
                     nodos = datos["data"]["nodes-list"]
                     self.__redes = datos["data"]["prefixes"]
@@ -506,9 +538,10 @@ class TopologyCreator:
                     for eje in ejes:
                         #print(eje)
                         #leje = eval(eje.replace("(","[").replace(")","]"))
-                        self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], weight=eje[2])
+                        # self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], weight=eje[2])
+                        self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], **eje[2])
                     self.__vtag = str(int(datetime.now().timestamp()*1e6))
-                    print(self.__vtag)
+                    self.logger.info("Actualizada la topología va BGP en:\t %s", str(datetime.now()))
                     
                     self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
                     self.__cost_map = self.compute_costmap(self.__topology)
@@ -526,7 +559,8 @@ class TopologyCreator:
 
             else:
             #except:
-                print("Error al procesar:\n", str(topo))
+                self.logger.error("Error al procesar:\n %s", str(topo))
+                self.logger.error("Timestamp:\t %s", str(datetime.now()))
             #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
             #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
             #print(str(self.desire6g_graphs({"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]})))
@@ -610,14 +644,14 @@ if __name__ == '__main__':
     #portm = 5000
 
 
-    #modules['bgp'] = TopologyBGP(('localhost',5000))
+    # modules['bgp'] = TopologyBGP(('localhost',5000))
     modules['ietf'] = TopologyIetf(('localhost',5000))
     modules['ndt'] = TopologyNDT(('localhost',5000))
 
 
 
     print("Creando ALTO CORE")
-    alto = TopologyCreator(modules, DEF_IP, DEF_PORT, portm=5000)
+    alto = TopologyCreator(modules, DEF_IP, DEF_PORT, portm=5000, output="/home/ubuntu/change_scheduler/topologies/cost_calendar2.json")
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)

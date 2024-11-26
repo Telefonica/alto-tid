@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
-
+import logging
 import networkx
+from datetime import datetime
 from time import sleep
 from modulos.alto_module import AltoModule
 import socket
@@ -36,6 +37,13 @@ class TopologyNDT(AltoModule):
             '/update-expected-topology' : self.api_cost_calendar_cs
         }
 
+        logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+        #timestamp = int(datetime.now().timestamp())
+        self.filename = "./logs/alto.log"
+
+
     def run(self):
         '''
             Creates the API using TCP sockets and executes the functionality workflow.
@@ -44,7 +52,8 @@ class TopologyNDT(AltoModule):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self.ip, self.port))
             s.listen(5)
-            print(f"API running on http://{self.ip}:{self.port}/")
+            self.logger.info(f"API running on http://{self.ip}:{self.port}/")
+            self.logger.info("Timestamp:\t %s", str(datetime.now()))
 
             while True:
                 conn, addr = s.accept()
@@ -54,7 +63,8 @@ class TopologyNDT(AltoModule):
                         if data:
                             method, path, body = data.split(' ', 2)
                             path = urlparse(path).path
-                            print("PATH:", path)
+                            self.logger.info("API Acceded: %s", str(path))
+                            self.logger.info("Timestamp:\t %s", str(datetime.now()))
                             path, params = self.parse_params(path)
                             if body:
                                 params['data'] = body.split("\r\n\r\n")[1]

@@ -237,7 +237,9 @@
                   {
                       "link-id": "10.10.10.1-10.10.10.5",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -247,7 +249,9 @@
                   {
                       "link-id": "10.10.10.1-10.10.10.3",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -257,7 +261,9 @@
                   {
                       "link-id": "10.10.10.5-10.10.10.2",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -267,7 +273,9 @@
                   {
                       "link-id": "10.10.10.3-10.10.10.6",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -277,7 +285,9 @@
                   {
                       "link-id": "10.10.10.2-10.10.10.4",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -287,7 +297,9 @@
                   {
                       "link-id": "10.10.10.4-10.10.10.8",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -297,7 +309,9 @@
                   {
                       "link-id": "10.10.10.6-10.10.10.7",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -307,7 +321,9 @@
                   {
                       "link-id": "10.10.10.7-10.10.10.8",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"
@@ -317,7 +333,9 @@
 		  {
                       "link-id": "10.10.10.3-10.10.10.4",
                       "ietf-l3-unicast-topology:l3-link-attributes": {
-                          "routingcost": "10",
+                          "routingcost": 10,
+                          "latency": 10,
+                          "bandwidth": 200,
                           "tefsdn-topology:domain-id": "0",
                           "tefsdn-topology:link-attributes": {
                               "level": "2"

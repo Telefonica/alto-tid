@@ -64,7 +64,8 @@ class TopologyBGP(AltoModule):
                     if auts == []: 
                         print("Tremenda F " + str(nd))
                         auts = 0
-                    pid = self.obtain_pid(nd, auts)    
+                    # pid = self.obtain_pid(nd, auts)
+                    pid = self.obtain_pid(nd,100)
                     self.pids[pid] = nd
 
 
@@ -98,13 +99,15 @@ class TopologyBGP(AltoModule):
                     is_bgp = update_msg['announce'].get('ipv4 unicast')
                     if 'attribute' in update_msg:
                         ls_area_id = update_msg['attribute'].get('bgp-ls', {}).get('area-id', 0)
-                        igp_metric = update_msg['attribute'].get('bgp-ls', {}).get("igp-metric", 1)
+                        igp_metric = update_msg['attribute'].get('bgp-ls', {}).get("igp-metric", 10)
                         if is_bgp_ls:
                             for next_hop_address, nlri in is_bgp_ls.items():
+                                print("NLRI:\t", nlri)
                                 for prefix in nlri:
                                     if self.discard_message_from_protocol_id(prefix, [4, 5]):
                                         continue
                                     #print("hola load")
+                                    print(f"NLRI:\t {nlri}\n y PREFIX:\t {prefix}")
                                     self.__load_topology(prefix, igp_metric)
                                     #self.__load_pid_prop(prefix, ls_area_id)
                         elif is_bgp:
