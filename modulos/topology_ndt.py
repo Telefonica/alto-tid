@@ -39,7 +39,7 @@ class TopologyNDT(AltoModule):
 
         logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         #timestamp = int(datetime.now().timestamp())
         self.filename = "./logs/alto.log"
 
@@ -141,6 +141,7 @@ class TopologyNDT(AltoModule):
                 return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
             # print("Info recibida:\t", d)
             data = json.loads(d.replace("'",'"').replace("\n","").replace("\t",""))
+            self.logger.debug("Info recibida: %s", str(data))
             #data = request.json
             cost_calendar_start_time = data.get('calendar_start_time', [])
             #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))

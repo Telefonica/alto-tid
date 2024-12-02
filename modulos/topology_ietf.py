@@ -31,14 +31,16 @@ class TopologyIetf(AltoModule):
         self.cost_map = {}
         self.router_ids = []
         self.ts = {}
-        
+        self.old_ejes  = []
+        self.old_nodos = {}
+        self.nodos = {}        
         
     ### Manager function       
     def manage_topology_updates(self):
         while 1:
             sleep(3)
             self.manage_updates()
-            sleep(500)
+            sleep(100)
 
 
     def process_topology(self, topology_data):
@@ -51,6 +53,8 @@ class TopologyIetf(AltoModule):
             # Lista de enlaces
             links = []
             self.topology = networkx.Graph()
+            print("TOPOLOGIA NODOS:\t", self.topology.nodes())
+            print("TOPOLOGIA EJES:\t", self.topology.edges())
             ietf_networks = topology_data["ietf-network:networks"]
             if ietf_networks == '':
                 return
@@ -74,7 +78,7 @@ class TopologyIetf(AltoModule):
                             self.pids[pid_name]['ipv4']=[]
                         if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
                             self.pids[pid_name]['ipv4'].append( nodo['node-id'])
-                        # print
+                        print("NODO:\t", nodos[nodo['node-id']])
                         self.topology.add_node(nodos[nodo['node-id']])
 
                     # print("NODOS:\t", nodos)
@@ -116,6 +120,8 @@ class TopologyIetf(AltoModule):
         #Lista de enlaces
         links = []
         # full_path = os.path.join("./", "ietf2_prueba.json")
+        print("TOPOLOGIA NODOS:\t", self.topology.nodes())
+        print("TOPOLOGIA EJES:\t", self.topology.edges())
         full_path = os.path.join("./", "topology.json")
         with open(full_path, 'r') as archivo:
             self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
@@ -146,7 +152,7 @@ class TopologyIetf(AltoModule):
                             self.pids[pid_name]['ipv4']=[]
                         if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
                             self.pids[pid_name]['ipv4'].append( nodo['node-id'])
-                        self.topology.add_node(nodo['node-id'])
+                        self.topology.add_node(nodos[nodo['node-id']])
                    
                     # print("NODOS:\t", nodos)
                     # Falta listar los enlaces y guardarlos.
@@ -157,10 +163,10 @@ class TopologyIetf(AltoModule):
                         a1 = a.split('_')[0]
                         b1 = b.split('_')[0]
                         for k in nodos.keys():
-                            if nodos[k] == a1:
-                                a = k
-                            elif nodos[k] == b1:
-                                b = k
+                            if k == a1:
+                                a = nodos[k]
+                            elif k == b1:
+                                b = nodos[k]
                         properties = {"weight" : 10}
                         for elemento, peso in link["ietf-l3-unicast-topology:l3-link-attributes"].items():
                             if elemento == "routingcost": 
@@ -186,12 +192,21 @@ class TopologyIetf(AltoModule):
             # nodos = list(set(self.topology.nodes()))
             # snodos = str(nodos).replace("'", '"')
             #prefijos = str(prefijos).replace("'", '"')
+            for nodo, nombre in nodos.items():
+                self.nodos[nodo] = nombre
             print("Nº de enlaces cargados:  " + str(len(self.topology.edges)))
             z_ejes = [(tupla[0], tupla[1], self.topology.get_edge_data(tupla[0], tupla[1])) for tupla in self.ejes]
+            l_nodos = list(set(self.topology.nodes()))
             #print(str(z_ejes))
-            data = {"pids":nodos,"nodes-list":list(set(self.topology.nodes())),"costs-list": z_ejes,"prefixes": prefijos}
+            data = {"pids":nodos,"nodes-list":l_nodos,"costs-list": z_ejes,"prefixes": prefijos}
             #data = '{"pids":'+datos+',"nodes-list": '+snodos+',"costs-list": '+str(z_ejes)+',"prefixes": '+prefijos+"}"
-            self.return_info(2,0,1, data)
+            if (l_nodos != self.old_nodos) or (z_ejes != self.old_ejes):
+                print("DATA:\t", data)
+                print("OLD NODOS:\t", self.old_nodos)
+                print("OLD EJES:\t", self.old_ejes)
+                self.return_info(2,0,1, data)
+                self.old_ejes  = z_ejes
+                self.old_nodos = l_nodos
                         
     def manage_update_topology(self, update_topology):
         d_json = update_topology

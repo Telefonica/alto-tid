@@ -1,6 +1,12 @@
 # Logs
 logs/*
 
+# Network traces
+*.pcap
+
+# Backup files
+*.bk
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

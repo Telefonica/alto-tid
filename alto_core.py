@@ -61,7 +61,7 @@ class TopologyCreator:
         # Loggs
         logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         timestamp = int(datetime.now().timestamp())
         self.filename = "./logs/alto.log"
         with open(self.filename, "w", encoding='utf-8') as f:
@@ -370,9 +370,9 @@ class TopologyCreator:
            time_dif = update_time - self.init_time
            update_column =  math.floor(time_dif.total_seconds()/time_interval_size)
            self.logger.debug(update_column)
-           self.logger.debug(self.__topology.nodes(), 'antes de actualizar')
+           self.logger.debug('antes de actualizar:\t %s', str(self.__topology.nodes()))
            updated_topology = self.__d_modules["ietf"].manage_update_topology(new_topology)
-           self.logger.debug(updated_topology.nodes(), 'despues de actualizar')
+           self.logger.debug('despues de actualizar:\t %s', str(updated_topology.nodes()))
 
            for i in range(number_of_intervals):
                if i >= update_column:
@@ -534,12 +534,13 @@ class TopologyCreator:
                     nodos_nombre = datos["data"]["pids"]
                     #print(str(self.__redes))
                     for nodo in nodos:
-                        self.__topology.add_node(nodos_nombre[nodo])
+                        self.__topology.add_node(nodo)
                     for eje in ejes:
                         #print(eje)
                         #leje = eval(eje.replace("(","[").replace(")","]"))
                         # self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], weight=eje[2])
-                        self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], **eje[2])
+                        # self.__topology.add_edge(nodos_nombre[eje[0]], nodos_nombre[eje[1]], **eje[2])
+                        self.__topology.add_edge(eje[0], eje[1], **eje[2])
                     self.__vtag = str(int(datetime.now().timestamp()*1e6))
                     self.logger.info("Actualizada la topología va BGP en:\t %s", str(datetime.now()))
                     
@@ -579,6 +580,7 @@ class TopologyCreator:
                 self.__endpoints[user["ipv4"][0]]=user
 
     def get_topology(self):
+        return self.graph_to_topology_json(self.__topology, self.init_time)
         with open('./topology.json', 'r') as source:
             jason = source.read()
             jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
