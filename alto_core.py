@@ -61,7 +61,7 @@ class TopologyCreator:
         # Loggs
         logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
+        self.logger.setLevel(logging.INFO)
         timestamp = int(datetime.now().timestamp())
         self.filename = "./logs/alto.log"
         with open(self.filename, "w", encoding='utf-8') as f:
