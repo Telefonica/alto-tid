@@ -39,7 +39,7 @@ class TopologyNDT(AltoModule):
 
         logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         #timestamp = int(datetime.now().timestamp())
         self.filename = "./logs/alto.log"
 
@@ -59,16 +59,18 @@ class TopologyNDT(AltoModule):
                 conn, addr = s.accept()
                 with conn:
                     try:
-                        data = conn.recv(16384).decode('utf-8')
+                        data = conn.recv(32768).decode('utf-8')
                         if data:
                             method, path, body = data.split(' ', 2)
                             path = urlparse(path).path
                             self.logger.info("API Acceded: %s", str(path))
                             self.logger.info("Timestamp:\t %s", str(datetime.now()))
                             path, params = self.parse_params(path)
+                            # print("BODY PETICIÓN:\t", body)
+                            # print("DATA:\t", data)
                             if body:
                                 params['data'] = body.split("\r\n\r\n")[1]
-                            # print("Parametros:", str(params), "URL:", str(path))
+                            print("Parametros:", str(params), "URL:", str(path))
                             response = self.handle_request(method, path, params)
                             conn.sendall(response)
                     except Exception as e:
@@ -139,10 +141,10 @@ class TopologyNDT(AltoModule):
             d = params.get('data', None)
             if d is None:
                 return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
-            # print("Info recibida:\t", d)
+            print("Info recibida:\t", d)
             data = json.loads(d.replace("'",'"').replace("\n","").replace("\t",""))
             self.logger.debug("Info recibida: %s", str(data))
-            #data = request.json
+            # data = request.json
             cost_calendar_start_time = data.get('calendar_start_time', [])
             #cost_calendar_start_time_tuple = tuple(map(int, cost_calendar_start_time.split(',')))
             update_topology = data.get('update_topology', "")

@@ -30,7 +30,7 @@ DEF_PORT = 8888
 DEF_IP = "0.0.0.0"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 TPS = {"xrv11":{"xrv13":"Gi0/0/0/0","xrv15":"Gi0/0/0/2"},"xrv12":{"xrv14":"Gi0/0/0/0","xrv15":"Gi0/0/0/1"},"xrv13":{"xrv11":"Gi0/0/0/0","xrv14":"Gi0/0/0/1","xrv16":"Gi0/0/0/2"},"xrv14":{"xrv12":"Gi0/0/0/0","xrv13":"Gi0/0/0/1","xrv18":"Gi0/0/0/2"},"xrv15":{"xrv11":"Gi0/0/0/2","xrv12":"Gi0/0/0/1"},"xrv16":{"xrv13":"Gi0/0/0/2","xrv17":"Gi0/0/0/0"},"xrv17":{"xrv16":"Gi0/0/0/0","xrv18":"Gi0/0/0/1"},"xrv18":{"xrv14":"Gi0/0/0/2","xrv17":"Gi0/0/0/1"}}
-time_interval_size = 120 #seconds
+time_interval_size = 1800 #seconds
 number_of_intervals = 3
 
 class TopologyCreator:
@@ -61,13 +61,11 @@ class TopologyCreator:
         # Loggs
         logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.INFO)
+        self.logger.setLevel(logging.DEBUG)
         timestamp = int(datetime.now().timestamp())
         self.filename = "./logs/alto.log"
         with open(self.filename, "w", encoding='utf-8') as f:
             f.write(f"Starting ALTO: {timestamp}")
-
-
 
     ######################
     ### Static Methods ###
@@ -222,7 +220,6 @@ class TopologyCreator:
         t_http.start()
 
    
-   
    ##############################################
    ###    Functions to be called by the API   ###
    ##############################################
@@ -322,7 +319,6 @@ class TopologyCreator:
     def get_directory(self):
         return self.__respuesta.indice()
 
-
     def compute_costcalendar(self):
         # shortest_paths is a dict by source and target that contains the shortest path length for
         # that source and destination. This procedure we have as many times as there are topologies in list_topologies
@@ -344,7 +340,7 @@ class TopologyCreator:
                     if dst_pid_name not in self.cost_calendar[src_pid_name]:
                         self.cost_calendar[src_pid_name][dst_pid_name]=[-1 for _ in range(number_of_intervals)] 
                     self.cost_calendar[src_pid_name][dst_pid_name][i]=weight
-        self.logger.info("COST CALENDAR:\t %s", str(self.cost_calendar))
+        self.logger.info("COST CALENDAR:\t %s\nIteration:\t%s", str(self.cost_calendar), str(i))
         self.logger.info("Timestamp:\t %s", str(datetime.now()))
 
     # curl -X POST -H "Content-Type: application/json" -d @new_topology.json localhost:9999/update-expected-topology
@@ -479,6 +475,28 @@ class TopologyCreator:
                 }
             }
             links.append(link)
+            link = {
+                "link-id": f"{data.get('link_name', f'{v}-{TPS[v][u]}-{u}-{TPS[u][v]}')}",
+                "source":{
+                    "source-node":v,
+                    "source-tp":TPS[v][u]
+                },
+                "destination":{
+                    "dest-node":u,
+                    "dest-tp":TPS[u][v]
+                },
+                "ietf-l3-unicast-topology:l3-link-attributes": {
+                    "routingcost": data.get("weight", -1),
+                    "latency": data.get("latency", -1),
+                    "bandwidth": data.get("bandwidth", -1),
+                    "tefsdn-topology:domain-id": data.get("domain_id", "0"),
+                    "tefsdn-topology:link-attributes": {
+                        "level": data.get("level", "2")
+                    }
+                }
+            }
+            links.append(link)
+
         
         # Estructura final
         topology_json = {

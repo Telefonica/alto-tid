@@ -63,45 +63,55 @@ class TopologyIetf(AltoModule):
                 if "node" in net.keys() and "ietf-network-topology:link" in net.keys():
                     for nodo in net["node"]:
                         #Realizo un macheo de los IDs de los nodos con el nombre y el/los prefijo/s.
-                        nodos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["name"]
-                        tps[nodo["node-id"]] = []
-                        if "prefix" in nodo["ietf-l3-unicast-topology:l3-node-attributes"].keys():
-                            prefijos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["prefix"]
-                        if "ietf-network-topology:termination-point" in nodo.keys():
-                            for tp in nodo["ietf-network-topology:termination-point"]:
-                                tps[nodo["node-id"]].append(str(nodos[nodo["node-id"]]) + ' ' +  str(tp["tp-id"]))
-                        #pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
-                        pid_name = nodo["node-id"]
-                        if pid_name not in self.pids:
-                            self.pids[pid_name] = {}
-                        if 'ipv4' not in self.pids[pid_name]:
-                            self.pids[pid_name]['ipv4']=[]
-                        if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
-                            self.pids[pid_name]['ipv4'].append( nodo['node-id'])
-                        # print("NODO:\t", nodos[nodo['node-id']])
-                        self.topology.add_node(nodos[nodo['node-id']])
+                        # nodos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["name"]
+                        if nodo["ietf-l3-unicast-topology:l3-node-attributes"]["state"] == "UP":
+                            nodos[nodo["node-id"]] = nodo["node-id"]
+                            tps[nodo["node-id"]] = []
+                            if "prefix" in nodo["ietf-l3-unicast-topology:l3-node-attributes"].keys():
+                                prefijos[nodo["node-id"]] = nodo["ietf-l3-unicast-topology:l3-node-attributes"]["prefix"]
+                            if "ietf-network-topology:termination-point" in nodo.keys():
+                                for tp in nodo["ietf-network-topology:termination-point"]:
+                                    tps[nodo["node-id"]].append(str(nodos[nodo["node-id"]]) + ' ' +  str(tp["tp-id"]))
+                            #pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(nodo["node-id"]))
+                            pid_name = nodo["node-id"]
+                            if pid_name not in self.pids:
+                                self.pids[pid_name] = {}
+                            if 'ipv4' not in self.pids[pid_name]:
+                                self.pids[pid_name]['ipv4']=[]
+                            if nodo['node-id'] not in self.pids[pid_name]['ipv4']:
+                                self.pids[pid_name]['ipv4'].append( nodo['node-id'])
+                            # print("NODO:\t", nodos[nodo['node-id']])
+                            self.topology.add_node(nodos[nodo['node-id']])
+                        else:
+                            print("Eliminado el nodo:\t", nodo["node-id"])
 
                     # print("NODOS:\t", nodos)
                     # Falta listar los enlaces y guardarlos.
                     for link in net["ietf-network-topology:link"]:
-                        a,b = link["link-id"].split("-")
-                        if a == '' or b == '':
-                            break
-                        a1 = a.split('_')[0]
-                        b1 = b.split('_')[0]
-                        for k in nodos.keys():
-                            if k == a1:
-                                a = nodos[k]
-                            elif k == b1:
-                                b = nodos[k]
-                        links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["routingcost"]))
-                #print("Numero de enlaces:  ",len(links))
-                # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
-                # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
+                        if link["ietf-l3-unicast-topology:l3-link-attributes"]["state"] == "UP":
+                            a,a2,b,b2 = link["link-id"].split("-")
+                            # a,b = link["link-id"].split("-")
+                            if a == '' or b == '':
+                                break
+                            a1 = a.split('_')[0]
+                            b1 = b.split('_')[0]
+                            for k in nodos.keys():
+                                if k == a1:
+                                    a = nodos[k]
+                                elif k == b1:
+                                    b = nodos[k]
+                            if (a in self.topology.nodes()) and (b in self.topology.nodes()):
+                                # print("Añadido el link:\t", a,b)
+                                links.append(((a,b),link["ietf-l3-unicast-topology:l3-link-attributes"]["routingcost"]))
+                        else:
+                            print("Eliminado el enlace:\t", link["link-id"])
+                    #print("Numero de enlaces:  ",len(links))
+                    # Una vez funciona todo, en vez de almacenarlo en diccionarios los guardamos en un grafo. -> Los nodos se pueden ir pasando ya arriba.
+                    # Ahora mismo va todo correcto, falta pasar los a,b a PID en vez de node-id.
             for link in links:
                 if int(link[1])>=0:
-                    self.topology.add_edge(link[0][0], link[0][1], weight=int(link[1]))
-                    self.ejes[(link[0][0], link[0][1])] = int(link[1])
+                    self.topology.add_edge(link[0][0], link[0][1], weight=10) #int(link[1]))
+                    self.ejes[(link[0][0], link[0][1])] = 10 #int(link[1])
 
 
 
