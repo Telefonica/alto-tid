@@ -13,6 +13,9 @@
 
 ## General Description
 
+### About this git
+This repository serves as an extension of the existing code in [ALTO Repo](https://github.com/Telefonica/alto-tid/tree/optimaix), where TID's ALTO code is being developed. This code does not work by itself, but it is necessary to integrate it with that repository, working as a delta to the previously existing work.
+
 ### What is the ALTO Protocol?
 
 The Application-Layer Traffic Optimization (ALTO) protocol, defined in [RFC 7285](https://www.rfc-editor.org/info/rfc7285), is designed to help applications optimize their network traffic by providing them with abstracted, high-level network information from the perspective of network operators. Typically, applications such as content delivery networks (CDNs) or peer-to-peer (P2P) sharing systems need to make decisions about which endpoints to connect to for efficiency and performance. The ALTO protocol supports this by offering a view of the network topology and cost structure, helping applications select the best endpoints based on network conditions.
