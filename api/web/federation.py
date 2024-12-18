@@ -7,8 +7,8 @@ import requests
 class FederationApi:
     def __init__(self):
         self.requests = []
-        self.federados = ["192.168.159.74:9999"]        
-        self.sdn = "192.168.159.205:80"
+        self.federados = ["192.168.159.83:9999"]
+        self.sdn = "192.168.159.236:80"
 
     # Función para comparar QoS
     def compare_qos(self, qos1, qos2):
@@ -17,12 +17,13 @@ class FederationApi:
     # Función para manejar peticiones federadas
     def handle_federated_request(self, request):
         # self.clean_expired_requests()  # Eliminar peticiones expiradas antes de buscar coincidencias
+        print("COMPARATIVA:\n", request)
         for req in self.requests:
-            if (request['client_app_id'][0] == req['client_app_id'] and 
-                request['server_app_id'] == req['server_app_id'] and 
+            if (request['client_app_id'][0] == req['client_app_id'] and
+                request['server_app_id'] == req['server_app_id'] and
                 self.compare_qos(request['qos'], req['qos']) ): # and
                 #datetime.datetime.now(datetime.timezone.utc) < req['expiration_time']):
-                self.requests.remove(req)  # Eliminar la solicitud coincidente localmente                
+                self.requests.remove(req)  # Eliminar la solicitud coincidente localmente
                 return req  # Devolver la solicitud coincidente si hay match
             #print(request['client_app_id'][0] , req['client_app_id'] ,request['server_app_id'] , req['server_app_id'] , self.compare_qos(request['qos'], req['qos']))
         return None
@@ -42,13 +43,15 @@ class FederationApi:
             # Checking the local status.
             resp = self.handle_federated_request(j_request)
             if resp:
-                federated_response = {"code": 1, " status": "Match found", "id": resp['client_app_id']}
-                f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
+                federated_response = {"code": 1, " status": "Match found", "id": [resp['client_app_id']]}
+                f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response) + '\n').encode('utf-8')
                 resp["socket"].sendall(f_response)
             else:
                 federated_response = {"code": 0, " status": "Match not found"}
+                
             # f_response = json.dumps(federated_response).encode('utf-8')
-            f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
+            print("Federated response:\n", federated_response)
+            f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response) + '\n').encode('utf-8')
             federated_socket.send(f_response)
             #federated_socket.send(json.dumps(federated_response).encode('utf-8'))
 
@@ -63,7 +66,7 @@ class FederationApi:
     def send_to_federated_servers(self, request):
         for federado in self.federados:
             print("FEDERADO:\t", federado)
-            ip, port = federado.split(':')
+            #ip, port = federado.split(':')
             try:
                 try:
                     j_request = json.loads(request.replace("'", '"'))
@@ -74,13 +77,10 @@ class FederationApi:
                 endpoint = "http://" + self.federados[0] + "/federation-api"
                 response = requests.post(endpoint, json=j_request, headers={"Content-Type": "application/json"})
                 mess = str(response.text)
-                smess = mess.split("\r\n\r\n")[-1] 
-                #smess = mess.split("\n\n", -1)
+                smess = mess.split("\r\n\r\n")[-1]
                 print("RESPONSE:\t", mess)
                 j_res = json.loads(smess)
-                #rint("RESPONSE:\t", response)
                 #j_res = json.loads(response.message)
-                #j_res = json.load(response.text.split("\r\n\r\n", -1))
                 #j_res = response.json()
                 if j_res["code"]:
                     return True  # Si se encontró coincidencia en otro servidor
@@ -100,7 +100,7 @@ class FederationApi:
         #if 1:
             # Recibir datos del cliente
             request_data = client_socket.recv(2048).decode('utf-8')
-            
+
             # Parsear los datos recibidos para obtener el cuerpo de la solicitud
             headers, body = request_data.split('\r\n\r\n', 1)
             request_line = headers.splitlines()[0]
@@ -122,20 +122,20 @@ class FederationApi:
 
                 # Parsear el campo expiration_time a un objeto datetime
                 expiration_time = datetime.datetime.strptime(request['expiration_time'], '%Y-%m-%dT%H:%M:%S.%fZ')
-                
+
                 # Verificar si hay una coincidencia en las solicitudes
                 # Verificar si hay una coincidencia en las solicitudes locales
                 match = self.handle_federated_request(request)
                 if match:
                     #print(match)
                     # Enviar el id de la solicitud coincidente
-                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{match['id']}'}}"
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{match['id']}'}}"
                     print("RESPUESTA ENVIADA:\n", response)
                     client_socket.sendall(response.encode('utf-8'))
 
                     # Enviar el id de la solicitud actual a la solicitud coincidente
                     matching_socket = match['socket']
-                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['local_qkdn_id']}'}}"
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['local_qkdn_id']}'}}"
                     print("RESPUESTA ENVIADA:\n", response)
                     matching_socket.sendall(response.encode('utf-8'))
 
@@ -150,10 +150,11 @@ class FederationApi:
                     print("NO MATCH")
                     # Si no hay coincidencia local, buscar en servidores federados
                     if self.send_to_federated_servers(request):
-                        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['local_qkdn_id']}'}}"
+                        federated_response = {"code": 1, " status": "Match found", "id": request['client_app_id']}
+                        f_response = "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response) + '\n'
                         #response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found in federated server'}}\n"
-                        print("RESPUESTA ENVIADA:\n", response)
-                        client_socket.sendall(response.encode('utf-8'))
+                        print("RESPUESTA ENVIADA:\n", f_response)
+                        client_socket.sendall(f_response.encode('utf-8'))
                         client_socket.close()
                         return
                     # Si no se encontró coincidencia en servidores federados, guardar la solicitud localmente
