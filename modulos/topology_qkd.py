@@ -18,11 +18,12 @@ class TopologyQKD(AltoModule):
         super().__init__(mb)
         self.topology_file = ruta
         self.topology_file = "./maps/qkd-topology.json"
+        self.topology_devices = "./maps/qkd-devices.json"
         self.sdn_api = sdn
 
 
     # Get Topology
-    def get_topology(self, prueba=True):
+    def get_topology(self, prueba=False):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
@@ -42,11 +43,11 @@ class TopologyQKD(AltoModule):
             return {}
         
     # Get Devices
-    def get_device(self, nodo, prueba=True):
+    def get_device(self, nodo, prueba=False):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
-                with open("./maps/qkd-devices.json", 'r') as file:
+                with open(self.topology_devices, 'r') as file:
                     nodos = json.load(file)
                     data = nodos[nodo]
                     links = data["qkd_node"]["qkd_links"]["qkd_link"]
