@@ -1,3 +1,13 @@
+# Logs
+logs/*
+
+# Network traces
+*.pcap
+
+# Backup files
+*.bk
+
+
 Dockerfile
 kuberfiles
 __pycache__

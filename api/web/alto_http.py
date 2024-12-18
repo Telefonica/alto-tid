@@ -109,8 +109,7 @@ class AltoHttp:
     def build_response(self, status_code, data):
         '''
             HTTP response handler.
-            Imputs:
-                Status_code: HTTP Status Code
+            Imputs:                Status_code: HTTP Status Code
                 Data: information to be sent in the body.
             Output:
                 HTTP response.
@@ -292,8 +291,13 @@ class AltoHttp:
             if d is None:
                 return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
             data = json.loads(d)
+            print("DATA:\n", data)
             node = data.get('node', "")
             if node != "":
+                #print("NODE:\n", node)
+                mens_b = bytes(json.dumps(self.alto.get_bordernode(node)),encoding="utf-8")
+                return bytes("HTTP/1.1 {status_code}\r\nContent-Type: application/json\r\n\r\n", encoding="utf-8") + mes_b
+                #return self.alto.get_bordernode(node)
                 return self.build_response(200, self.alto.get_bordernode(node))
             return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
         

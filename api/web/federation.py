@@ -43,14 +43,14 @@ class FederationApi:
             resp = self.handle_federated_request(j_request)
             if resp:
                 federated_response = {"code": 1, " status": "Match found", "id": resp['client_app_id']}
-                f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
+                f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
                 resp["socket"].sendall(f_response)
             else:
                 federated_response = {"code": 0, " status": "Match not found"}
             # f_response = json.dumps(federated_response).encode('utf-8')
-            f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
+            f_response = ("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n" + json.dumps(federated_response)).encode('utf-8')
             federated_socket.send(f_response)
-            # federated_socket.send(federated_response.encode('utf-8'))
+            #federated_socket.send(json.dumps(federated_response).encode('utf-8'))
 
         except requests.RequestException as e:
             print(f"Error forwarding to SDN: {e}")
@@ -73,9 +73,15 @@ class FederationApi:
                 print("PAYLOAD SEND:\n", j_request)
                 endpoint = "http://" + self.federados[0] + "/federation-api"
                 response = requests.post(endpoint, json=j_request, headers={"Content-Type": "application/json"})
-                print("RESPONSE:\t", response)
+                mess = str(response.text)
+                smess = mess.split("\r\n\r\n")[-1] 
+                #smess = mess.split("\n\n", -1)
+                print("RESPONSE:\t", mess)
+                j_res = json.loads(smess)
+                #rint("RESPONSE:\t", response)
                 #j_res = json.loads(response.message)
-                j_res = response.json()
+                #j_res = json.load(response.text.split("\r\n\r\n", -1))
+                #j_res = response.json()
                 if j_res["code"]:
                     return True  # Si se encontró coincidencia en otro servidor
             except Exception as e:
@@ -144,7 +150,8 @@ class FederationApi:
                     print("NO MATCH")
                     # Si no hay coincidencia local, buscar en servidores federados
                     if self.send_to_federated_servers(request):
-                        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found in federated server'}}\n"
+                        response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found', 'id':'{request['local_qkdn_id']}'}}"
+                        #response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Match found in federated server'}}\n"
                         print("RESPUESTA ENVIADA:\n", response)
                         client_socket.sendall(response.encode('utf-8'))
                         client_socket.close()
@@ -161,6 +168,8 @@ class FederationApi:
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Peer not found'}}\n"
                     print("RESPUESTA ENVIADA:\n", response)
                     client_socket.sendall(response.encode('utf-8'))
+                    client_socket.close()
+                    return
                     #client_socket.shutdown(socket.SHUT_WR)
             else:
                 response = "HTTP/1.1 400 Bad Request\r\nContent-Type: text/plain\r\n\r\nHTTP/1.1 400 Bad Request\r\nContent-Type: application/json\r\n\r\Innvalid Request"
