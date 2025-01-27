@@ -4,6 +4,7 @@
 import socket
 import json
 from urllib.parse import urlparse, parse_qs
+from alto_logger import AltoLogger
 
 ERRORES = {"sintax": "E_SYNTAX", "campo": "E_MISSING_FIELD", "tipo": "E_INVALID_FIELD_TYPE", "valor": "E_INVALID_FIELD_VALUE"}
 
@@ -27,6 +28,7 @@ class AltoHttp:
             '/costmap/filter': self.api_costs_by_pid,
             '/get-bordernode': self.api_bordernode
         }
+        self.logger = AltoLogger("log/alto")
 
     ####################################
     ##          APIs functions        ##
@@ -40,7 +42,8 @@ class AltoHttp:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self.ip, self.port))
             s.listen(5)
-            print(f"API running on http://{self.ip}:{self.port}/")
+            mensaje = f"API running on http://{self.ip}:{self.port}/"
+            self.logger.log_message(mensaje)
 
             while True:
                 conn, addr = s.accept()
@@ -50,11 +53,12 @@ class AltoHttp:
                         if data:
                             method, path, body = data.split(' ', 2)
                             path = urlparse(path).path
-                            print("PATH:", path)
+                            # print("PATH:", path)
                             path, params = self.parse_params(path)
                             if body:
                                 params['data'] = body.split("\r\n\r\n")[1]
-                            print("Parametros:", str(params), "URL:", str(path))
+                            mensaje = f"Path: {path}\tParametros: {str(params)}"
+                            self.logger.log_message(mensaje)
                             response = self.handle_request(method, path, params)
                             conn.sendall(response)
                     except Exception as e:
@@ -291,9 +295,10 @@ class AltoHttp:
             if d is None:
                 return self.build_response(400, {"ERROR": ERRORES["valor"], "syntax-error": "Body not found."})
             data = json.loads(d)
-            print("DATA:\n", data)
+            mensaje = f"Data:\t {data}"
+            self.logger.log_message(mensaje)
             node = data.get('node', "")
-            if node != "":
+            if node != "" :
                 #print("NODE:\n", node)
                 mens_b = bytes(json.dumps(self.alto.get_bordernode(node)),encoding="utf-8")
                 return bytes("HTTP/1.1 {status_code}\r\nContent-Type: application/json\r\n\r\n", encoding="utf-8") + mes_b
