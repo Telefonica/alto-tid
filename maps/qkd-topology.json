@@ -19,13 +19,13 @@
     "links": [ 
         { 
             "id": "29272f08-6c68-5258-aaf9-06b8decf0988", 
-            "name": "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb", 
+            "link_id": "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb", 
             "source": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
             "target": "cccccccc-cccc-cccc-cccc-cccccccccccc" 
         }, 
         { 
             "id": "95d3231f-7fd2-501a-b3ad-57f001558076", 
-            "name": "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa", 
+            "link_id": "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa", 
             "source": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 
             "target": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" 
         } 

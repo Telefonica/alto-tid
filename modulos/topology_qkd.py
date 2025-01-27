@@ -14,12 +14,14 @@ DEFAULT_ASN = 0
 class TopologyQKD(AltoModule):
 
 
-    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="192.168.159.236"):
+    # def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="192.168.159.236"):
+    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="10.8.0.90"):
         super().__init__(mb)
         self.topology_file = ruta
         self.topology_file = "./maps/qkd-topology.json"
         self.topology_devices = "./maps/qkd-devices.json"
-        self.sdn_api = sdn
+        self.topology_enlaces = "./maps/qkd-enlaces.json"
+        self.sdn_api = sdn #"192.168.159.205"
 
 
     # Get Topology
@@ -36,6 +38,7 @@ class TopologyQKD(AltoModule):
                 response = requests.get(url)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
+                print("DATA:\t", data)
             return data
         except (requests.exceptions.RequestException, json.JSONDecodeError, FileNotFoundError, IOError) as error:
             # Devuelve un diccionario vacío en caso de cualquier error
@@ -55,16 +58,41 @@ class TopologyQKD(AltoModule):
                 # Realiza la petición HTTP 
                 # URL: http://192.168.159.205/webui/qkd/device/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 url = "http://" +  self.sdn_api + "/webui/qkd/device/" + str(nodo)
+                #print("URL:\t", url)
                 response = requests.get(url)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
                 links = data["qkd_links"]
-                print("Links obtained:\t", links)                
+                print("\nLinks obtained:\t", links)                
             return links
         except (requests.exceptions.RequestException, json.JSONDecodeError, FileNotFoundError, IOError) as E:
             # Devuelve un diccionario vacío en caso de cualquier error
             print("Error en la ejecución:\t", E)
             return {}
+
+    def get_weight(self, link, prueba=False):
+        try:
+            # Si es prueba, lee del archivo local
+            if prueba:
+                with open(self.topology_enlaces, 'r') as file:
+                    links = json.load(file)
+                    data = links[link]
+                    peso = data["key_availability"]
+            else:
+                # Realiza la petición HTTP 
+                # URL: http://192.168.159.205/webui/qkd/link/bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb/key_availability
+                url = "http://" +  self.sdn_api + "/webui/qkd/link/" + str(link) + "/key_availability"
+                #print("URL:\t", url)
+                response = requests.get(url)
+                response.raise_for_status()  # Lanza una excepción si el estatus no es 200
+                data = response.json()  # Parsear la respuesta a JSON
+                peso = data["key_availability"]
+                print("Link:\t", data)                
+            return peso
+        except (requests.exceptions.RequestException, json.JSONDecodeError, FileNotFoundError, IOError) as E:
+            # Devuelve un diccionario vacío en caso de cualquier error
+            print("Error en la ejecución:\t", E)
+            return 0
 
     ### Manager function
     def manage_topology_updates(self):
@@ -72,7 +100,7 @@ class TopologyQKD(AltoModule):
         while True:
             sleep(1)
             something_changed = self.manage_updates(something_changed)
-            sleep(4)
+            sleep(40)
             
     def manage_updates(self, cambios):
         """
@@ -88,7 +116,7 @@ class TopologyQKD(AltoModule):
         #Lista de enlaces
         links = []
         
-        d_json = self.get_topology(False)
+        d_json = self.get_topology(True)
         self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
 
         if d_json != {}:
@@ -99,11 +127,14 @@ class TopologyQKD(AltoModule):
                 nodos = [ nodo["id"] for nodo in d_json["devices"] ]
                 # Load links
                 for nodo in nodos:
-                    nlinks = self.get_device(nodo, False)
+                    nlinks = self.get_device(nodo, True)
                     for nlink in nlinks:
+                        # Pedimos el peso
+                        peso = self.get_weight(nlink["link_id"], True)                        
                         local = nlink["local"]["qkd_node"]
                         remote = nlink["remote"]["qkd_node"]
-                        link = (local, nlink["remote"]["qkd_node"], 1)
+                        link = (local, nlink["remote"]["qkd_node"], peso)
+                        print("Link:\t", link)
                         links.append(link)
                         if local not in prefijos.keys():
                             prefijos[local] = {}
@@ -114,7 +145,8 @@ class TopologyQKD(AltoModule):
                 #links = [ (n["source"], n["target"], 1) for n in d_json["links"] ]        
                 # Load networks --> Not in this version
                 #prefijos = {}
-                      
+                #print("NODOS:\t", nodos)
+                #print("Links:\t", links)
                 snodos = str(nodos).replace("'", '"')
                 prefijos = str(prefijos).replace("'", '"')
                 #slinks = str(links).replace("'", '"').replace("(", "[").replace(")","]")
