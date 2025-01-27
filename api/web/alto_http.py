@@ -294,6 +294,7 @@ class AltoHttp:
             data = json.loads(d)
             node = data.get('node', "")
             if node != "":
+                print("DATA REQUESTED:\t", data)
                 return self.build_response(200, self.alto.get_bordernode(node))
             return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
         

@@ -1,0 +1,1306 @@
+2025-01-17T15:12:48.655296	Server listening on port 9999
+2025-01-17T15:36:01.802870	Accepted connection from ('192.168.159.83', 54782)
+2025-01-17T15:36:01.809308	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:01.809840	
+
+Timestamp Forwarding:	2025-01-17T15:36:01.809832
+2025-01-17T15:36:01.810273	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:01.810582	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:02.465976	Accepted connection from ('192.168.159.83', 54788)
+2025-01-17T15:36:02.467327	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:02.467705	
+
+Timestamp Forwarding:	2025-01-17T15:36:02.467692
+2025-01-17T15:36:02.467921	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:02.468124	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:02.972855	Accepted connection from ('192.168.159.83', 54794)
+2025-01-17T15:36:02.973701	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:02.974150	
+
+Timestamp Forwarding:	2025-01-17T15:36:02.974137
+2025-01-17T15:36:02.974530	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:02.974904	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:03.483675	Accepted connection from ('192.168.159.83', 54796)
+2025-01-17T15:36:03.484474	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:03.484701	
+
+Timestamp Forwarding:	2025-01-17T15:36:03.484691
+2025-01-17T15:36:03.484823	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:03.485031	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:04.623236	Accepted connection from ('192.168.159.83', 54804)
+2025-01-17T15:36:04.624020	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:04.624254	
+
+Timestamp Forwarding:	2025-01-17T15:36:04.624244
+2025-01-17T15:36:04.624399	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:04.624671	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:05.181334	Accepted connection from ('192.168.159.83', 54808)
+2025-01-17T15:36:05.182104	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:05.182385	
+
+Timestamp Forwarding:	2025-01-17T15:36:05.182374
+2025-01-17T15:36:05.182568	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:05.182759	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:05.758356	Accepted connection from ('192.168.159.83', 54822)
+2025-01-17T15:36:05.759202	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:05.759419	
+
+Timestamp Forwarding:	2025-01-17T15:36:05.759409
+2025-01-17T15:36:05.759545	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:05.759753	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:06.307449	Accepted connection from ('192.168.159.83', 54832)
+2025-01-17T15:36:06.308211	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:06.308427	
+
+Timestamp Forwarding:	2025-01-17T15:36:06.308417
+2025-01-17T15:36:06.308546	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:06.308722	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:06.802924	Accepted connection from ('192.168.159.83', 54846)
+2025-01-17T15:36:06.803713	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:06.804017	
+
+Timestamp Forwarding:	2025-01-17T15:36:06.804006
+2025-01-17T15:36:06.804218	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:06.804441	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:07.347418	Accepted connection from ('192.168.159.83', 54848)
+2025-01-17T15:36:07.348410	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:07.348843	
+
+Timestamp Forwarding:	2025-01-17T15:36:07.348830
+2025-01-17T15:36:07.349166	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:07.349556	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:07.891311	Accepted connection from ('192.168.159.83', 54854)
+2025-01-17T15:36:07.892546	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:07.893003	
+
+Timestamp Forwarding:	2025-01-17T15:36:07.892990
+2025-01-17T15:36:07.893352	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:07.893721	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:08.484373	Accepted connection from ('192.168.159.83', 54862)
+2025-01-17T15:36:08.485191	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:08.485434	
+
+Timestamp Forwarding:	2025-01-17T15:36:08.485423
+2025-01-17T15:36:08.485623	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:08.485827	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:09.065613	Accepted connection from ('192.168.159.83', 54870)
+2025-01-17T15:36:09.066376	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:09.066635	
+
+Timestamp Forwarding:	2025-01-17T15:36:09.066625
+2025-01-17T15:36:09.066799	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:09.066986	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:09.572731	Accepted connection from ('192.168.159.83', 54880)
+2025-01-17T15:36:09.573527	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:09.573786	
+
+Timestamp Forwarding:	2025-01-17T15:36:09.573771
+2025-01-17T15:36:09.574012	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:09.574207	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:10.071348	Accepted connection from ('192.168.159.83', 54888)
+2025-01-17T15:36:10.072111	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:10.072359	
+
+Timestamp Forwarding:	2025-01-17T15:36:10.072349
+2025-01-17T15:36:10.072489	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:10.072667	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:10.618900	Accepted connection from ('192.168.159.83', 54902)
+2025-01-17T15:36:10.619655	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:10.619937	
+
+Timestamp Forwarding:	2025-01-17T15:36:10.619926
+2025-01-17T15:36:10.620083	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:10.620277	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:11.150907	Accepted connection from ('192.168.159.83', 54912)
+2025-01-17T15:36:11.151703	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:11.152057	
+
+Timestamp Forwarding:	2025-01-17T15:36:11.152044
+2025-01-17T15:36:11.152193	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:11.152376	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:11.827551	Accepted connection from ('192.168.159.83', 48842)
+2025-01-17T15:36:11.828442	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:11.828700	
+
+Timestamp Forwarding:	2025-01-17T15:36:11.828690
+2025-01-17T15:36:11.828855	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:11.829043	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:12.368158	Accepted connection from ('192.168.159.83', 48846)
+2025-01-17T15:36:12.368926	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:12.369167	
+
+Timestamp Forwarding:	2025-01-17T15:36:12.369156
+2025-01-17T15:36:12.369363	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:12.369679	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:12.896894	Accepted connection from ('192.168.159.83', 48858)
+2025-01-17T15:36:12.897560	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:12.897776	
+
+Timestamp Forwarding:	2025-01-17T15:36:12.897767
+2025-01-17T15:36:12.897879	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:12.898032	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:13.402919	Accepted connection from ('192.168.159.83', 48868)
+2025-01-17T15:36:13.403638	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:13.403905	
+
+Timestamp Forwarding:	2025-01-17T15:36:13.403894
+2025-01-17T15:36:13.404037	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:13.404144	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:14.038800	Accepted connection from ('192.168.159.83', 48880)
+2025-01-17T15:36:14.039607	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:14.040001	
+
+Timestamp Forwarding:	2025-01-17T15:36:14.039987
+2025-01-17T15:36:14.040165	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:14.040352	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:14.569804	Accepted connection from ('192.168.159.83', 48888)
+2025-01-17T15:36:14.570537	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:14.570775	
+
+Timestamp Forwarding:	2025-01-17T15:36:14.570766
+2025-01-17T15:36:14.570905	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:14.571087	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:15.129855	Accepted connection from ('192.168.159.83', 48902)
+2025-01-17T15:36:15.130599	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:15.130823	
+
+Timestamp Forwarding:	2025-01-17T15:36:15.130814
+2025-01-17T15:36:15.130944	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:15.131169	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:15.674919	Accepted connection from ('192.168.159.83', 48918)
+2025-01-17T15:36:15.675693	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:15.676022	
+
+Timestamp Forwarding:	2025-01-17T15:36:15.676009
+2025-01-17T15:36:15.676171	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:15.676379	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:16.296085	Accepted connection from ('192.168.159.83', 48924)
+2025-01-17T15:36:16.296952	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:16.297193	
+
+Timestamp Forwarding:	2025-01-17T15:36:16.297180
+2025-01-17T15:36:16.297319	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:16.297495	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:16.807845	Accepted connection from ('192.168.159.83', 48930)
+2025-01-17T15:36:16.808663	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:16.808936	
+
+Timestamp Forwarding:	2025-01-17T15:36:16.808925
+2025-01-17T15:36:16.809067	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:16.809250	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:17.318057	Accepted connection from ('192.168.159.83', 48936)
+2025-01-17T15:36:17.318740	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:17.318961	
+
+Timestamp Forwarding:	2025-01-17T15:36:17.318951
+2025-01-17T15:36:17.319080	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:17.319346	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:17.895022	Accepted connection from ('192.168.159.83', 48948)
+2025-01-17T15:36:17.895805	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:17.896024	
+
+Timestamp Forwarding:	2025-01-17T15:36:17.896014
+2025-01-17T15:36:17.896144	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:17.896327	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:18.422544	Accepted connection from ('192.168.159.83', 48962)
+2025-01-17T15:36:18.423335	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:18.423613	
+
+Timestamp Forwarding:	2025-01-17T15:36:18.423602
+2025-01-17T15:36:18.423808	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:18.424003	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:18.997128	Accepted connection from ('192.168.159.83', 48966)
+2025-01-17T15:36:18.997935	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:18.998211	
+
+Timestamp Forwarding:	2025-01-17T15:36:18.998201
+2025-01-17T15:36:18.998391	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:18.998611	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:19.508290	Accepted connection from ('192.168.159.83', 48972)
+2025-01-17T15:36:19.509095	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:19.509372	
+
+Timestamp Forwarding:	2025-01-17T15:36:19.509361
+2025-01-17T15:36:19.509555	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:19.509776	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:20.005783	Accepted connection from ('192.168.159.83', 48976)
+2025-01-17T15:36:20.006503	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:20.006771	
+
+Timestamp Forwarding:	2025-01-17T15:36:20.006760
+2025-01-17T15:36:20.006952	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:20.007193	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:20.585048	Accepted connection from ('192.168.159.83', 48982)
+2025-01-17T15:36:20.585789	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:20.586053	
+
+Timestamp Forwarding:	2025-01-17T15:36:20.586042
+2025-01-17T15:36:20.586235	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:20.586431	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:21.689532	Accepted connection from ('192.168.159.83', 48734)
+2025-01-17T15:36:21.690541	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:21.690850	
+
+Timestamp Forwarding:	2025-01-17T15:36:21.690839
+2025-01-17T15:36:21.691034	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:21.691281	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:22.223162	Accepted connection from ('192.168.159.83', 48746)
+2025-01-17T15:36:22.223984	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:22.224450	
+
+Timestamp Forwarding:	2025-01-17T15:36:22.224437
+2025-01-17T15:36:22.224807	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:22.225185	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:22.758318	Accepted connection from ('192.168.159.83', 48756)
+2025-01-17T15:36:22.759069	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:22.759348	
+
+Timestamp Forwarding:	2025-01-17T15:36:22.759337
+2025-01-17T15:36:22.759536	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:22.759771	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:23.318322	Accepted connection from ('192.168.159.83', 48762)
+2025-01-17T15:36:23.319055	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:23.319390	
+
+Timestamp Forwarding:	2025-01-17T15:36:23.319378
+2025-01-17T15:36:23.319572	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:23.319847	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:23.860311	Accepted connection from ('192.168.159.83', 48776)
+2025-01-17T15:36:23.861300	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:23.861976	
+
+Timestamp Forwarding:	2025-01-17T15:36:23.861960
+2025-01-17T15:36:23.862477	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:23.863016	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:24.397612	Accepted connection from ('192.168.159.83', 48792)
+2025-01-17T15:36:24.398419	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:24.398885	
+
+Timestamp Forwarding:	2025-01-17T15:36:24.398872
+2025-01-17T15:36:24.399296	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:24.399685	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:25.622882	Accepted connection from ('192.168.159.83', 48806)
+2025-01-17T15:36:25.623960	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:25.624230	
+
+Timestamp Forwarding:	2025-01-17T15:36:25.624220
+2025-01-17T15:36:25.624455	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:25.624885	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:26.196753	Accepted connection from ('192.168.159.83', 48816)
+2025-01-17T15:36:26.197492	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:26.197719	
+
+Timestamp Forwarding:	2025-01-17T15:36:26.197709
+2025-01-17T15:36:26.197845	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:26.198026	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:26.679965	Accepted connection from ('192.168.159.83', 48824)
+2025-01-17T15:36:26.680710	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:26.680992	
+
+Timestamp Forwarding:	2025-01-17T15:36:26.680982
+2025-01-17T15:36:26.681118	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:26.681306	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:27.197206	Accepted connection from ('192.168.159.83', 48834)
+2025-01-17T15:36:27.198337	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:27.198631	
+
+Timestamp Forwarding:	2025-01-17T15:36:27.198620
+2025-01-17T15:36:27.198765	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:27.198984	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:28.317824	Accepted connection from ('192.168.159.83', 48838)
+2025-01-17T15:36:28.318639	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:28.318865	
+
+Timestamp Forwarding:	2025-01-17T15:36:28.318855
+2025-01-17T15:36:28.318984	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:28.319217	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:28.956856	Accepted connection from ('192.168.159.83', 48848)
+2025-01-17T15:36:28.957576	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:28.957803	
+
+Timestamp Forwarding:	2025-01-17T15:36:28.957793
+2025-01-17T15:36:28.957932	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:28.958112	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:43.454616	Accepted connection from ('192.168.159.83', 54986)
+2025-01-17T15:36:43.455483	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:43.455726	
+
+Timestamp Forwarding:	2025-01-17T15:36:43.455715
+2025-01-17T15:36:43.455954	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:43.456184	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:44.079272	Accepted connection from ('192.168.159.83', 54996)
+2025-01-17T15:36:44.080128	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:44.080394	
+
+Timestamp Forwarding:	2025-01-17T15:36:44.080383
+2025-01-17T15:36:44.080589	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:44.080904	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:44.800396	Accepted connection from ('192.168.159.83', 54998)
+2025-01-17T15:36:44.801151	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:44.801418	
+
+Timestamp Forwarding:	2025-01-17T15:36:44.801407
+2025-01-17T15:36:44.801638	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:44.801856	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:45.370683	Accepted connection from ('192.168.159.83', 55006)
+2025-01-17T15:36:45.371463	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:45.371734	
+
+Timestamp Forwarding:	2025-01-17T15:36:45.371724
+2025-01-17T15:36:45.371966	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:45.372217	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:45.894893	Accepted connection from ('192.168.159.83', 55014)
+2025-01-17T15:36:45.895774	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:45.896064	
+
+Timestamp Forwarding:	2025-01-17T15:36:45.896054
+2025-01-17T15:36:45.896252	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:45.896481	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:46.395627	Accepted connection from ('192.168.159.83', 55026)
+2025-01-17T15:36:46.396445	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:46.396739	
+
+Timestamp Forwarding:	2025-01-17T15:36:46.396728
+2025-01-17T15:36:46.396925	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:46.397153	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:46.950391	Accepted connection from ('192.168.159.83', 55034)
+2025-01-17T15:36:46.951196	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:46.951457	
+
+Timestamp Forwarding:	2025-01-17T15:36:46.951447
+2025-01-17T15:36:46.951653	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:46.951894	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:47.454564	Accepted connection from ('192.168.159.83', 55042)
+2025-01-17T15:36:47.455331	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:47.455690	
+
+Timestamp Forwarding:	2025-01-17T15:36:47.455678
+2025-01-17T15:36:47.455923	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:47.456164	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:47.978905	Accepted connection from ('192.168.159.83', 55054)
+2025-01-17T15:36:47.979708	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:47.980053	
+
+Timestamp Forwarding:	2025-01-17T15:36:47.980037
+2025-01-17T15:36:47.980269	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:47.980588	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:48.499902	Accepted connection from ('192.168.159.83', 55056)
+2025-01-17T15:36:48.500660	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:48.500942	
+
+Timestamp Forwarding:	2025-01-17T15:36:48.500931
+2025-01-17T15:36:48.501128	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:48.501348	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:49.108705	Accepted connection from ('192.168.159.83', 55072)
+2025-01-17T15:36:49.109448	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:49.109710	
+
+Timestamp Forwarding:	2025-01-17T15:36:49.109700
+2025-01-17T15:36:49.109896	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:49.110186	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:49.616107	Accepted connection from ('192.168.159.83', 55086)
+2025-01-17T15:36:49.616841	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:49.617127	
+
+Timestamp Forwarding:	2025-01-17T15:36:49.617116
+2025-01-17T15:36:49.617313	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:49.617548	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:50.143850	Accepted connection from ('192.168.159.83', 55100)
+2025-01-17T15:36:50.144606	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:50.144947	
+
+Timestamp Forwarding:	2025-01-17T15:36:50.144935
+2025-01-17T15:36:50.145143	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:50.145363	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:50.852527	Accepted connection from ('192.168.159.83', 55108)
+2025-01-17T15:36:50.853297	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:50.853559	
+
+Timestamp Forwarding:	2025-01-17T15:36:50.853548
+2025-01-17T15:36:50.853754	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:50.853971	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:51.642980	Accepted connection from ('192.168.159.83', 55714)
+2025-01-17T15:36:51.643824	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:51.644124	
+
+Timestamp Forwarding:	2025-01-17T15:36:51.644113
+2025-01-17T15:36:51.644311	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:51.644540	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:52.166859	Accepted connection from ('192.168.159.83', 55728)
+2025-01-17T15:36:52.167662	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:52.168029	
+
+Timestamp Forwarding:	2025-01-17T15:36:52.168018
+2025-01-17T15:36:52.168232	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:52.168457	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:52.695039	Accepted connection from ('192.168.159.83', 55744)
+2025-01-17T15:36:52.695863	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:52.696155	
+
+Timestamp Forwarding:	2025-01-17T15:36:52.696143
+2025-01-17T15:36:52.696343	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:52.696580	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:53.211057	Accepted connection from ('192.168.159.83', 55752)
+2025-01-17T15:36:53.211930	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:53.212390	
+
+Timestamp Forwarding:	2025-01-17T15:36:53.212377
+2025-01-17T15:36:53.212799	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:53.213185	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:53.725890	Accepted connection from ('192.168.159.83', 55754)
+2025-01-17T15:36:53.726630	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:53.726861	
+
+Timestamp Forwarding:	2025-01-17T15:36:53.726851
+2025-01-17T15:36:53.727192	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:53.727495	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:54.307803	Accepted connection from ('192.168.159.83', 55756)
+2025-01-17T15:36:54.308601	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:54.308856	
+
+Timestamp Forwarding:	2025-01-17T15:36:54.308845
+2025-01-17T15:36:54.309073	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:54.309310	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:54.891139	Accepted connection from ('192.168.159.83', 55766)
+2025-01-17T15:36:54.891974	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:54.892294	
+
+Timestamp Forwarding:	2025-01-17T15:36:54.892283
+2025-01-17T15:36:54.892484	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:54.892728	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:55.421119	Accepted connection from ('192.168.159.83', 55770)
+2025-01-17T15:36:55.421919	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:55.422208	
+
+Timestamp Forwarding:	2025-01-17T15:36:55.422198
+2025-01-17T15:36:55.422396	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:55.422614	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:55.986061	Accepted connection from ('192.168.159.83', 55784)
+2025-01-17T15:36:55.986812	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:55.987063	
+
+Timestamp Forwarding:	2025-01-17T15:36:55.987053
+2025-01-17T15:36:55.987271	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:55.987463	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:56.529500	Accepted connection from ('192.168.159.83', 55798)
+2025-01-17T15:36:56.530338	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:56.530571	
+
+Timestamp Forwarding:	2025-01-17T15:36:56.530560
+2025-01-17T15:36:56.530726	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:56.530948	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:57.040928	Accepted connection from ('192.168.159.83', 55810)
+2025-01-17T15:36:57.041682	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:57.041968	
+
+Timestamp Forwarding:	2025-01-17T15:36:57.041957
+2025-01-17T15:36:57.042160	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:57.042391	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:57.593242	Accepted connection from ('192.168.159.83', 55826)
+2025-01-17T15:36:57.594040	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:57.594315	
+
+Timestamp Forwarding:	2025-01-17T15:36:57.594304
+2025-01-17T15:36:57.594511	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:57.594730	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:58.250339	Accepted connection from ('192.168.159.83', 55836)
+2025-01-17T15:36:58.251177	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:58.251452	
+
+Timestamp Forwarding:	2025-01-17T15:36:58.251442
+2025-01-17T15:36:58.251650	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:58.251897	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:59.066639	Accepted connection from ('192.168.159.83', 55842)
+2025-01-17T15:36:59.067441	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:59.067731	
+
+Timestamp Forwarding:	2025-01-17T15:36:59.067720
+2025-01-17T15:36:59.067955	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:59.068176	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:36:59.621882	Accepted connection from ('192.168.159.83', 55846)
+2025-01-17T15:36:59.622572	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:36:59.622793	
+
+Timestamp Forwarding:	2025-01-17T15:36:59.622784
+2025-01-17T15:36:59.622942	Request received from federated server: 192.168.159.83
+2025-01-17T15:36:59.623170	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:00.229383	Accepted connection from ('192.168.159.83', 55856)
+2025-01-17T15:37:00.230142	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:00.230416	
+
+Timestamp Forwarding:	2025-01-17T15:37:00.230405
+2025-01-17T15:37:00.230603	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:00.230820	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:00.795416	Accepted connection from ('192.168.159.83', 55860)
+2025-01-17T15:37:00.796313	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:00.796615	
+
+Timestamp Forwarding:	2025-01-17T15:37:00.796604
+2025-01-17T15:37:00.796884	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:00.797273	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:01.357491	Accepted connection from ('192.168.159.83', 57742)
+2025-01-17T15:37:01.358352	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:01.358580	
+
+Timestamp Forwarding:	2025-01-17T15:37:01.358570
+2025-01-17T15:37:01.358707	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:01.358892	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:01.827422	Accepted connection from ('192.168.159.83', 57744)
+2025-01-17T15:37:01.828182	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:01.828411	
+
+Timestamp Forwarding:	2025-01-17T15:37:01.828401
+2025-01-17T15:37:01.828543	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:01.828727	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:02.250092	Accepted connection from ('192.168.159.83', 57746)
+2025-01-17T15:37:02.250799	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:02.251024	
+
+Timestamp Forwarding:	2025-01-17T15:37:02.251015
+2025-01-17T15:37:02.251247	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:02.251439	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:02.804459	Accepted connection from ('192.168.159.83', 57762)
+2025-01-17T15:37:02.805245	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:02.805475	
+
+Timestamp Forwarding:	2025-01-17T15:37:02.805465
+2025-01-17T15:37:02.805603	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:02.805785	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:03.200000	Accepted connection from ('192.168.159.83', 57770)
+2025-01-17T15:37:03.201913	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:03.202299	
+
+Timestamp Forwarding:	2025-01-17T15:37:03.202286
+2025-01-17T15:37:03.202517	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:03.202784	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:03.668427	Accepted connection from ('192.168.159.83', 57774)
+2025-01-17T15:37:03.669591	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:03.670041	
+
+Timestamp Forwarding:	2025-01-17T15:37:03.670028
+2025-01-17T15:37:03.670405	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:03.670783	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:37:04.077651	Accepted connection from ('192.168.159.83', 57786)
+2025-01-17T15:37:04.078504	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:37:04.078756	
+
+Timestamp Forwarding:	2025-01-17T15:37:04.078746
+2025-01-17T15:37:04.078902	Request received from federated server: 192.168.159.83
+2025-01-17T15:37:04.079166	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:36.277278	Accepted connection from ('192.168.159.83', 39826)
+2025-01-17T15:52:36.282226	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:36.282845	
+
+Timestamp Forwarding:	2025-01-17T15:52:36.282830
+2025-01-17T15:52:36.283302	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:36.283888	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:36.865738	Accepted connection from ('192.168.159.83', 39838)
+2025-01-17T15:52:36.866676	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:36.866983	
+
+Timestamp Forwarding:	2025-01-17T15:52:36.866971
+2025-01-17T15:52:36.867246	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:36.867545	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:37.398487	Accepted connection from ('192.168.159.83', 39844)
+2025-01-17T15:52:37.399432	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:37.400178	
+
+Timestamp Forwarding:	2025-01-17T15:52:37.400161
+2025-01-17T15:52:37.401173	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:37.401832	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:37.918215	Accepted connection from ('192.168.159.83', 39850)
+2025-01-17T15:52:37.918939	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:37.919220	
+
+Timestamp Forwarding:	2025-01-17T15:52:37.919208
+2025-01-17T15:52:37.919368	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:37.919631	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:38.604062	Accepted connection from ('192.168.159.83', 39860)
+2025-01-17T15:52:38.604706	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:38.604923	
+
+Timestamp Forwarding:	2025-01-17T15:52:38.604914
+2025-01-17T15:52:38.605060	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:38.605234	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:39.676058	Accepted connection from ('192.168.159.83', 39864)
+2025-01-17T15:52:39.676798	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:39.677020	
+
+Timestamp Forwarding:	2025-01-17T15:52:39.677010
+2025-01-17T15:52:39.677141	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:39.677329	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:40.171906	Accepted connection from ('192.168.159.83', 39880)
+2025-01-17T15:52:40.172707	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:40.172941	
+
+Timestamp Forwarding:	2025-01-17T15:52:40.172931
+2025-01-17T15:52:40.173071	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:40.173253	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:40.678374	Accepted connection from ('192.168.159.83', 39884)
+2025-01-17T15:52:40.679079	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:40.679360	
+
+Timestamp Forwarding:	2025-01-17T15:52:40.679349
+2025-01-17T15:52:40.679482	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:40.679668	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:41.184274	Accepted connection from ('192.168.159.83', 39896)
+2025-01-17T15:52:41.184976	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:41.185205	
+
+Timestamp Forwarding:	2025-01-17T15:52:41.185195
+2025-01-17T15:52:41.185360	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:41.185549	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:41.723282	Accepted connection from ('192.168.159.83', 47494)
+2025-01-17T15:52:41.724001	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:41.724227	
+
+Timestamp Forwarding:	2025-01-17T15:52:41.724217
+2025-01-17T15:52:41.724355	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:41.724538	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:42.253437	Accepted connection from ('192.168.159.83', 47506)
+2025-01-17T15:52:42.254127	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:42.254342	
+
+Timestamp Forwarding:	2025-01-17T15:52:42.254332
+2025-01-17T15:52:42.254453	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:42.254622	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:42.762320	Accepted connection from ('192.168.159.83', 47514)
+2025-01-17T15:52:42.763152	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:42.763449	
+
+Timestamp Forwarding:	2025-01-17T15:52:42.763436
+2025-01-17T15:52:42.763597	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:42.763787	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:43.276204	Accepted connection from ('192.168.159.83', 47516)
+2025-01-17T15:52:43.276953	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:43.277217	
+
+Timestamp Forwarding:	2025-01-17T15:52:43.277203
+2025-01-17T15:52:43.277362	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:43.277604	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:43.810137	Accepted connection from ('192.168.159.83', 47518)
+2025-01-17T15:52:43.810868	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:43.811174	
+
+Timestamp Forwarding:	2025-01-17T15:52:43.811162
+2025-01-17T15:52:43.811327	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:43.811513	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:44.304854	Accepted connection from ('192.168.159.83', 47520)
+2025-01-17T15:52:44.305574	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:44.305799	
+
+Timestamp Forwarding:	2025-01-17T15:52:44.305789
+2025-01-17T15:52:44.305918	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:44.306135	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:45.567323	Accepted connection from ('192.168.159.83', 47532)
+2025-01-17T15:52:45.568326	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:45.568725	
+
+Timestamp Forwarding:	2025-01-17T15:52:45.568713
+2025-01-17T15:52:45.568844	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:45.569034	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:46.123847	Accepted connection from ('192.168.159.83', 47536)
+2025-01-17T15:52:46.124694	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:46.124928	
+
+Timestamp Forwarding:	2025-01-17T15:52:46.124918
+2025-01-17T15:52:46.125055	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:46.125239	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:46.646732	Accepted connection from ('192.168.159.83', 47544)
+2025-01-17T15:52:46.647499	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:46.647727	
+
+Timestamp Forwarding:	2025-01-17T15:52:46.647717
+2025-01-17T15:52:46.647848	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:46.648051	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:47.145417	Accepted connection from ('192.168.159.83', 47548)
+2025-01-17T15:52:47.146282	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:47.146549	
+
+Timestamp Forwarding:	2025-01-17T15:52:47.146538
+2025-01-17T15:52:47.146673	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:47.146855	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:47.648783	Accepted connection from ('192.168.159.83', 47550)
+2025-01-17T15:52:47.649514	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:47.649742	
+
+Timestamp Forwarding:	2025-01-17T15:52:47.649732
+2025-01-17T15:52:47.649883	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:47.650132	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:48.167210	Accepted connection from ('192.168.159.83', 47558)
+2025-01-17T15:52:48.167740	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:48.167921	
+
+Timestamp Forwarding:	2025-01-17T15:52:48.167914
+2025-01-17T15:52:48.168024	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:48.168151	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:48.914390	Accepted connection from ('192.168.159.83', 47570)
+2025-01-17T15:52:48.916159	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:48.916385	
+
+Timestamp Forwarding:	2025-01-17T15:52:48.916376
+2025-01-17T15:52:48.916487	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:48.916659	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:49.438623	Accepted connection from ('192.168.159.83', 47582)
+2025-01-17T15:52:49.439372	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:49.439561	
+
+Timestamp Forwarding:	2025-01-17T15:52:49.439554
+2025-01-17T15:52:49.439655	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:49.439801	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:49.983774	Accepted connection from ('192.168.159.83', 47592)
+2025-01-17T15:52:49.984600	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:49.984883	
+
+Timestamp Forwarding:	2025-01-17T15:52:49.984872
+2025-01-17T15:52:49.985017	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:49.985205	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:50.478277	Accepted connection from ('192.168.159.83', 47596)
+2025-01-17T15:52:50.479218	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:50.480212	
+
+Timestamp Forwarding:	2025-01-17T15:52:50.480197
+2025-01-17T15:52:50.481239	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:50.481758	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:50.996932	Accepted connection from ('192.168.159.83', 47604)
+2025-01-17T15:52:50.997698	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:50.997938	
+
+Timestamp Forwarding:	2025-01-17T15:52:50.997927
+2025-01-17T15:52:50.998122	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:50.998320	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:51.545971	Accepted connection from ('192.168.159.83', 35504)
+2025-01-17T15:52:51.546822	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:51.547057	
+
+Timestamp Forwarding:	2025-01-17T15:52:51.547047
+2025-01-17T15:52:51.547227	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:51.547415	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:52.648962	Accepted connection from ('192.168.159.83', 35506)
+2025-01-17T15:52:52.649698	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:52.649923	
+
+Timestamp Forwarding:	2025-01-17T15:52:52.649913
+2025-01-17T15:52:52.650080	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:52.650271	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:53.225247	Accepted connection from ('192.168.159.83', 35516)
+2025-01-17T15:52:53.226036	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:53.226328	
+
+Timestamp Forwarding:	2025-01-17T15:52:53.226317
+2025-01-17T15:52:53.226679	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:53.226886	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:53.846756	Accepted connection from ('192.168.159.83', 35532)
+2025-01-17T15:52:53.847711	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:53.847943	
+
+Timestamp Forwarding:	2025-01-17T15:52:53.847932
+2025-01-17T15:52:53.848063	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:53.848250	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:54.410999	Accepted connection from ('192.168.159.83', 35540)
+2025-01-17T15:52:54.411747	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:54.411976	
+
+Timestamp Forwarding:	2025-01-17T15:52:54.411966
+2025-01-17T15:52:54.412105	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:54.412288	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:54.996109	Accepted connection from ('192.168.159.83', 35546)
+2025-01-17T15:52:54.996906	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:54.997131	
+
+Timestamp Forwarding:	2025-01-17T15:52:54.997121
+2025-01-17T15:52:54.997260	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:54.997445	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:55.515995	Accepted connection from ('192.168.159.83', 35552)
+2025-01-17T15:52:55.516802	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:55.517043	
+
+Timestamp Forwarding:	2025-01-17T15:52:55.517033
+2025-01-17T15:52:55.517173	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:55.517356	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:56.048535	Accepted connection from ('192.168.159.83', 35556)
+2025-01-17T15:52:56.049371	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:56.049628	
+
+Timestamp Forwarding:	2025-01-17T15:52:56.049617
+2025-01-17T15:52:56.049760	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:56.049944	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:56.547995	Accepted connection from ('192.168.159.83', 35570)
+2025-01-17T15:52:56.548831	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:56.549059	
+
+Timestamp Forwarding:	2025-01-17T15:52:56.549049
+2025-01-17T15:52:56.549188	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:56.549367	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:57.047030	Accepted connection from ('192.168.159.83', 35582)
+2025-01-17T15:52:57.047784	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:57.048024	
+
+Timestamp Forwarding:	2025-01-17T15:52:57.048013
+2025-01-17T15:52:57.048154	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:57.048340	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:57.535350	Accepted connection from ('192.168.159.83', 35586)
+2025-01-17T15:52:57.536142	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:57.536413	
+
+Timestamp Forwarding:	2025-01-17T15:52:57.536402
+2025-01-17T15:52:57.536552	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:57.536737	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:58.037558	Accepted connection from ('192.168.159.83', 35596)
+2025-01-17T15:52:58.038421	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:58.038697	
+
+Timestamp Forwarding:	2025-01-17T15:52:58.038686
+2025-01-17T15:52:58.038882	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:58.039092	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:59.248900	Accepted connection from ('192.168.159.83', 35604)
+2025-01-17T15:52:59.249660	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:59.249910	
+
+Timestamp Forwarding:	2025-01-17T15:52:59.249900
+2025-01-17T15:52:59.250116	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:59.250317	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:52:59.847638	Accepted connection from ('192.168.159.83', 35612)
+2025-01-17T15:52:59.848534	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:52:59.848795	
+
+Timestamp Forwarding:	2025-01-17T15:52:59.848785
+2025-01-17T15:52:59.848962	Request received from federated server: 192.168.159.83
+2025-01-17T15:52:59.849172	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:00.442923	Accepted connection from ('192.168.159.83', 35616)
+2025-01-17T15:53:00.443798	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:00.444064	
+
+Timestamp Forwarding:	2025-01-17T15:53:00.444054
+2025-01-17T15:53:00.444246	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:00.444448	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:00.982228	Accepted connection from ('192.168.159.83', 35632)
+2025-01-17T15:53:00.982960	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:00.983282	
+
+Timestamp Forwarding:	2025-01-17T15:53:00.983271
+2025-01-17T15:53:00.983470	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:00.983680	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:02.245765	Accepted connection from ('192.168.159.83', 36172)
+2025-01-17T15:53:02.246645	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:02.246921	
+
+Timestamp Forwarding:	2025-01-17T15:53:02.246911
+2025-01-17T15:53:02.247156	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:02.247399	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:02.773351	Accepted connection from ('192.168.159.83', 36188)
+2025-01-17T15:53:02.774193	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:02.774478	
+
+Timestamp Forwarding:	2025-01-17T15:53:02.774467
+2025-01-17T15:53:02.774663	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:02.774865	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:03.398033	Accepted connection from ('192.168.159.83', 36202)
+2025-01-17T15:53:03.398965	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:03.399323	
+
+Timestamp Forwarding:	2025-01-17T15:53:03.399307
+2025-01-17T15:53:03.399540	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:03.399855	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:04.070716	Accepted connection from ('192.168.159.83', 36206)
+2025-01-17T15:53:04.071619	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:04.071897	
+
+Timestamp Forwarding:	2025-01-17T15:53:04.071887
+2025-01-17T15:53:04.072065	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:04.072277	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:04.727554	Accepted connection from ('192.168.159.83', 36216)
+2025-01-17T15:53:04.728479	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:04.728762	
+
+Timestamp Forwarding:	2025-01-17T15:53:04.728750
+2025-01-17T15:53:04.728947	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:04.729148	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:05.253435	Accepted connection from ('192.168.159.83', 36220)
+2025-01-17T15:53:05.254290	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:05.254755	
+
+Timestamp Forwarding:	2025-01-17T15:53:05.254742
+2025-01-17T15:53:05.255257	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:05.255666	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:05.778167	Accepted connection from ('192.168.159.83', 36232)
+2025-01-17T15:53:05.778697	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:05.778833	
+
+Timestamp Forwarding:	2025-01-17T15:53:05.778827
+2025-01-17T15:53:05.778902	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:05.779011	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:06.328351	Accepted connection from ('192.168.159.83', 36242)
+2025-01-17T15:53:06.329043	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:06.329326	
+
+Timestamp Forwarding:	2025-01-17T15:53:06.329312
+2025-01-17T15:53:06.329523	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:06.329776	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:06.864874	Accepted connection from ('192.168.159.83', 36244)
+2025-01-17T15:53:06.865625	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:06.865947	
+
+Timestamp Forwarding:	2025-01-17T15:53:06.865931
+2025-01-17T15:53:06.866187	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:06.866396	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:07.440827	Accepted connection from ('192.168.159.83', 36252)
+2025-01-17T15:53:07.441561	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:07.441828	
+
+Timestamp Forwarding:	2025-01-17T15:53:07.441818
+2025-01-17T15:53:07.442012	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:07.442245	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:07.975810	Accepted connection from ('192.168.159.83', 36258)
+2025-01-17T15:53:07.976539	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:07.976860	
+
+Timestamp Forwarding:	2025-01-17T15:53:07.976849
+2025-01-17T15:53:07.977051	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:07.977265	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:08.586506	Accepted connection from ('192.168.159.83', 36274)
+2025-01-17T15:53:08.587325	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:08.587586	
+
+Timestamp Forwarding:	2025-01-17T15:53:08.587576
+2025-01-17T15:53:08.587770	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:08.587971	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:09.119290	Accepted connection from ('192.168.159.83', 36286)
+2025-01-17T15:53:09.120077	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:09.120531	
+
+Timestamp Forwarding:	2025-01-17T15:53:09.120519
+2025-01-17T15:53:09.120888	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:09.121263	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:09.642085	Accepted connection from ('192.168.159.83', 36288)
+2025-01-17T15:53:09.642836	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:09.643065	
+
+Timestamp Forwarding:	2025-01-17T15:53:09.643055
+2025-01-17T15:53:09.643268	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:09.643475	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:10.169973	Accepted connection from ('192.168.159.83', 36298)
+2025-01-17T15:53:10.170891	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:10.171414	
+
+Timestamp Forwarding:	2025-01-17T15:53:10.171400
+2025-01-17T15:53:10.172310	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:10.172787	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:10.730151	Accepted connection from ('192.168.159.83', 36314)
+2025-01-17T15:53:10.731852	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:10.732141	
+
+Timestamp Forwarding:	2025-01-17T15:53:10.732130
+2025-01-17T15:53:10.732289	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:10.732496	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:11.819354	Accepted connection from ('192.168.159.83', 56586)
+2025-01-17T15:53:11.820380	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:11.820635	
+
+Timestamp Forwarding:	2025-01-17T15:53:11.820620
+2025-01-17T15:53:11.820787	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:11.821006	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:12.348752	Accepted connection from ('192.168.159.83', 56590)
+2025-01-17T15:53:12.349557	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:12.349791	
+
+Timestamp Forwarding:	2025-01-17T15:53:12.349780
+2025-01-17T15:53:12.349921	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:12.350137	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:13.480608	Accepted connection from ('192.168.159.83', 56592)
+2025-01-17T15:53:13.481524	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:13.481756	
+
+Timestamp Forwarding:	2025-01-17T15:53:13.481746
+2025-01-17T15:53:13.481871	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:13.482080	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:14.005886	Accepted connection from ('192.168.159.83', 56604)
+2025-01-17T15:53:14.006738	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:14.006965	
+
+Timestamp Forwarding:	2025-01-17T15:53:14.006955
+2025-01-17T15:53:14.007087	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:14.007351	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:14.662192	Accepted connection from ('192.168.159.83', 56606)
+2025-01-17T15:53:14.663038	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:14.663375	
+
+Timestamp Forwarding:	2025-01-17T15:53:14.663364
+2025-01-17T15:53:14.663511	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:14.663695	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:15.196504	Accepted connection from ('192.168.159.83', 56616)
+2025-01-17T15:53:15.197291	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:15.197523	
+
+Timestamp Forwarding:	2025-01-17T15:53:15.197513
+2025-01-17T15:53:15.197652	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:15.197836	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:15.751446	Accepted connection from ('192.168.159.83', 56620)
+2025-01-17T15:53:15.753064	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:15.753308	
+
+Timestamp Forwarding:	2025-01-17T15:53:15.753298
+2025-01-17T15:53:15.753441	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:15.753630	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:16.290488	Accepted connection from ('192.168.159.83', 56630)
+2025-01-17T15:53:16.291282	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:16.291511	
+
+Timestamp Forwarding:	2025-01-17T15:53:16.291500
+2025-01-17T15:53:16.291639	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:16.291822	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:17.036462	Accepted connection from ('192.168.159.83', 56642)
+2025-01-17T15:53:17.037172	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:17.037390	
+
+Timestamp Forwarding:	2025-01-17T15:53:17.037380
+2025-01-17T15:53:17.037510	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:17.037695	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:17.594605	Accepted connection from ('192.168.159.83', 56652)
+2025-01-17T15:53:17.595365	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:17.595625	
+
+Timestamp Forwarding:	2025-01-17T15:53:17.595614
+2025-01-17T15:53:17.595758	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:17.595943	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:18.105252	Accepted connection from ('192.168.159.83', 56666)
+2025-01-17T15:53:18.105952	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:18.106218	
+
+Timestamp Forwarding:	2025-01-17T15:53:18.106208
+2025-01-17T15:53:18.106348	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:18.106530	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:18.688281	Accepted connection from ('192.168.159.83', 56676)
+2025-01-17T15:53:18.689014	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:18.689242	
+
+Timestamp Forwarding:	2025-01-17T15:53:18.689232
+2025-01-17T15:53:18.689370	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:18.689567	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:19.237987	Accepted connection from ('192.168.159.83', 56682)
+2025-01-17T15:53:19.238711	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:19.238938	
+
+Timestamp Forwarding:	2025-01-17T15:53:19.238928
+2025-01-17T15:53:19.239067	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:19.239320	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:19.771952	Accepted connection from ('192.168.159.83', 56686)
+2025-01-17T15:53:19.772666	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:19.772917	
+
+Timestamp Forwarding:	2025-01-17T15:53:19.772906
+2025-01-17T15:53:19.773054	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:19.773239	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:20.343008	Accepted connection from ('192.168.159.83', 56692)
+2025-01-17T15:53:20.343881	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:20.344123	
+
+Timestamp Forwarding:	2025-01-17T15:53:20.344113
+2025-01-17T15:53:20.344253	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:20.344437	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:20.860143	Accepted connection from ('192.168.159.83', 56706)
+2025-01-17T15:53:20.861532	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:20.862004	
+
+Timestamp Forwarding:	2025-01-17T15:53:20.861990
+2025-01-17T15:53:20.862397	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:20.862782	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:21.420494	Accepted connection from ('192.168.159.83', 41576)
+2025-01-17T15:53:21.421238	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:21.421474	
+
+Timestamp Forwarding:	2025-01-17T15:53:21.421464
+2025-01-17T15:53:21.421665	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:21.421873	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:22.029228	Accepted connection from ('192.168.159.83', 41578)
+2025-01-17T15:53:22.030104	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:22.030370	
+
+Timestamp Forwarding:	2025-01-17T15:53:22.030360
+2025-01-17T15:53:22.030554	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:22.030756	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:22.705970	Accepted connection from ('192.168.159.83', 41586)
+2025-01-17T15:53:22.706785	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:22.707043	
+
+Timestamp Forwarding:	2025-01-17T15:53:22.707033
+2025-01-17T15:53:22.707279	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:22.707478	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:23.523253	Accepted connection from ('192.168.159.83', 41600)
+2025-01-17T15:53:23.524034	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:23.524297	
+
+Timestamp Forwarding:	2025-01-17T15:53:23.524287
+2025-01-17T15:53:23.524460	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:23.524663	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:53:24.105889	Accepted connection from ('192.168.159.83', 41616)
+2025-01-17T15:53:24.106744	PAYLOAD:
+{"client_app_id": ["coap://10.8.0.114:53001@aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa/"], "server_app_id": "coap://10.8.1.114:53002@cccccccc-cccc-cccc-cccc-cccccccccccc/", "expiration_time": "2019-10-15T12:30:50.52Z", "local_qkdn_id": "cccccccc-cccc-cccc-cccc-cccccccccccc", "priority": 5, "qos": {"clients_shared_keys_required": false, "clients_shared_path_enable": false, "jitter": 2, "ttl": 1, "max_bandwidth": 128, "min_bandwidth": 0}, "remote_domain_req": false}
+2025-01-17T15:53:24.107023	
+
+Timestamp Forwarding:	2025-01-17T15:53:24.107012
+2025-01-17T15:53:24.107262	Request received from federated server: 192.168.159.83
+2025-01-17T15:53:24.107466	Error handling client: unsupported operand type(s) for +: 'dict' and 'str'
+2025-01-17T15:56:39.888858	Server listening on port 9999

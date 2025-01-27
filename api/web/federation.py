@@ -8,7 +8,10 @@ class FederationApi:
     def __init__(self):
         self.requests = []
         self.federados = ["192.168.159.83:9999"]
-        self.sdn = "192.168.159.236:80"
+        # self.sdn = "192.168.159.236:80"
+        self.sdn = "10.8.0.90:80"
+
+
 
     # Función para comparar QoS
     def compare_qos(self, qos1, qos2):
@@ -110,13 +113,16 @@ class FederationApi:
             if method == 'POST' and path == '/federation-api':
                 request = json.loads(body)
                 print("PAYLOAD:\n", body)
-
                 # Comprobar si la petición proviene de un servidor federado
                 client_address = client_socket.getpeername()[0]
                 if client_address in [f.split(':')[0] for f in self.federados]:
+                    timestamp = datetime.datetime.now().isoformat()
+                    print("\n\nTimestamp Forwarding:\t", timestamp)
                     print(f"Request received from federated server: {client_address}")
                     # Reenviar al servidor SDN
                     self.forward_to_sdn(request, client_socket)
+                    timestamp = datetime.datetime.now().isoformat()
+                    print("\n\nTimestamp Forwarded:\t", timestamp)
                     client_socket.close()
                     return
 
@@ -159,17 +165,19 @@ class FederationApi:
                         client_socket.close()
                         return
                     # Si no se encontró coincidencia en servidores federados, guardar la solicitud localmente
-                    self.requests.append({
+                    '''self.requests.append({
                         'client_app_id': request['client_app_id'][0],
                         'server_app_id': request['server_app_id'],
                         'qos': request['qos'],
                         'id': request['local_qkdn_id'],
                         'socket': client_socket,
                         'expiration_time': expiration_time
-                    })
+                    })'''
                     response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Peer not found'}}\n"
                     print("RESPUESTA ENVIADA:\n", response)
                     client_socket.sendall(response.encode('utf-8'))
+                    client_socket.close()
+                    return
                     #client_socket.shutdown(socket.SHUT_WR)
             else:
                 response = "HTTP/1.1 400 Bad Request\r\nContent-Type: text/plain\r\n\r\nHTTP/1.1 400 Bad Request\r\nContent-Type: application/json\r\n\r\Innvalid Request"
@@ -181,6 +189,7 @@ class FederationApi:
         except Exception as e:
             print(f"Error handling client: {e}")
             client_socket.close()
+
 
     def server_loop(self):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

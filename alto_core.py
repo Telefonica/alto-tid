@@ -45,6 +45,9 @@ class TopologyCreator:
         self.ts = {}
         self.__endpoints = {}
         self.known_servers = servers
+        now = datetime.now()
+        timestamp = now.strftime("%d%m%Y%H%M")
+        self.logs = f"./log/logs-{timestamp}.log"
 
     ######################
     ### Static Methods ###
@@ -97,6 +100,18 @@ class TopologyCreator:
         addr_long = int(hex_ip, 16) & 0xFFFFFFFF
         struct.pack("<L", addr_long)
         return socket.inet_ntoa(struct.pack("<L", addr_long))
+
+    def log_message(self, message):
+        # Obtener el timestamp actual en formato ISO 8601
+        timestamp = datetime.now().isoformat()
+        # Crear la línea de registro con timestamp y mensaje separados por una tabulación
+        log_entry = f"{timestamp}\t{message}"
+        # Mostrar el mensaje por pantalla
+        print(message)
+        # Guardar el log en el archivo especificado
+        with open(self.logs, 'a') as log_file:
+            log_file.write(log_entry + '\n')
+
 
     ######################
     ### Public methods ###
@@ -360,11 +375,94 @@ class TopologyCreator:
                         return qlink["qkdl_remote"]
         return {}
 
+    def longest_path_min_weight(self, source, target):
+        # Generate all simple paths from source to target
+        all_paths = list(networkx.all_simple_paths(self.__topology, source=source, target=target))
+        self.log_message("ALL paths:\t" + str(all_paths))
+        # print("ALL paths:\t", all_paths)
+        # If no paths exist, return None
+        if not all_paths:
+            return None
+        
+        # Calculate the weight of each path as the minimum edge weight in the path
+        path_weights = []
+        for path in all_paths:
+            min_weight = 99999999
+            for i in range(len(path) - 1):
+                u = path[i]
+                v = path[i + 1]
+                edge_weight = self.__topology[u][v]['weight']
+                self.log_message("Edge weight:\t" + str(edge_weight))
+                if edge_weight < min_weight:
+                    min_weight = edge_weight
+            if min_weight == 99999999:
+                min_weight = -1 
+            path_weights.append(min_weight)
+        
+        # Return the maximum weight among all paths
+        return max(path_weights)
+
     ### Ampliation functions
-    def get_bordernode(self, node=None):
+    def get_bordernode(self, node=None, source="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"):
+        print("\n\n\n\n\n")
+        node_local = ""
+        optimal = -1
+        if 1:
+        #try:
+            if node != None:
+                self.log_message("Node received:\t" + str(node))
+                timestamp = datetime.now().isoformat()
+                print("Timestamp:\t", timestamp)
+                # if node in self.bordernodes.keys():
+                #     for local in self.bordernodes[node].keys():
+                #         if self.bordernodes[node][local]["weight"] > optimal:
+                #             optimal = self.bordernodes[node][local]["weight"]
+                #             node_local = local
+                for remote in self.bordernodes.keys():
+                    for local in self.bordernodes[remote].keys():
+                        peso = self.longest_path_min_weight(source, local)
+                        if remote != node:
+                            peso_remote = min(peso, self.peso_remoto(remote, node))
+                        else:
+                            peso_remote = peso
+                        self.log_message("Local:\t" + str(local) +
+                                        "Remote:\t" + str(remote) + 
+                                        "Peso:\t" + str(peso) + 
+                                        "Peso remoto:\t" + str(peso_remote))
+                        if peso_remote > optimal:
+                            optimal = peso_remote
+                            node_local = local             
+                if node_local:
+                    timestamp = datetime.now().isoformat()
+                    print("Timestamp Return:\t", timestamp)
+                    return str({"local": {"qkdn_id": node_local, "qkdi_id": self.bordernodes[remote][node_local]["local_id"]}, 
+                        "remote": {"qkdn_id": remote, "qkdi_id": self.bordernodes[remote][node_local]["remote_id"]}})
+        #except Exception as e:
+        #    print("ERROR:\t", e)
+        return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})    
+        
+    def peso_remoto(self, bnode, node):
+        peso = -2
+        for server in self.known_servers:
+            try:
+                response = self.ask_other_alto_server(node, server[0], server[1])
+                if response != {}:
+                    self.log_message("DATOS peso remoto:\t" + str(response))
+                    if bnode in response["cost-map"].keys():
+                        peso = response["cost-map"][bnode]    
+            except Exception as e:
+                self.log_message("Conexión infructuosa.")
+                self.log_message("Error:\t" + str(e))
+                continue
+            finally:
+                return peso
+    
+    def old_get_bordernode(self, node=None):
         if node != None:
             if node in self.bordernodes.keys():
-                return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
+                # Recorrer la lista de nodos que hacen BN con ese.
+                local = self.eval_best_link(node)
+                #return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
                 #return str({"border-node":self.bordernodes[node], "remote" : node}) 
             else:
                 for server in self.known_servers:
@@ -390,6 +488,12 @@ class TopologyCreator:
                    except:
                        continue
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
+    
+    def eval_best_link(self, bordern):
+        local = ""
+        cost = -1
+        
+        return local
     
     def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
         # Creamos un socket.
@@ -553,8 +657,9 @@ class TopologyCreator:
                     #print(net.split("/")[-1])
                     if int(net.split("/")[-1]) < 30:
                         return 1
-        except:
+        except Exception as e:
             print("Error en la evaluación c del pid:", pid, self.__net_map)
+            print("Error:\t" , e)
         return 0
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -570,8 +675,9 @@ class TopologyCreator:
                 #print(asn)
                 if asn != our_asn and self.__cost_map[pid][net] == 1:
                     return 1
-        except:
+        except  Exception as e:
             print("Error en la evaluación b del pid:", pid, self.__cost_map)
+            print("Error:\t", e)
         return 0
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -601,12 +707,15 @@ class TopologyCreator:
             topo = s.recv(16384)
             print("Received:" + str(len(topo)) + " Bytes")
             topo = topo.decode()
-            try:
+            if 1:
+            #try:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
                 self.apis = datos["data"]["prefixes"]
                 #print(str(self.__redes))
+                print("NODOS:\t", self.nodos)
+                print("EJES;\t", ejes)
                 for nodo in self.nodos:
                     self.__topology.add_node(nodo)
                 for eje in ejes:
@@ -614,7 +723,10 @@ class TopologyCreator:
                     leje = eval(eje.replace("(","[").replace(")","]"))
                     self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
                     if leje[1] not in self.nodos:
-                        self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
+                        # self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
+                        if leje[1] not in self.bordernodes:
+                            self.bordernodes[leje[1]] = {}
+                        self.bordernodes[leje[1]][leje[0]] = {"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]], "weight":leje[2]}
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
                 #print("Topology loaded:\t", str(self.__vtag))
                 #print("Border Nodes:\t", self.bordernodes)
@@ -624,8 +736,9 @@ class TopologyCreator:
                 #self.__pids = datos["data"]["pids"]
                 #print("Todo correcto Hulio")
                 #self.comput-e_netmap(int(asn), pids)
-            except:
+            ''' except Exception as e:
                 print("Error al procesar:\n", str(topo))
+                print("Error:\t", e)'''
             #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
             #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
             #print(str(self.desire6g_graphs({"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]})))
