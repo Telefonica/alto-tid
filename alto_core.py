@@ -11,6 +11,7 @@ import socket
 import threading
 import ipaddress
 import hashlib
+import request
 
 # from time import sleep
 from datetime import datetime
@@ -19,7 +20,7 @@ from modulos.topology_qkd import TopologyQKD
 # from modulos.topology_ietf import TopologyIetf
 from yang_alto import RespuestasAlto
 from api.web.alto_http_demo import AltoHttp
-
+from alto_logger import AltoLogger
 
 DEFAULT_ASN = 0
 DEF_PORT = 8080
@@ -28,7 +29,7 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.83",8080]]):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.74",8080]]):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -45,6 +46,7 @@ class TopologyCreator:
         self.ts = {}
         self.__endpoints = {}
         self.known_servers = servers
+        self.logger = AltoLogger("log/alto")
 
     ######################
     ### Static Methods ###
@@ -331,10 +333,12 @@ class TopologyCreator:
             return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
         if len(node.split(":"))>0:
             nnode = self.reverse_ip(self.hex_to_ip(node.split(":")[1]))
-            print(nnode)
+            mensaje = f"Node received: {nnode}"
+            self.logger.log_message(mensaje)
         else:
             nnode = self.reverse_ip(self.hex_to_ip(node))
-            print(nnode)
+            mensaje = f"Node received: {nnode}"
+            self.logger.log_message(mensaje)
         props = self.evaluate_qkd_endpoints(nnode)
         if props == -1:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "Properties not found for such PID."})
@@ -360,8 +364,126 @@ class TopologyCreator:
                         return qlink["qkdl_remote"]
         return {}
 
+    def longest_path_min_weight(self, source, target):
+        # Generate all simple paths from source to target
+        all_paths = list(networkx.all_simple_paths(self.__topology, source=source, target=target))
+        # print("ALL paths:\t", all_paths)
+        # If no paths exist, return None
+        if not all_paths:
+            return None
+        
+        # Calculate the weight of each path as the minimum edge weight in the path
+        path_weights = []
+        for path in all_paths:
+            min_weight = 99999999
+            for i in range(len(path) - 1):
+                u = path[i]
+                v = path[i + 1]
+                edge_weight = self.__topology[u][v]['weight']
+                # print("Edge weight:\t", edge_weight)
+                if edge_weight < min_weight:
+                    min_weight = edge_weight
+            if min_weight == 99999999:
+                min_weight = -1 
+            path_weights.append(min_weight)
+        
+        # Return the maximum weight among all paths
+        return max(path_weights)
+
+    def get_remote_nodes(self, server):
+        """
+        Realiza una solicitud HTTP a una dirección IP y puerto dados con un endpoint específico.
+
+        :param ip: Dirección IP como cadena (str)
+        :param puerto: Puerto como entero (int)
+        :param endpoint: Endpoint como cadena (str)
+        :return: Respuesta en formato JSON como diccionario
+        :raises: requests.exceptions.RequestException si hay algún error en la solicitud
+        """
+        # Construir la URL
+        url = f"http://{server[0]}:{server[1]}/costmap"
+
+        try:
+            # Realizar la solicitud GET
+            respuesta = requests.get(url)
+
+            # Verificar si la solicitud fue exitosa
+            respuesta.raise_for_status()
+
+            # Intentar convertir la respuesta a JSON
+            return respuesta.json()
+
+        except requests.exceptions.RequestException as error:
+            print(f"Error al realizar la solicitud: {error}")
+            return None
+
     ### Ampliation functions
-    def get_bordernode(self, node=None):
+    def get_bordernode(self, node=None, source="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"):
+        # print("\n\n\n\n\n")
+        node_local = ""
+        node_remote = ""
+        optimal = -1
+        # try:
+        if 1:
+            if node != None:
+                mensaje = f"\nNode:\t{node}\nREMOTES:\t{self.bordernodes.keys()}"
+                self.logger.log_message(mensaje)
+                # existe = 0
+                # for server in self.known_servers:
+                #     costmap = self.get_remote_nodes(server)
+                #     if node in costmap.keys():
+                #         existe = 1
+                #         break
+                if existe == 0:
+                    return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})                    
+                # print("Node:\t", node, "\nREMOTES:\t", self.bordernodes.keys())
+                # if node in self.bordernodes.keys():
+                #     for local in self.bordernodes[node].keys():
+                #         if self.bordernodes[node][local]["weight"] > optimal:
+                #             optimal = self.bordernodes[node][local]["weight"]
+                #             node_local = local
+                for remote in self.bordernodes.keys():
+                    for local in self.bordernodes[remote].keys():
+                        
+                        #peso = self.longest_path_min_weight(source, remote)
+                        peso_remote = self.bordernodes[remote][local]["weight"]
+                        peso = peso_remote
+                        #if remote != node:
+                        #    peso_remote = min(peso, self.peso_remoto(remote, node))
+                        # else:
+                        #    peso_remote = peso
+                        if peso_remote > optimal:
+                            # print("Local:\t", local, "Remote:\t", remote, "Peso:\t", peso, "Peso remoto:\t", peso_remote)
+                            optimal = peso_remote
+                            node_local = local  
+                            node_remote  = remote           
+                if node_local:
+                    return str({"local": {"qkdn_id": node_local, "qkdi_id": self.bordernodes[node_remote][node_local]["local_id"]}, 
+                        "remote": {"qkdn_id": node_remote, "qkdi_id": self.bordernodes[node_remote][node_local]["remote_id"]}})
+        #except Exception as e:
+        #    print("ERROR:\t", e)
+        return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
+    
+    def peso_remoto(self, bnode, node):
+        peso = -2
+        for server in self.known_servers:
+            try:
+                response = self.ask_other_alto_server(node, server[0], server[1])
+                if response != {}:
+                    # print("DATOS peso remoto:\t", response)
+                    if bnode in response["cost-map"].keys():
+                        peso = response["cost-map"][bnode]    
+            except Exception as e:
+                print("Connection refused.")
+                print("Error:\t", e)
+                continue
+            finally:
+                return peso
+    
+
+    ### Ampliation functions
+    def old_get_bordernode(self, node=None):
+        print("NODE:\t", node)
         if node != None:
             if node in self.bordernodes.keys():
                 return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
@@ -387,7 +509,8 @@ class TopologyCreator:
                                             return str({"local": {"qkdn_id": self.bordernodes[node3]["node"], "qkdi_id": self.bordernodes[node3]["local_id"]}, "remote": {"qkdn_id": node3, "qkdi_id": self.bordernodes[node3]["remote_id"]}})
                                             #return str({"border-node":node2, "remote" : node3})                    
                             #print(response)
-                   except:
+                   except Exception as e:
+                       print(f"Error de conexión: {e}")
                        continue
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
     
@@ -419,7 +542,7 @@ class TopologyCreator:
             result = json.loads(datos)
             #print("Resultado:\t", str(result))
         except ConnectionError as e:
-            print(f"Error de conexión: {e}")
+            print(f"Connection error: {e}")
             result = {}            
         finally:
             s.close()
@@ -596,10 +719,11 @@ class TopologyCreator:
     def mailbox(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind(('localhost',self.port_module))
-        print("Waiting...")      
+        self.logger.log_message("Waiting...")      
         while 1:
             topo = s.recv(16384)
-            print("Received:" + str(len(topo)) + " Bytes")
+            mensaje = f"Received: {str(len(topo))} Bytes"
+            self.logger.log_message(mensaje)
             topo = topo.decode()
             try:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
@@ -614,7 +738,10 @@ class TopologyCreator:
                     leje = eval(eje.replace("(","[").replace(")","]"))
                     self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
                     if leje[1] not in self.nodos:
-                        self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
+                        # self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
+                        if leje[1] not in self.bordernodes:
+                            self.bordernodes[leje[1]] = {}
+                        self.bordernodes[leje[1]][leje[0]] = {"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]], "weight":leje[2]}
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
                 #print("Topology loaded:\t", str(self.__vtag))
                 #print("Border Nodes:\t", self.bordernodes)
@@ -625,7 +752,7 @@ class TopologyCreator:
                 #print("Todo correcto Hulio")
                 #self.comput-e_netmap(int(asn), pids)
             except:
-                print("Error al procesar:\n", str(topo))
+                print("Error during processing code:\n", str(topo))
             #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
             #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
             #print(str(self.desire6g_graphs({"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]})))
@@ -688,15 +815,15 @@ if __name__ == '__main__':
     modules['qkd'] = TopologyQKD((ipm,portm))
     ## Let's delete the config section to make it easier to dockerase it.
 
-    print("Creando ALTO CORE")
+    print("Creating ALTO CORE")
     print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(ipa),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
     
 
 
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83",8080]])
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.74",8080]])
     threads = list()
     for modulo in modules.keys():
-        print("Creando el módulo de topología:",modulo)
+        print("Creating the topology module:",modulo)
         x = threading.Thread(target=alto.gestiona_info, args=(modulo,))#, daemon=True)
         threads.append(x)
         x.start()    
@@ -704,13 +831,13 @@ if __name__ == '__main__':
         
         
         
-        print("Lanzando API REST")
+        print("Launching API REST")
         t_api = threading.Thread(target=alto.run_api)
         t_api.start()
                 #alto.launch_api()
                 
                 
-    print("Lanzando gestor de respuestas")
+    print("Launching the response manager")
     alto.mailbox()
 
 
