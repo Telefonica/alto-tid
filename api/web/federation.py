@@ -211,6 +211,7 @@ class FederationApi:
             self.logger.log_message(f"Error handling client: {e}")
             client_socket.close()
 
+
     def server_loop(self):
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server.bind(('0.0.0.0', 9999))
