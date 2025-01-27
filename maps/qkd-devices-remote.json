@@ -161,6 +161,22 @@
                             "qkd_node": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy", 
                             "interface": 2 
                         } 
+                    },
+		    {
+                        "phys_channel_att": -5,
+                        "phys_qkd_role": "RECEIVER",
+                        "phys_wavelength": "1550",
+                        "qkdl_id": "qkd_link_yyyyyyyy-bbbb-bbbb-bbbb-yyyyyyyyyyyy",
+                        "qkdl_status": "ACTIVE",
+                        "local": {
+                            "qkd_node": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                            "interface": 3
+                        },
+                        "qkdl_type": "PHYS",
+                        "remote": {
+                            "qkd_node": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+                            "interface": 4
+                        }
                     }
                 ]
             }, 

@@ -100,6 +100,18 @@ class TopologyCreator:
         struct.pack("<L", addr_long)
         return socket.inet_ntoa(struct.pack("<L", addr_long))
 
+    def log_message(self, message):
+        # Obtener el timestamp actual en formato ISO 8601
+        timestamp = datetime.now().isoformat()
+        # Crear la línea de registro con timestamp y mensaje separados por una tabulación
+        log_entry = f"{timestamp}\t{message}"
+        # Mostrar el mensaje por pantalla
+        print(message)
+        # Guardar el log en el archivo especificado
+        with open(self.logs, 'a') as log_file:
+            log_file.write(log_entry + '\n')
+
+
     ######################
     ### Public methods ###
     ######################
@@ -486,7 +498,9 @@ class TopologyCreator:
         print("NODE:\t", node)
         if node != None:
             if node in self.bordernodes.keys():
-                return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
+                # Recorrer la lista de nodos que hacen BN con ese.
+                local = self.eval_best_link(node)
+                #return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
                 #return str({"border-node":self.bordernodes[node], "remote" : node}) 
             else:
                 for server in self.known_servers:
@@ -513,6 +527,12 @@ class TopologyCreator:
                        print(f"Error de conexión: {e}")
                        continue
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
+    
+    def eval_best_link(self, bordern):
+        local = ""
+        cost = -1
+        
+        return local
     
     def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
         # Creamos un socket.
@@ -676,8 +696,9 @@ class TopologyCreator:
                     #print(net.split("/")[-1])
                     if int(net.split("/")[-1]) < 30:
                         return 1
-        except:
+        except Exception as e:
             print("Error en la evaluación c del pid:", pid, self.__net_map)
+            print("Error:\t" , e)
         return 0
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -693,8 +714,9 @@ class TopologyCreator:
                 #print(asn)
                 if asn != our_asn and self.__cost_map[pid][net] == 1:
                     return 1
-        except:
+        except  Exception as e:
             print("Error en la evaluación b del pid:", pid, self.__cost_map)
+            print("Error:\t", e)
         return 0
 
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
@@ -725,12 +747,15 @@ class TopologyCreator:
             mensaje = f"Received: {str(len(topo))} Bytes"
             self.logger.log_message(mensaje)
             topo = topo.decode()
-            try:
+            if 1:
+            #try:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
                 self.apis = datos["data"]["prefixes"]
                 #print(str(self.__redes))
+                print("NODOS:\t", self.nodos)
+                print("EJES;\t", ejes)
                 for nodo in self.nodos:
                     self.__topology.add_node(nodo)
                 for eje in ejes:

@@ -60,6 +60,7 @@ class TopologyQKD(AltoModule):
                 # Realiza la petición HTTP 
                 # URL: http://192.168.159.205/webui/qkd/device/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
                 url = "http://" +  self.sdn_api + "/webui/qkd/device/" + str(nodo)
+                #print("URL:\t", url)
                 response = requests.get(url)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
@@ -146,7 +147,8 @@ class TopologyQKD(AltoModule):
                 #links = [ (n["source"], n["target"], 1) for n in d_json["links"] ]        
                 # Load networks --> Not in this version
                 #prefijos = {}
-                      
+                #print("NODOS:\t", nodos)
+                #print("Links:\t", links)
                 snodos = str(nodos).replace("'", '"')
                 prefijos = str(prefijos).replace("'", '"')
                 #slinks = str(links).replace("'", '"').replace("(", "[").replace(")","]")
