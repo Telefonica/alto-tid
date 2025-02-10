@@ -16,11 +16,11 @@ class TopologyQKD(AltoModule):
 
 
     #def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="192.168.159.205"):
-    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="10.8.1.90"):
+    def __init__(self, mb, ruta="./maps/qkd-topology.json", sdn="10.8.0.90"):
         super().__init__(mb)
         self.topology_file = ruta
-        self.topology_file = "./maps/qkd-topology-remote.json"
-        self.topology_devices = "./maps/qkd-devices-remote.json"
+        self.topology_file = "./maps/qkd-topology.json"
+        self.topology_devices = "./maps/qkd-devices.json"
         self.topology_enlaces = "./maps/qkd-enlaces.json"
         self.sdn_api = sdn
         self.logger = AltoLogger("log/alto")
