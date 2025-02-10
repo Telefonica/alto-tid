@@ -11,7 +11,7 @@ import socket
 import threading
 import ipaddress
 import hashlib
-import request
+import requests
 
 # from time import sleep
 from datetime import datetime
@@ -100,16 +100,6 @@ class TopologyCreator:
         struct.pack("<L", addr_long)
         return socket.inet_ntoa(struct.pack("<L", addr_long))
 
-    def log_message(self, message):
-        # Obtener el timestamp actual en formato ISO 8601
-        timestamp = datetime.now().isoformat()
-        # Crear la línea de registro con timestamp y mensaje separados por una tabulación
-        log_entry = f"{timestamp}\t{message}"
-        # Mostrar el mensaje por pantalla
-        print(message)
-        # Guardar el log en el archivo especificado
-        with open(self.logs, 'a') as log_file:
-            log_file.write(log_entry + '\n')
 
 
     ######################
@@ -423,31 +413,32 @@ class TopologyCreator:
             respuesta.raise_for_status()
 
             # Intentar convertir la respuesta a JSON
-            return respuesta.json()
+            return json.loads(respuesta.json().replace("'", '"'))
 
         except requests.exceptions.RequestException as error:
             print(f"Error al realizar la solicitud: {error}")
             return None
 
     ### Ampliation functions
-    def get_bordernode(self, node=None, source="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"):
+    def get_bordernode(self, node=None, source="cccccccc-cccc-cccc-cccc-cccccccccccc"):
         # print("\n\n\n\n\n")
         node_local = ""
         node_remote = ""
         optimal = -1
-        # try:
-        if 1:
+        try:
+        # if 1:
             if node != None:
                 mensaje = f"\nNode:\t{node}\nREMOTES:\t{self.bordernodes.keys()}"
                 self.logger.log_message(mensaje)
                 # existe = 0
                 # for server in self.known_servers:
-                #     costmap = self.get_remote_nodes(server)
+                #     costmap = self.get_remote_nodes(server)["cost-map"]
+                    # print(f"COSTMAP:\t{costmap}")
                 #     if node in costmap.keys():
                 #         existe = 1
                 #         break
-                if existe == 0:
-                    return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})                    
+                # if existe == 0:
+                #     return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})                    
                 # print("Node:\t", node, "\nREMOTES:\t", self.bordernodes.keys())
                 # if node in self.bordernodes.keys():
                 #     for local in self.bordernodes[node].keys():
@@ -470,10 +461,11 @@ class TopologyCreator:
                             node_local = local  
                             node_remote  = remote           
                 if node_local:
+                    self.logger.log_message(f"Local node: {node_local}\t Remote Node: {node_remote}")
                     return str({"local": {"qkdn_id": node_local, "qkdi_id": self.bordernodes[node_remote][node_local]["local_id"]}, 
                         "remote": {"qkdn_id": node_remote, "qkdi_id": self.bordernodes[node_remote][node_local]["remote_id"]}})
-        #except Exception as e:
-        #    print("ERROR:\t", e)
+        except Exception as e:
+            print("ERROR:\t", e)
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
     
     def peso_remoto(self, bnode, node):
@@ -495,7 +487,7 @@ class TopologyCreator:
 
     ### Ampliation functions
     def old_get_bordernode(self, node=None):
-        print("NODE:\t", node)
+        # print("NODE:\t", node)
         if node != None:
             if node in self.bordernodes.keys():
                 # Recorrer la lista de nodos que hacen BN con ese.
@@ -510,13 +502,13 @@ class TopologyCreator:
                         if response != {}:
                             #print("RESPUESTAAA:\t", str(response))
                             #datos = response.split('\n')
-                            print("DATOS:\t", response)
+                            # print("DATOS:\t", response)
                             #.replace('\t', '').replace('\n', '').strip())
                             #print("DATOS:\t", type(response))
                             #datos = dict(dat)
                             for node2 in response["cost-map"].keys():
                                 if node2 in self.nodos:
-                                    print("NODO:\t", node2)
+                                    # print("NODO:\t", node2)
                                     # Potential Optimization problem. Ussing By default: remote node will be the first one saved. Just one Connection between networks.
                                     for node3 in self.bordernodes.keys():
                                         if self.bordernodes[node3]["node"] == node2:
@@ -613,7 +605,7 @@ class TopologyCreator:
     def get_filtered_cost_map(self, filtro):
         if filtro == "qkd":
             topo = self.__topology.copy()
-            print(str(topo.nodes), str(topo.edges))
+            # print(str(topo.nodes), str(topo.edges))
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
                 #nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
@@ -623,10 +615,10 @@ class TopologyCreator:
                 for nodo in topo.nodes:
                     if nodo not in nodos:
                         eliminar.append(nodo)
-                print(str(eliminar))
+                # print(str(eliminar))
                 for nodo in eliminar:
                     topo.remove_node(nodo)
-                print(str(topo.nodes), str(topo.edges))
+                # print(str(topo.nodes), str(topo.edges))
             return self.compute_costmap(topo)
         else:
             return -1
@@ -747,15 +739,15 @@ class TopologyCreator:
             mensaje = f"Received: {str(len(topo))} Bytes"
             self.logger.log_message(mensaje)
             topo = topo.decode()
-            if 1:
-            #try:
+            # if 1:
+            try:
                 datos = json.loads(str(topo).replace('\t', '').replace('\n', '').strip())
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
                 self.apis = datos["data"]["prefixes"]
-                #print(str(self.__redes))
-                print("NODOS:\t", self.nodos)
-                print("EJES;\t", ejes)
+                # print(str(self.__redes))
+                # print("NODOS:\t", self.nodos)
+                # print("EJES;\t", ejes)
                 for nodo in self.nodos:
                     self.__topology.add_node(nodo)
                 for eje in ejes:
