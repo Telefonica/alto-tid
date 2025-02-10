@@ -29,7 +29,7 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.74",8080]]):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.83",8080]]):
         self.__d_modules = modules
         self.__redes = []
         self.__topology = networkx.Graph()
@@ -837,7 +837,7 @@ if __name__ == '__main__':
     
 
 
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.74",8080]])
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83",8080]])
     threads = list()
     for modulo in modules.keys():
         print("Creating the topology module:",modulo)

@@ -14,9 +14,9 @@ from alto_logger import AltoLogger
 class FederationApi:
     def __init__(self):
         self.requests = []
-        self.federados = ["192.168.159.74:9999"]
+        self.federados = ["192.168.159.83:9999"]
         #self.sdn = "192.168.159.205:80"
-        self.sdn = "10.8.1.90:80"
+        self.sdn = "10.8.0.90:80"
         self.logger = AltoLogger("log/api-federacion")
 
 
