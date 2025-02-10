@@ -27,7 +27,7 @@ class FederationApi:
     # Función para manejar peticiones federadas
     def handle_federated_request(self, request):
         # self.clean_expired_requests()  # Eliminar peticiones expiradas antes de buscar coincidencias
-        print("COMPARATIVA:\n", request)
+        # print("COMPARATIVA:\n", request)
         for req in self.requests:
             if (request['client_app_id'][0] == req['client_app_id'] and
                 request['server_app_id'] == req['server_app_id'] and
@@ -40,7 +40,7 @@ class FederationApi:
         return None
 
     # Función para manejar peticiones federadas desde servidores federados
-    def forward_to_sdn(self, request, federated_socket):
+    def forward_to_sdn(self, request, federated_socket, prueba=False):
         try:
             try:
                 j_request = json.loads(request.replace("'", '"'))
@@ -48,10 +48,14 @@ class FederationApi:
                 j_request = request
             mensaje = f"PAYLOAD SEND:\t{j_request}"
             self.logger.log_message(mensaje)
-            endpoint = "http://" + self.sdn + "/webui/qkd/appRegistry/registerQkdApp"
-            response = requests.post(endpoint, json=j_request, headers={"Content-Type": "application/json"})
-            mensaje = f"SDN Response: {response.status_code}, {response.text}"
-            self.logger.log_message(mensaje)
+            if prueba:
+                mensaje = "Test realized correctly with local information"
+                self.logger.log_message(mensaje)
+            else:
+                endpoint = "http://" + self.sdn + "/webui/qkd/appRegistry/registerQkdApp"
+                response = requests.post(endpoint, json=j_request, headers={"Content-Type": "application/json"})
+                mensaje = f"SDN Response: {response.status_code}, {response.text}"
+                self.logger.log_message(mensaje)
 
             # Checking the local status.
             # resp = self.handle_federated_request(j_request)
@@ -136,7 +140,7 @@ class FederationApi:
                     mensaje = f"Request received from federated server: {client_address}"
                     self.logger.log_message(mensaje)
                     # Reenviar al servidor SDN
-                    self.forward_to_sdn(request, client_socket)
+                    self.forward_to_sdn(request, client_socket, False)
                     timestamp = datetime.datetime.now().isoformat()
                     mensaje = f"\nTimestamp Forwarded:\t{timestamp}"
                     self.logger.log_message(mensaje)
@@ -171,7 +175,7 @@ class FederationApi:
                     # self.requests.remove(match)
                     return
                 else:
-                    self.logger.log_message("NO MATCH")
+                    # self.logger.log_message("NO MATCH")
                     # Si no hay coincidencia local, buscar en servidores federados
                     if self.send_to_federated_servers(request):
                         federated_response = {"code": 1, " status": "Match found", "id": request['client_app_id']}
@@ -191,7 +195,7 @@ class FederationApi:
                         'socket': client_socket,
                         'expiration_time': expiration_time
                     })'''
-                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Peer not found'}}\n"
+                    response = f"HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\nHTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n{{'message':'Request forwarded correctly'}}\n"
                     mensaje = f"RESPUESTA ENVIADA:\t {response}"
                     self.logger.log_message(mensaje)
                     client_socket.sendall(response.encode('utf-8'))

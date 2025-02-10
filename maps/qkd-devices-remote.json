@@ -166,7 +166,7 @@
                         "phys_channel_att": -5,
                         "phys_qkd_role": "RECEIVER",
                         "phys_wavelength": "1550",
-                        "qkdl_id": "qkd_link_yyyyyyyy-bbbb-bbbb-bbbb-yyyyyyyyyyyy",
+                        "link_id": "qkd_link_yyyyyyyy-bbbb-bbbb-bbbb-yyyyyyyyyyyy",
                         "qkdl_status": "ACTIVE",
                         "local": {
                             "qkd_node": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
