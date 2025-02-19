@@ -118,7 +118,7 @@ class TopologyQKD(AltoModule):
         #Lista de enlaces
         links = []
         
-        d_json = self.get_topology(False)
+        d_json = self.get_topology(True)
         self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
 
         if d_json != {}:
@@ -129,10 +129,10 @@ class TopologyQKD(AltoModule):
                 nodos = [ nodo["name"] for nodo in d_json["devices"] ]
                 # Load links
                 for nodo in nodos:
-                    nlinks = self.get_device(nodo, False)
+                    nlinks = self.get_device(nodo, True)
                     for nlink in nlinks:
                         # Pedimos el peso
-                        peso = self.get_weight(nlink["link_id"], False)                        
+                        peso = self.get_weight(nlink["link_id"], True)                        
                         local = nlink["local"]["qkd_node"]
                         remote = nlink["remote"]["qkd_node"]
                         link = (local, nlink["remote"]["qkd_node"], peso)
