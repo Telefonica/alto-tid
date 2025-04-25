@@ -5,12 +5,25 @@ import socket
 import json
 from urllib.parse import urlparse, parse_qs
 from alto_logger import AltoLogger
+import networkx as nx
+from api.web.alto_gui import AltoGui
+
+import datetime
+import json
+import requests
+from sys import path
+import os
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+target_dir = os.path.normpath(os.path.join(current_dir, '../../'))
+path.insert(0, target_dir)
+
 
 ERRORES = {"sintax": "E_SYNTAX", "campo": "E_MISSING_FIELD", "tipo": "E_INVALID_FIELD_TYPE", "valor": "E_INVALID_FIELD_VALUE"}
 
 class AltoHttp:
 
-    def __init__(self, a, ip="127.0.0.1", port=8080):
+    def __init__(self, a, ip="127.0.0.1", port=8888):
         self.alto = a
         self.port = port
         self.ip = ip
@@ -26,9 +39,28 @@ class AltoHttp:
             '/all': self.api_all,
             '/best': self.api_shortest,
             '/costmap/filter': self.api_costs_by_pid,
-            '/get-bordernode': self.api_bordernode
+            '/get-bordernode': self.api_bordernode,
+            '/federation-api': self.api_federation,
         }
         self.logger = AltoLogger("log/alto")
+        # Visualización gráfica de la topología si está disponible
+        self.app = None
+        try:
+            self.gui = AltoGui(self.alto)
+            self.app = self.gui.app
+            print("GUI initialized")
+        except Exception as e:
+            self.logger.log_message(f"No se pudo inicializar la GUI de red: {e}")
+
+        self.created_services = []     # List for storing created services
+
+        print("Dash app initialized")
+        self.requests = []
+        self.federados = ["192.168.159.83:9998"]
+        #self.sdn = "192.168.159.205:80"
+        self.sdn = "10.8.0.90:80"
+        self.logger.log_message("Federation API initialized")
+
 
     ####################################
     ##          APIs functions        ##
@@ -300,10 +332,22 @@ class AltoHttp:
             node = data.get('node', "")
             if node != "" :
                 #print("NODE:\n", node)
-                mens_b = bytes(json.dumps(self.alto.get_bordernode(node)),encoding="utf-8")
-                return bytes("HTTP/1.1 {status_code}\r\nContent-Type: application/json\r\n\r\n", encoding="utf-8") + mes_b
+                resp = json.loads(self.alto.get_bordernode(node).replace("'", '"'))
+                print("Highlighting link:", resp)
+
+                border_node = resp.get("local")
+                remote_node = resp.get("remote")
+
+                # Si existe GUI, remarcar el enlace
+                if self.gui:
+                    #print("Highlighting link:", border_node, remote_node)
+                    self.gui.highlight_link(border_node["qkdn_id"], remote_node["qkdn_id"])
+
+                return self.build_response(200, resp)
+                # mens_b = bytes(json.dumps(self.alto.get_bordernode(node)),encoding="utf-8")
+                # return bytes("HTTP/1.1 {status_code}\r\nContent-Type: application/json\r\n\r\n", encoding="utf-8") + mes_b
                 #return self.alto.get_bordernode(node)
-                return self.build_response(200, self.alto.get_bordernode(node))
+                # return self.build_response(200, self.alto.get_bordernode(node))
             return self.build_response(400, {"ERROR": ERRORES["campo"], "syntax-error": "Properties field missing. Property fields: node and/or filter"})
         
     def api_all(self, method, params):
@@ -363,3 +407,87 @@ class AltoHttp:
         '''
         texto_sano = str(texto).replace('#', '').replace('--', '').replace("'", "").replace("//", "").replace('_', '').replace('<', '').replace('>', '').replace('&', '').replace('%', '').replace("{", '').replace("}", "").replace('"', "").replace("-", "")
         return texto_sano
+    
+    ####################################
+    ##   Federation API functions     ##
+    ####################################
+
+    def api_federation(self, method, params):
+        if method != 'POST':
+            return self.build_response(400, {"ERROR": "E_METHOD", "message": "Only POST allowed."})
+
+        try:
+            raw_data = params.get("data", None)
+            if not raw_data:
+                return self.build_response(400, {"ERROR": "E_NO_BODY", "message": "No body found in request."})
+
+            request = json.loads(raw_data)
+            client_address = request.get('remote_ip', None)  # IP del cliente (pasada explícitamente si es federado)
+            if not client_address:
+                client_address = 'unknown'
+
+            self.logger.log_message(f"Federation Payload from {client_address}: {request}")
+
+            expiration_time = datetime.datetime.strptime(request['expiration_time'], '%Y-%m-%dT%H:%M:%S.%fZ')
+
+            # Verificar si la IP proviene de un servidor federado
+            if client_address in [f.split(':')[0] for f in self.federados]:
+                self.logger.log_message(f"Request from federated server {client_address}")
+                # En producción, aquí se haría forward a SDN
+                return self.build_response(200, {"status": "forwarded", "code": 0})
+
+            match = self.handle_federated_request(request)
+            if match:
+                return self.build_response(200, {"status": "Match found", "id": match['id'], "code": 1})
+            else:
+                if self.send_to_federated_servers(request):
+                    return self.build_response(200, {"status": "Match found in federated server", "id": request['client_app_id'], "code": 1})
+                # Si no hay match, guardar la petición
+                self.requests.append({
+                    'client_app_id': request['client_app_id'][0],
+                    'server_app_id': request['server_app_id'],
+                    'qos': request['qos'],
+                    'id': request['local_qkdn_id'],
+                    'expiration_time': expiration_time,
+                })
+                return self.build_response(200, {"status": "Stored for future matching", "code": 0})
+
+        except Exception as e:
+            self.logger.log_message(f"Federation API error: {e}")
+            return self.build_response(500, {"ERROR": "E_SERVER_ERROR", "message": str(e)})
+
+
+
+    def handle_federated_request(self, request):
+        for req in self.requests:
+            if (request['client_app_id'][0] == req['client_app_id'] and
+                request['server_app_id'] == req['server_app_id'] and
+                self.compare_qos(request['qos'], req['qos'])):
+                self.requests.remove(req)  # Eliminar la solicitud coincidente
+                self.logger.log_message(f"Match found: {req}")
+                return req  # Devolver la solicitud coincidente
+        return None
+
+
+    def send_to_federated_servers(self, request):
+        for federado in self.federados:
+            try:
+                mensaje = f"Sending to federated: {federado}"
+                self.logger.log_message(mensaje)
+
+                endpoint = f"http://{federado}/federation-api"
+                enriched_request = request.copy()
+                enriched_request["remote_ip"] = self.ip  # Añadimos IP para identificar origen
+
+                response = requests.post(endpoint, json=enriched_request, headers={"Content-Type": "application/json"})
+                mess = str(response.text)
+                smess = mess.split("\r\n\r\n")[-1] if "\r\n\r\n" in mess else mess
+                self.logger.log_message(f"Federated server response: {smess}")
+
+                j_res = json.loads(smess)
+                if j_res.get("code") == 1:
+                    return True
+            except Exception as e:
+                self.logger.log_message(f"Error connecting to federated server {federado}: {e}")
+        return False
+        

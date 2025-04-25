@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
+import time
 import ipaddress
 import os
 import json
@@ -13,41 +14,126 @@ import ipaddress
 import hashlib
 import requests
 
-# from time import sleep
+from time import sleep
 from datetime import datetime
 # from modulos.topology_bgp import TopologyBGP
 from modulos.topology_qkd import TopologyQKD
 # from modulos.topology_ietf import TopologyIetf
 from yang_alto import RespuestasAlto
-from api.web.alto_http_demo import AltoHttp
+from api.web.alto_http import AltoHttp
 from alto_logger import AltoLogger
+from api.web.federation import FederationApi
+from networkx.readwrite import json_graph
 
 DEFAULT_ASN = 0
-DEF_PORT = 8080
-REMOTE_PORT = 8080
+DEF_PORT = 8888
+REMOTE_PORT = 8888
 DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000, servers=[["192.168.159.83",8080]]):
+    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8888, portm=5000, servers=[["192.168.159.83",8080]]):
         self.__d_modules = modules
         self.__redes = []
-        self.__topology = networkx.Graph()
+        self.topology = networkx.Graph()
         self.__cost_map = {}
         self.__net_map = {}
         self.nodos = []
         self.bordernodes = {}
         self.ip = ip
-        self.puerto = puerto
-        self.port_module = portm
-        self.__api = AltoHttp(self, ip, puerto)        
-        self.__vtag = 0
-        self.__respuesta = RespuestasAlto()
         self.ts = {}
         self.__endpoints = {}
         self.known_servers = servers
-        self.logger = AltoLogger("log/alto")
+        self.remotes = {}
+        for server in self.known_servers:
+            self.remotes[server[0]] = networkx.Graph()
+        self.puerto = puerto
+        self.port_module = portm
+        self.__api = AltoHttp(self, ip, puerto)        
+        self.gui_app = self.__api.app        
+        self.__vtag = 0
+        self.__respuesta = RespuestasAlto()
 
+        self.polling_interval = 60  # segundos
+        self.start_remote_polling()    
+            
+        self.logger = AltoLogger("log/alto")
+        
+        # self.federation = FederationApi()
+        # self.init_federation_api()
+
+    def init_federation_api(self):
+        hilo_federation = threading.Thread(target=self.federation.server_loop, daemon=True)
+        hilo_federation.start()
+
+
+
+    def costmap_to_node_link(self, data):
+        costmap = data.get('cost-map', {})
+        G = networkx.Graph()
+
+        for src, targets in costmap.items():
+            G.add_node(src)  # asegúrate de agregar el nodo incluso si no tiene edges
+            for dst, weight in targets.items():
+                if not G.has_edge(src, dst):  # evitar duplicados
+                    G.add_edge(src, dst, weight=weight)
+
+        # Convertir a formato node-link (JSON serializable)
+        return json_graph.node_link_data(G)
+
+
+    def fetch_remote_topology(self, server):
+        try:
+            url = f"http://{server[0]}:{server[1]}/costmap"
+            response = requests.get(url, timeout=5)
+
+            if response.status_code == 200:
+                try:
+                    s_data = response.json()
+                    data = json.loads(s_data.replace("'", '"'))
+                    print("Hola 1")
+                except ValueError:
+                    # Si no es JSON válido, intentar decodificar desde string crudo
+                    raw_text = response.text.strip()
+                    print("Hola 2")
+                    # Reemplaza comillas simples por dobles, escapando adecuadamente
+                    safe_text = re.sub(r"'", '"', raw_text)
+                    try:
+                        data = json.loads(safe_text.replace("'", '"'))
+                        print("Hola 3")
+                    except json.JSONDecodeError as e:
+                        print("Hola 4")
+                        print(f"[ERROR] No se pudo decodificar como JSON ni desde texto en {server}: {e}")
+                        print(f"[DEBUG] Texto recibido:\n{raw_text}")
+                        return
+                print("[INFO] Datos obtenidos de la topología remota:", data)
+                if isinstance(data, dict):
+                    try:
+                        print("Hola 5")
+                        data_node_link = self.costmap_to_node_link(data)
+                        graph = networkx.node_link_graph(data_node_link)
+                        self.remotes[server[0]] = graph
+                        print(f"[INFO] Topología actualizada desde {server}")
+                    except Exception as e:
+                        print(f"[ERROR] Fallo al convertir JSON a grafo desde {server}: {e}")
+                else:
+                    print(f"[WARN] Datos no válidos desde {server}: no es un diccionario JSON")
+            else:
+                print(f"[WARN] Fallo al obtener topología de {server}, status: {response.status_code}")
+        except requests.RequestException as e:
+            print(f"[ERROR] Error al contactar con {server}: {e}")
+
+    def poll_remotes(self):
+        while True:
+            for server in self.known_servers:
+                self.fetch_remote_topology(server)
+            time.sleep(self.polling_interval)
+
+    def start_remote_polling(self):
+        thread = threading.Thread(target=self.poll_remotes, daemon=True)
+        thread.start()
+        
+        
     ######################
     ### Static Methods ###
     ######################
@@ -160,7 +246,7 @@ class TopologyCreator:
         # shortest_paths is a dict by source and target that contains the shortest path length for
         # that source and destination
         if topo == None:
-            topo = self.__topology
+            topo = self.topology
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
@@ -256,7 +342,7 @@ class TopologyCreator:
         if pid:
             if type(pid) is not str:
                 return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-            #if pid not in self.__topology.nodes():
+            #if pid not in self.topology.nodes():
             #    return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
             if properties:
                 if type(properties) is not str:
@@ -368,7 +454,7 @@ class TopologyCreator:
 
     def longest_path_min_weight(self, source, target):
         # Generate all simple paths from source to target
-        all_paths = list(networkx.all_simple_paths(self.__topology, source=source, target=target))
+        all_paths = list(networkx.all_simple_paths(self.topology, source=source, target=target))
         # print("ALL paths:\t", all_paths)
         # If no paths exist, return None
         if not all_paths:
@@ -381,7 +467,7 @@ class TopologyCreator:
             for i in range(len(path) - 1):
                 u = path[i]
                 v = path[i + 1]
-                edge_weight = self.__topology[u][v]['weight']
+                edge_weight = self.topology[u][v]['weight']
                 # print("Edge weight:\t", edge_weight)
                 if edge_weight < min_weight:
                     min_weight = edge_weight
@@ -568,7 +654,7 @@ class TopologyCreator:
         Output: list of nodes that conforms the path between a and b.
         '''
         try:
-            return networkx.dijkstra_path(self.__topology, a, b)
+            return networkx.dijkstra_path(self.topology, a, b)
         except networkx.exception.NetworkXNoPath as e:
             return []
         except Exception as e:
@@ -604,7 +690,7 @@ class TopologyCreator:
     ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
     def get_filtered_cost_map(self, filtro):
         if filtro == "qkd":
-            topo = self.__topology.copy()
+            topo = self.topology.copy()
             # print(str(topo.nodes), str(topo.edges))
             with open('./endpoints/qkd-properties.json','r') as archivo:
                 qprop = json.load(archivo)
@@ -749,11 +835,12 @@ class TopologyCreator:
                 # print("NODOS:\t", self.nodos)
                 # print("EJES;\t", ejes)
                 for nodo in self.nodos:
-                    self.__topology.add_node(nodo)
+                    self.topology.add_node(nodo)
+                    self.topology.nodes[nodo]["type"] = "local"
                 for eje in ejes:
                     #print(eje)
                     leje = eval(eje.replace("(","[").replace(")","]"))
-                    self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
+                    self.topology.add_edge(leje[0], leje[1], weight=leje[2])
                     if leje[1] not in self.nodos:
                         # self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
                         if leje[1] not in self.bordernodes:
@@ -762,7 +849,7 @@ class TopologyCreator:
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
                 #print("Topology loaded:\t", str(self.__vtag))
                 #print("Border Nodes:\t", self.bordernodes)
-                self.__cost_map = self.compute_costmap(self.__topology)
+                self.__cost_map = self.compute_costmap(self.topology)
                 #print(datos["data"]["pids"])
                 #self.compute_netmap()
                 #self.__pids = datos["data"]["pids"]
@@ -812,49 +899,42 @@ class TopologyFileWriter:
         self.write_file(self.__same_node_ips, content)
 
 
-if __name__ == '__main__':
-    '''speaker_bgp = ManageBGPSpeaker()
-    exabgp_process = speaker_bgp.check_tcp_connection()
-    
-    topology_creator = TopologyCreator(exabgp_process,0)
-    topology_creator.manage_ietf_speaker_updates()
-    '''
-    
-  
+if __name__ == '__main__' and os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
     mode = 0
-
     modules = {}
-    ipm = "localhost" 
+    ipm = "localhost"
     ipa = "0.0.0.0"
-    DEF_PORT = 8080
+    DEF_PORT = 8888
     portm = 5001
-    ruta = "./maps/" + "qkd-topology.json"
-    modules['qkd'] = TopologyQKD((ipm,portm))
-    ## Let's delete the config section to make it easier to dockerase it.
+    ruta = "./maps/qkd-topology.json"
+    modules['qkd'] = TopologyQKD((ipm, portm))
 
     print("Creating ALTO CORE")
-    print("Modules:\t",str(modules),"\nMode:\t",str(mode),"\nAPI IP:\t",str(ipa),"\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
-    
+    print("Modules:\t", str(modules), "\nMode:\t", str(mode), "\nAPI IP:\t", str(ipa), "\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
 
+    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83", 8080]])
 
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83",8080]])
-    threads = list()
+    # Hilos para los módulos
+    threads = []
     for modulo in modules.keys():
-        print("Creating the topology module:",modulo)
-        x = threading.Thread(target=alto.gestiona_info, args=(modulo,))#, daemon=True)
+        print("Creating the topology module:", modulo)
+        x = threading.Thread(target=alto.gestiona_info, args=(modulo,))
         threads.append(x)
-        x.start()    
-        
-        
-        
-        
-        print("Launching API REST")
-        t_api = threading.Thread(target=alto.run_api)
-        t_api.start()
-                #alto.launch_api()
-                
-                
+        x.start()
+
+    # Hilo para mailbox
     print("Launching the response manager")
-    alto.mailbox()
+    t_mailbox = threading.Thread(target=alto.mailbox)
+    t_mailbox.start()
 
+    # Hilo para lógica de la API REST (si es más que solo Dash)
+    print("Launching API REST logic")
+    t_api_logic = threading.Thread(target=alto._TopologyCreator__api.run)
+    t_api_logic.start()
 
+    # GUI Dash: en el hilo principal
+    print("Starting Dash GUI on main thread")
+    if alto.gui_app:
+        alto.gui_app.run(debug=True, host="0.0.0.0", port=8050, use_reloader=False)
+    else:
+        print("Error: No se pudo iniciar la GUI de Dash.")

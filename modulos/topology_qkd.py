@@ -10,7 +10,7 @@ from modulos.alto_module import AltoModule
 from alto_logger import AltoLogger
 
 DEFAULT_ASN = 0
-
+PRUEBA = True
 
 class TopologyQKD(AltoModule):
 
@@ -26,8 +26,9 @@ class TopologyQKD(AltoModule):
         self.logger = AltoLogger("log/alto")
 
 
+
     # Get Topology
-    def get_topology(self, prueba=False):
+    def get_topology(self, prueba=PRUEBA):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
@@ -48,7 +49,7 @@ class TopologyQKD(AltoModule):
             return {}
         
     # Get Devices
-    def get_device(self, nodo, prueba=False):
+    def get_device(self, nodo, prueba=PRUEBA):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
@@ -72,7 +73,7 @@ class TopologyQKD(AltoModule):
             self.logger.log_message(f"Execution error:\t{E}")
             return {}
 
-    def get_weight(self, link, prueba=False):
+    def get_weight(self, link, prueba=PRUEBA):
         try:
             # Si es prueba, lee del archivo local
             if prueba:
@@ -118,7 +119,7 @@ class TopologyQKD(AltoModule):
         #Lista de enlaces
         links = []
         
-        d_json = self.get_topology(True)
+        d_json = self.get_topology()
         self.vtag = hashlib.sha3_384((str(int(datetime.timestamp(datetime.now())*1000000))).encode()).hexdigest()[:64]
 
         if d_json != {}:
@@ -129,10 +130,10 @@ class TopologyQKD(AltoModule):
                 nodos = [ nodo["name"] for nodo in d_json["devices"] ]
                 # Load links
                 for nodo in nodos:
-                    nlinks = self.get_device(nodo, True)
+                    nlinks = self.get_device(nodo)
                     for nlink in nlinks:
                         # Pedimos el peso
-                        peso = self.get_weight(nlink["link_id"], True)                        
+                        peso = self.get_weight(nlink["link_id"])                        
                         local = nlink["local"]["qkd_node"]
                         remote = nlink["remote"]["qkd_node"]
                         link = (local, nlink["remote"]["qkd_node"], peso)

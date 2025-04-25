@@ -3,6 +3,7 @@ import socket
 import threading
 import json
 import requests
+import networkx as nx
 from sys import path
 import os
 
@@ -10,6 +11,10 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 target_dir = os.path.normpath(os.path.join(current_dir, '../../'))
 path.insert(0, target_dir)
 from alto_logger import AltoLogger
+from api.web.alto_gui import AltoGui
+
+
+PRUEBA = True
 
 class FederationApi:
     def __init__(self):
@@ -18,11 +23,31 @@ class FederationApi:
         #self.sdn = "192.168.159.205:80"
         self.sdn = "10.8.0.90:80"
         self.logger = AltoLogger("log/api-federacion")
-
-
+        self.network  = nx.Graph()
+        self.gui = AltoGui(self.network.nodes(), self.network.edges())
+        self.logger.log_message("Federation API initialized")
+        
     # Función para comparar QoS
     def compare_qos(self, qos1, qos2):
         return all(qos1.get(k) == qos2.get(k) for k in qos1)
+
+    def update_network(self, network):
+        for node in network.nodes():
+            if node in self.network.nodes():
+                # Actualizar atributos del nodo existente
+                self.network.nodes[node].update(network.nodes[node])
+            else:
+                self.network.add_node(node, **network.nodes[node])
+        for edge in network.edges():
+            if edge in self.network.edges():
+                # Actualizar atributos de la arista existente
+                self.network.edges[edge].update(network.edges[edge])
+            else:
+                # Añadir la arista al grafo 
+                self.network.add_edge(edge[0], edge[1], **network.edges[edge])
+        self.logger.log_message("Network updated")
+        
+
 
     # Función para manejar peticiones federadas
     def handle_federated_request(self, request):
@@ -40,7 +65,7 @@ class FederationApi:
         return None
 
     # Función para manejar peticiones federadas desde servidores federados
-    def forward_to_sdn(self, request, federated_socket, prueba=False):
+    def forward_to_sdn(self, request, federated_socket, prueba=PRUEBA):
         try:
             try:
                 j_request = json.loads(request.replace("'", '"'))
@@ -140,7 +165,7 @@ class FederationApi:
                     mensaje = f"Request received from federated server: {client_address}"
                     self.logger.log_message(mensaje)
                     # Reenviar al servidor SDN
-                    self.forward_to_sdn(request, client_socket, False)
+                    self.forward_to_sdn(request, client_socket)
                     timestamp = datetime.datetime.now().isoformat()
                     mensaje = f"\nTimestamp Forwarded:\t{timestamp}"
                     self.logger.log_message(mensaje)
