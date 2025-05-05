@@ -1,6 +1,5 @@
 import dash
-from dash import dcc, html, Input, Output, State
-import pandas as pd
+from dash import dcc, html, Input, Output
 import networkx as nx
 import plotly.graph_objs as go
 
@@ -12,19 +11,33 @@ ANNOTATIONS = "#000000" #
 LINKS = "#b0b6ca"
 
 class AltoGui:
+    '''
+    Clase para crear la interfaz gráfica de usuario (GUI) para la visualización de la topología
+    de red. Esta clase utiliza Dash y Plotly para crear una aplicación web que muestra un grafo
+    interactivo de la topología de red. La clase también incluye métodos para actualizar el grafo
+    en tiempo real y resaltar enlaces seleccionados.
+    '''
     def __init__(self, alto):
         self.alto = alto
         print("Remotes:", self.alto.remotes)
         self.get_graph_callback = self.get_merged_graph  # función que devuelve el grafo de networkx
-        # self.df_llm    = pd.read_excel('Topology_Reference.xlsx', sheet_name='LLM')         # LLMs
         self.positions = {}
         self.created_services = []     # List for storing created services
         self.app = dash.Dash(__name__) # Create the Dash application
         self.create_dash()          # Initialize the Dash application
         self.highlighted_edges = []
+        self.graph = None #TO be initialized later
         # self.app.run(debug=True)
 
     def get_merged_graph(self):
+        '''
+        Combina la topología local y las remotas en un solo grafo.
+        La topología local se obtiene de self.alto.topology y las remotas de self.alto.remotes.
+        Se copian los nodos y enlaces de las topologías remotas al grafo base.
+        Si un nodo ya existe en el grafo base, se actualizan sus atributos.
+        Los enlaces se añaden solo si no existen en el grafo base.
+        :return: Un grafo de NetworkX que representa la topología combinada.
+        '''
         base_graph = self.alto.topology.copy()  # Copia para no alterar el original
 
         for remote_graph in self.alto.remotes.values():
@@ -47,9 +60,23 @@ class AltoGui:
 
 
     def add_node(self, node, type="local"):
+        '''
+        Añade un nodo al grafo con un tipo y color específicos.
+        :param node: El nodo a añadir.
+        :param type: El tipo de nodo (local, remote, etc.).
+        :return: None
+        '''
         self.graph.add_node(node, type=type, color=TYPE_COLORS.get(type, 'gray'))
 
     def add_edge(self, node1, node2, weight=1):
+        '''
+        Añade un enlace entre dos nodos en el grafo.
+        Si alguno de los nodos no existe, se añade al grafo.
+        :param node1: El primer nodo.
+        :param node2: El segundo nodo.
+        :param weight: El peso del enlace.
+        :return: None
+        '''
         if node1 not in self.graph.nodes:
             self.add_node(node1)
         if node2 not in self.graph.nodes:
@@ -57,10 +84,16 @@ class AltoGui:
         if self.graph.has_edge(node1, node2):
             self.graph[node1][node2]['weight'] = weight
         else:
-            self.graph.add_edge(node1, node2, weight=weight)    
-        
-        
-    def assign_default_positions(self, missing_positions, existing_positions):    # Assign random positions to nodes with no position
+            self.graph.add_edge(node1, node2, weight=weight)
+
+
+    def assign_default_positions(self, missing_positions, existing_positions):
+        '''
+        Asigna posiciones por defecto a los nodos que no tienen una posición definida.
+        :param missing_positions: Lista de nodos que no tienen posición definida.
+        :param existing_positions: Diccionario de posiciones existentes.
+        :return: Diccionario actualizado de posiciones.
+        '''
         x = 15
         y= 130
         for node in missing_positions:
@@ -71,6 +104,10 @@ class AltoGui:
     # Update the position dictionary
 
     def create_network_graph(self):
+        '''
+        Crea el grafo de la red utilizando Plotly y lo devuelve como un objeto de figura.
+        :return: Un objeto de figura de Plotly que representa el grafo de la red.
+        '''
         self.graph = self.get_graph_callback()
 
         for node in self.graph.nodes():
@@ -79,6 +116,13 @@ class AltoGui:
 
         if not self.positions or set(self.graph.nodes()) != set(self.positions.keys()):
             self.positions = nx.circular_layout(self.graph)
+            for node in self.graph.nodes():
+                if self.graph.nodes[node].get('type', 'unknown') == "local":
+                    self.positions[node] = \
+                        (self.positions[node][0] + 1.5, self.positions[node][1])
+                else:
+                    self.positions[node] = \
+                        (self.positions[node][0] - 1.5, self.positions[node][1])
 
         pos = self.positions
         edge_traces = []
@@ -112,7 +156,7 @@ class AltoGui:
             annotations.append(dict(
                 x=mid_x,
                 y=mid_y,
-                text=edege_hover_text.replace("<br>", "<br>"), 
+                text=edege_hover_text.replace("<br>", "<br>"),
                 showarrow=False,
                 font=dict(size=14, color=ANNOTATIONS),
                 align="center",
@@ -127,15 +171,6 @@ class AltoGui:
                 print("Highlighted edges:", self.highlighted_edges)
                 color = TYPE_COLORS['selected']
                 line_width = 4
-                #reversed_edges = [(b, a) for a, b in highlighted_edges]
-                #if (u, v) in highlighted_edges or (u, v) in reversed_edges:
-                #    color = 'red'    
-                #elif equally_weighted_edges and ((u, v) in equally_weighted_edges or (v, u) in equally_weighted_edges):
-                #    color = 'green'
-                #else:
-                #    color = 'rgba(136,136,136,0.2)'
-            #elif equally_weighted_edges and ((u, v) in equally_weighted_edges or (v, u) in equally_weighted_edges):
-            #    color = 'green'
             else:
                 color = LINKS
                 line_width = 2
@@ -168,22 +203,34 @@ class AltoGui:
                     text += f"<br>{key}: {value}"
 
             node_trace['text'] += (text,)
-            # if self.highlighted_edges:
-            #     involved_nodes = set(n for e in self.highlighted_edges for n in e)
-            #     if node in involved_nodes:
-            #         color = self.graph.nodes[node]['color']
-            #         line_width = 2
-            #     else:
-            #         color = 'rgba(136,136,136,0.2)'
-            #         line_width = 0
-            # else:
-            #     color = self.graph.nodes[node]['color']
-            #     line_width = 2
             color = self.graph.nodes[node]['color']
             line_width = 2
             node_trace['mode'] = 'markers'
             node_trace['marker']['color'] += (color,)
             node_trace['marker']['line']['width'] += (line_width,)
+
+        # Fondo: mitad izquierda gris, mitad derecha rojo pálido
+        shapes = [
+            # Mitad izquierda - gris
+            dict(
+                type="rect",
+                xref="paper", yref="paper",
+                x0=0, y0=0, x1=0.5, y1=1,
+                fillcolor="lightgray",
+                line=dict(width=0),
+                layer="below"
+            ),
+            # Mitad derecha - rojo pálido
+            dict(
+                type="rect",
+                xref="paper", yref="paper",
+                x0=0.5, y0=0, x1=1, y1=1,
+                fillcolor="#ffe6e6",  # rojo pálido
+                line=dict(width=0),
+                layer="below"
+            )
+        ]
+
 
         fig = go.Figure(data=edge_traces + [node_trace],
                         layout=go.Layout(
@@ -192,11 +239,16 @@ class AltoGui:
                             margin=dict(b=0, l=0, r=0, t=40),
                             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                            annotations=annotations  
+                            annotations=annotations,
+                            shapes=shapes   # fondo dividido
                         ))
         return fig
 
     def create_dash(self):
+        '''
+        Crea la aplicación Dash y define el diseño de la interfaz gráfica.
+        :return: None
+        '''
         self.app.layout = html.Div([
             html.Div([
                 html.H1("Network Federation", style={
@@ -229,12 +281,15 @@ class AltoGui:
                 'font-family': 'Segoe UI, sans-serif',
                 'flexGrow': '1'
             }),
-            
+
             # Pie de página con logos
             html.Div([
-                html.Img(src='assets/eu_funded_en.jpg', style={'height': '60px', 'margin': '0 20px'}),
-                html.Img(src='assets/discretion_logo.png', style={'height': '60px', 'margin': '0 20px'}),
-                html.Img(src='assets/logo_mindef.jpg', style={'height': '60px', 'margin': '0 20px'})
+                html.Img(src='assets/eu_funded_en.jpg',
+                         style={'height': '60px', 'margin': '0 20px'}),
+                html.Img(src='assets/discretion_logo.png',
+                         style={'height': '60px', 'margin': '0 20px'}),
+                html.Img(src='assets/logo_mindef.jpg',
+                         style={'height': '60px', 'margin': '0 20px'})
             ], style={
                 'display': 'flex',
                 'justifyContent': 'center',
@@ -255,6 +310,13 @@ class AltoGui:
 
 
     def create_service(self, n_clicks, origin, destination):
+        '''
+        Crea un servicio entre dos nodos seleccionados en el grafo.
+        :param n_clicks: Número de clics en el botón de crear servicio.
+        :param origin: Nodo de origen.
+        :param destination: Nodo de destino.
+        :return: Mensaje de éxito o error y una lista de opciones para el menú desplegable.
+        '''
         if not n_clicks or not origin or not destination:
             return "Por favor selecciona nodos válidos para crear un servicio.", []
 
@@ -267,8 +329,10 @@ class AltoGui:
 
             for neighbor in neighbors:
                 try:
-                    path = nx.shortest_path(self.graph, source=origin, target=neighbor, weight='weight')
-                    total_length = nx.path_weight(self.graph, path, weight='weight') - ((len(path) - 2) * 5)
+                    path = nx.shortest_path(self.graph,
+                                            source=origin, target=neighbor, weight='weight')
+                    total_length = nx.path_weight(self.graph,
+                                                  path, weight='weight') - ((len(path) - 2) * 5)
                     paths[tuple(path)] = total_length
                 except nx.NetworkXNoPath:
                     continue
@@ -292,7 +356,8 @@ class AltoGui:
                         for i, path in enumerate(self.created_services)]
 
                 return (
-                    f"Ruta más eficiente: {' → '.join(shortest_path)} (Consumo DDCC: {shortest_length:.2f} MWh)",
+                    f"Ruta más eficiente: {' → '.join(shortest_path)} \
+                        (Consumo DDCC: {shortest_length:.2f} MWh)",
                     options
                 )
             else:
@@ -301,26 +366,3 @@ class AltoGui:
         except nx.NetworkXNoPath:
             return "No existe una ruta entre los nodos seleccionados.", []
 
-
-    def highlight_selected_service(self, selected_index, reset_clicks):
-        ctx = dash.callback_context
-        if ctx.triggered[0]['prop_id'] == 'reset-button.n_clicks':
-            return self.create_network_graph()
-
-        if selected_index is None:
-            return self.create_network_graph()
-
-        path = self.created_services[selected_index]
-        path_edges = list(zip(path, path[1:]))
-
-        # Usamos los edges marcados previamente
-        return self.create_network_graph()
-
-
-    def highlight_link(self, node_a, node_b):
-        self.highlighted_edges = [(node_a, node_b), (node_b, node_a)]  # soporta grafos no dirigidos
-        return self.create_network_graph()
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

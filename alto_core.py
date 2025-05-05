@@ -1,39 +1,46 @@
 #!/usr/bin/env python3
 # © 2024 Telefónica Innovación Digital, All rights reserved
 
+# Main imports
 import time
 import ipaddress
 import os
 import json
 import re
 import struct
-import networkx
 import socket
 import threading
-import ipaddress
 import hashlib
+import ast
+from datetime import datetime
+
+#External imports
+import networkx
+from networkx.readwrite import json_graph
 import requests
 
-from time import sleep
-from datetime import datetime
 # from modulos.topology_bgp import TopologyBGP
-from modulos.topology_qkd import TopologyQKD
 # from modulos.topology_ietf import TopologyIetf
+# Own imports
+from modulos.topology_qkd import TopologyQKD
 from yang_alto import RespuestasAlto
 from api.web.alto_http import AltoHttp
 from alto_logger import AltoLogger
-from api.web.federation import FederationApi
-from networkx.readwrite import json_graph
+# from api.web.federation import FederationApi
 
 DEFAULT_ASN = 0
 DEF_PORT = 8888
 REMOTE_PORT = 8888
 DEF_IP = "127.0.0.1"
-ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
+ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD",
+           "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
-
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8888, portm=5000, servers=[["192.168.159.83",8080]]):
-        self.__d_modules = modules
+    ''' Class to integrate all the capabilities for the ALTO server.'''
+    def __init__(self, module_data, ip="127.0.0.1", puerto=8888,
+                         module_port=5000, servers=None):
+        if servers is None:
+            servers = [["192.168.159.83", 8080]]
+        self.__d_modules = module_data
         self.__redes = []
         self.topology = networkx.Graph()
         self.__cost_map = {}
@@ -48,41 +55,34 @@ class TopologyCreator:
         for server in self.known_servers:
             self.remotes[server[0]] = networkx.Graph()
         self.puerto = puerto
-        self.port_module = portm
-        self.__api = AltoHttp(self, ip, puerto)        
-        self.gui_app = self.__api.app        
+        self.port_module = module_port
+        self.api = AltoHttp(self, ip, puerto)
+        self.gui_app = self.api.app
         self.__vtag = 0
         self.__respuesta = RespuestasAlto()
-
         self.polling_interval = 60  # segundos
-        self.start_remote_polling()    
-            
+        self.start_remote_polling()
         self.logger = AltoLogger("log/alto")
-        
-        # self.federation = FederationApi()
-        # self.init_federation_api()
-
-    def init_federation_api(self):
-        hilo_federation = threading.Thread(target=self.federation.server_loop, daemon=True)
-        hilo_federation.start()
 
 
 
     def costmap_to_node_link(self, data):
+        ''' Convertir un diccionario de costmap a un formato node-link para NetworkX. '''
         costmap = data.get('cost-map', {})
-        G = networkx.Graph()
+        g = networkx.Graph()
 
         for src, targets in costmap.items():
-            G.add_node(src)  # asegúrate de agregar el nodo incluso si no tiene edges
+            g.add_node(src)  # asegúrate de agregar el nodo incluso si no tiene edges
             for dst, weight in targets.items():
-                if not G.has_edge(src, dst):  # evitar duplicados
-                    G.add_edge(src, dst, weight=weight)
+                if not g.has_edge(src, dst):  # evitar duplicados
+                    g.add_edge(src, dst, weight=weight)
 
         # Convertir a formato node-link (JSON serializable)
-        return json_graph.node_link_data(G)
+        return json_graph.node_link_data(g)
 
 
     def fetch_remote_topology(self, server):
+        ''' Fetch remote topology from a given server. '''
         try:
             url = f"http://{server[0]}:{server[1]}/costmap"
             response = requests.get(url, timeout=5)
@@ -103,7 +103,8 @@ class TopologyCreator:
                         print("Hola 3")
                     except json.JSONDecodeError as e:
                         print("Hola 4")
-                        print(f"[ERROR] No se pudo decodificar como JSON ni desde texto en {server}: {e}")
+                        print(f"[ERROR] No se pudo decodificar como \
+                              JSON ni desde texto en {server}: {e}")
                         print(f"[DEBUG] Texto recibido:\n{raw_text}")
                         return
                 print("[INFO] Datos obtenidos de la topología remota:", data)
@@ -119,25 +120,28 @@ class TopologyCreator:
                 else:
                     print(f"[WARN] Datos no válidos desde {server}: no es un diccionario JSON")
             else:
-                print(f"[WARN] Fallo al obtener topología de {server}, status: {response.status_code}")
+                print(f"[WARN] Fallo al obtener topología de {server}, \
+                      status: {response.status_code}")
         except requests.RequestException as e:
             print(f"[ERROR] Error al contactar con {server}: {e}")
 
     def poll_remotes(self):
+        ''' Poll remote servers for topology updates. '''
         while True:
             for server in self.known_servers:
                 self.fetch_remote_topology(server)
             time.sleep(self.polling_interval)
 
     def start_remote_polling(self):
+        ''' Start a thread to poll remote servers. '''
         thread = threading.Thread(target=self.poll_remotes, daemon=True)
         thread.start()
-        
-        
+
+
     ######################
     ### Static Methods ###
     ######################
-    
+
     @staticmethod
     def get_hex_id(ip):
         """Get hexadecimal value for certain IP
@@ -164,6 +168,7 @@ class TopologyCreator:
 
     @staticmethod
     def check_is_hex(hex_value):
+        '''Check if a string is a valid hexadecimal number.'''
         try:
             int(hex_value, 16)
             return True
@@ -172,15 +177,18 @@ class TopologyCreator:
 
     @staticmethod
     def check_if_router_id_is_hex(router_id):
+        '''Check if a router ID is in hexadecimal format.'''
         return router_id.isnumeric()
-    
+
     @staticmethod
     def reverse_ip(reversed_ip):
+        '''Convert a reversed IP address to standard format.'''
         l = reversed_ip.split(".")
         return '.'.join(l[::-1])
 
     @staticmethod
     def hex_to_ip(hex_ip):
+        """Convert a hexadecimal string to an IP address."""
         hex_ip = hex_ip.strip("0")
         addr_long = int(hex_ip, 16) & 0xFFFFFFFF
         struct.pack("<L", addr_long)
@@ -193,30 +201,35 @@ class TopologyCreator:
     ######################
 
     def get_router_id(self, value):
+        '''Convert a router ID to its standard IP format.'''
         if self.check_if_router_id_is_hex(value):
             return self.split_router_ids(value)
         elif "." in value:
             return value
         else:
             return self.reverse_ip(self.hex_to_ip(value))
-    
+
     def run_api(self):
-        self.__api.run()
-    
+        ''' Run the API server. '''
+        self.api.run()
+
     def parseo_yang(self, mensaje, tipo):
         '''
         It creates a message in the format expected by the ALTO client just as the RFC defined.
         Under evaluation for Stage 2.0.
-        Imputs: 
+        Imputs:
             mensaje: Map to be sent.
             tipo: type of map sent.
         Output: formated message with some metadata.
         '''
-        return str(tipo) + 'json{"alto-tid":"1.0","time":' + str(datetime.timestamp(datetime.now())) + ',"host":"altoserver-alberto","' + str(tipo) + '":' + str(mensaje) + '},}'
+        return str(tipo) + 'json{"alto-tid":"1.0","time":' +  \
+            str(datetime.timestamp(datetime.now())) + ',"host":"altoserver-alberto","' + \
+                str(tipo) + '":' + str(mensaje) + '},}'
 
     def compute_netmap(self, asn, redes):
         '''
-        This funtion evaluates the list of networks founded and associates them to the node in the topology that enroutes it.
+        This funtion evaluates the list of networks founded and associates them to the node
+        in the topology that enroutes it.
         Imput:
             asn: autonomous system where the network is.
             redes: list of networks.
@@ -229,71 +242,61 @@ class TopologyCreator:
                 if not ip["prefix"].endswith("/3", -3, -1):
                     #print(ip[-3:-1])
                     ipv4.append(str(ipaddress.IPv4Network(ip["prefix"], strict=False)))
-            #pid = 'pid%d:%s' % (asn, self.get_hex_id(router))
-            #pid = self.cyphered_pid(router, asn)
             pid = self.obtain_pid(router)
-            if len(ipv4):
-                if pid not in net_map.keys():
+            if ipv4:
+                if pid not in net_map:
                     net_map[pid] = {}
-                    #self.__net_map[pid]['ipv4'] = []
-                #self.__net_map[pid]["ipv4"] = ipv4
                 net_map[pid]['ipv4'] = ipv4
-            if len(ipv6):
+            if ipv6:
                 net_map[pid]["ipv6"] = ipv6
         return net_map
 
     def compute_costmap(self, topo=None):
+        '''This funtion evaluates the topology and computes the cost map.'''
         # shortest_paths is a dict by source and target that contains the shortest path length for
         # that source and destination
-        if topo == None:
+        if topo is not None:
             topo = self.topology
         cost_map = {}
         shortest_paths = dict(networkx.shortest_paths.all_pairs_dijkstra_path_length(topo))
         for src, dest_pids in shortest_paths.items():
-            #src_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(src))
-            #src_pid_name = self.obtain_pid(src)
+
             src_pid_name = src
             for dest_pid, weight in dest_pids.items():
-                #dst_pid_name = 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(dest_pid))
-                #dst_pid_name = self.obtain_pid(dest_pid)
+
                 dst_pid_name = dest_pid
                 if src_pid_name in self.nodos:
                     if src_pid_name not in cost_map:
                         cost_map[src_pid_name] = {}
                     cost_map[src_pid_name][dst_pid_name] = weight
-                    # if src in self.nodos:
-                    #     if src not in cost_map:
-                    #         cost_map[src] = {}
-                    #     cost_map[src][dest_pid] = weight
-                # elif dst_pid_name in self.nodos:
-                #     # Si el nodo no pertenece a nuestra red, significa que es alcanzable a través de un border node nuestro.
-                #     # Mapeamos Nodo_fuera : Nuestro nodo, para saber cuál es el BN con el que podemos alcanzar a ese nodo.
-                #     # Modificar en Multihoming.
-                #     self.bordernodes[src] = dst_pid_name
+
         return cost_map
-    
+
     def obtain_pid(self, router):
-        """Returns the hashed PID of the router passed as argument. 
+        """Returns the hashed PID of the router passed as argument.
             If the PID was already mapped, it uses a dictionary to access to it.
         """
         tsn = int(datetime.timestamp(datetime.now())*1000000)
         if len(router.split(":")) > 1:
             router = router.split(":")[1]
         rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
-        if rid not in self.ts.keys():
+        if rid not in self.ts:
             self.ts[rid] = tsn
         else:
             tsn = self.ts[rid]
         hash_r = hashlib.sha3_384((router + str(tsn)).encode())
         return ('pid%d:%s:%d' % (DEFAULT_ASN, hash_r.hexdigest()[:32], tsn))
-    
+
     def compute_pid_endpoint(self, endpoint):
+        """Returns the PID of the endpoint passed as argument.
+            If the PID was already mapped, it uses a dictionary to access to it.
+        """
         #Vamos a recibir la IP del
         ip_e = ipaddress.IPv4Address(endpoint)
         red = "0.0.0.0/-1"
         pid_e = 0
         #print(str( self.__net_map))
-        for pid in self.__net_map:
+        for pid in self.__net_map.items():
             #print("pid", pid)
             for prefijo in self.__net_map[pid]["ipv4"]:
                 if ip_e in ipaddress.IPv4Network(prefijo):
@@ -304,50 +307,58 @@ class TopologyCreator:
         return pid_e
 
     def launch_api(self):
-        t_http = threading.Thread(target=self.http.run)
+        ''' Launch the API server. '''
+        t_http = threading.Thread(target=self.api.run)
         t_http.start()
 
-   
-   
+
+
    ##############################################
    ###    Functions to be called by the API   ###
    ##############################################
-   
+
     ### RFC7285 functions
     def get_costs_map_by_pid(self, pid):
+        '''Get the cost map by PID.'''
         #pid = "pid0:" + str(npid)
         #print(pid)
         #print(str(self.__pids))
         if not pid:
             return str({"ERROR" : ERRORES["campo"], "syntax-error": "Missing PID."})
-        if type(pid) is not str:
-            return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
-        if pid in self.__cost_map.keys():
+        if not isinstance(pid, str):
+            return str({"ERROR" : ERRORES["tipo"],
+                        "syntax-error": "The PID type is incorrect. We need a string."})
+        if pid in self.__cost_map:
             #print(str(self.__pids))
             #print(str(self.__cost_map))
             mapa = self.__cost_map[pid]
-            return self.__respuesta.crear_respuesta("cost-map", "costmapfilter",  "my-default-network-map", self.__vtag, str(mapa))       
+            return self.__respuesta.crear_respuesta("cost-map", "costmapfilter",
+                                                "my-default-network-map", self.__vtag, str(mapa))
         else:
             for server in self.known_servers:
-                if (server[1] != self.puerto):# or (server[0] != self.ip):
+                if server[1] != self.puerto:# or (server[0] != self.ip):
                     response = self.ask_other_alto_server(pid, server[0], server[1])
                     if response != "":
-                        return response                   
+                        return response
 
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
 
     def get_properties(self, pid, properties=None):
+        '''Get the properties of a given PID.'''
         #return str(self.bf.session.q.nodeProperties().answer().frame())
         #pid = self.__compute_pid_endpoint(endpoint)
+        resp = {}
         if pid:
-            if type(pid) is not str:
-                return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+            if not isinstance(pid, str):
+                return str({"ERROR" : ERRORES["tipo"],
+                            "syntax-error": "The PID type is incorrect. We need a string."})
             #if pid not in self.topology.nodes():
             #    return str({"ERROR" : ERRORES["valor"], "syntax-error": "PID not found."})
             if properties:
-                if type(properties) is not str:
-                    return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The Property type is incorrect. We need a string."})
-                with open('./endpoints/properties.json','r') as archivo:
+                if not isinstance(properties, str):
+                    return str({"ERROR" : ERRORES["tipo"],
+                                "syntax-error": "Incorrect property type. We need a string."})
+                with open('./endpoints/properties.json','r', encoding='utf-8') as archivo:
                     prop = json.load(archivo)
                     for usuario in prop["users"]:
                         result = {}
@@ -357,68 +368,78 @@ class TopologyCreator:
                                     result[propiedad] = usuario["properties"][propiedad]
                             if result:
                                 for prop in properties:
-                                    resp = {"ipv4": pid ,"properties": properties, "values": [result[prop] for prop in properties]}
+                                    resp = {"ipv4": pid ,"properties": properties,
+                                            "values": [result[prop] for prop in properties]}
                             else:
-                                return str({"ERROR" : ERRORES["valor"], "syntax-error": f'{properties} not valid for {pid}'})
-                return self.__respuesta.respuesta_prop("endpointprop", "my-default-network-map.prop", self.__vtag, str(resp))
+                                return str({"ERROR" : ERRORES["valor"],
+                                            "syntax-error": f'{properties} not valid for {pid}'})
+                return self.__respuesta.respuesta_prop("endpointprop",
+                                            "my-default-network-map.prop", self.__vtag, str(resp))
             else:
-                with open('./endpoints/properties.json','r') as archivo:
+                with open('./endpoints/properties.json','r', encoding='utf-8') as archivo:
                     prop = json.load(archivo)
                     for usuario in prop["users"]:
                         result = {}
                         if usuario["ipv4"][0] == pid:
-                            resp = usuario                        
-                            return self.__respuesta.respuesta_prop("endpointprop", "my-default-network-map.prop", self.__vtag, str(resp))
+                            resp = usuario
+                            return self.__respuesta.respuesta_prop("endpointprop",
+                                        "my-default-network-map.prop", self.__vtag, str(resp))
                 #print(resp)
-                 
             #else:
-            #    return str({"ERROR" : ERRORES["campo"], "syntax-error": "Properties not provided"})       
         #return str(self.bf.session.q.nodeProperties().answer().frame())
         return str({"ERROR" : ERRORES["campo"], "syntax-error": "PID not provided"})
 
     def get_endpoint_costs(self, endpoint):
+        '''Get the costs map for a given endpoint.'''
         pid = self.__endpoints.get(endpoint)
         if pid:
-                return self.get_costs_map_by_pid(pid["pid"])
-        else:
-                return str({"ERROR" : ERRORES["valor"], "syntax-error": "Endpoint not found."})
+            return self.get_costs_map_by_pid(pid["pid"])
+        return str({"ERROR" : ERRORES["valor"], "syntax-error": "Endpoint not found."})
         #return "Implementation in proccess. Sorry dude"
 
     def get_maps(self, filtro=None):
-        if filtro == None:
-            return ('{"network_map":' + self.get_net_map() + ', "costs_map":' + self.get_costs_map() + '}')
-        else:
-            return ('{"network_map":' + self.get_net_map(filtro) + ', "costs_map":' + self.get_costs_map(filtro) + '}')
+        '''Get the network and costs maps.'''
+        if filtro is not None:
+            return '{"network_map":' + self.get_net_map() + \
+                    ', "costs_map":' + self.get_costs_map() + '}'
+        return '{"network_map":' + self.get_net_map(filtro) + \
+                    ', "costs_map":' + self.get_costs_map(filtro) + '}'
 
     def get_costs_map(self, filtro=None):
-        if filtro == None:
-            return self.__respuesta.respuesta_costes("costmap","networkmap-default", self.__vtag, str(self.__cost_map))
+        '''Get the costs map.'''
+        if filtro is not None:
+            return self.__respuesta.respuesta_costes("costmap",
+                                        "networkmap-default", self.__vtag, str(self.__cost_map))
         else:
             f_costmap = self.get_filtered_cost_map(filtro)
             if f_costmap == -1:
                 return str({"ERROR" : ERRORES["campo"], "syntax-error": "Filter not valid."})
-            return self.__respuesta.respuesta_costes("costmapfilter", "networkmap-default", self.__vtag, f_costmap)
-            #return self.__respuesta.crear_respuesta("filtered-cost-map","networkmap-default", 0, self.get_filtered_cost_map(filtro))
-        #return self.resp.crear_respuesta("cost-map", "networkmap-default", self.__vtag, str(self.__cost_map))
+            return self.__respuesta.respuesta_costes("costmapfilter",
+                                                     "networkmap-default", self.__vtag, f_costmap)
 
     def get_net_map(self, filtro=None):
-        if filtro == None:
-            return self.__respuesta.respuesta_pid("networkmap", "networkmap-default", self.__vtag, str(self.__net_map))
+        '''Get the network map.'''
+        if filtro is not None:
+            return self.__respuesta.respuesta_pid("networkmap",
+                                        "networkmap-default", self.__vtag, str(self.__net_map))
         else:
             f_netmap = self.get_filtered_network_map(filtro)
             if f_netmap == -1:
                 return str({"ERROR" : ERRORES["campo"], "syntax-error": "Filter not valid."})
-            return self.__respuesta.respuesta_pid("networkmapfilter","networkmap-default",self.__vtag, f_netmap)
-            #return self.__respuesta.crear_respuesta("filtered-pid-map", "networkmap-default", self.__vtag, self.get_filtered_network_map(filtro))
+            return self.__respuesta.respuesta_pid("networkmapfilter",
+                                                  "networkmap-default",self.__vtag, f_netmap)
 
     def get_directory(self):
+        '''Get the directory of the ALTO server.'''
         return self.__respuesta.indice()
 
     def get_qkd_properties(self, node=None):
-        if node == None:
+        '''Get the properties of a given QKD node.'''
+        if node is None:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "Null Link-ID is not valid."})
-        if type(node) is not str:
-            return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The PID type is incorrect. We need a string."})
+        if not isinstance(node, str):
+            return str({"ERROR" : ERRORES["tipo"],
+                        "syntax-error": "The PID type is incorrect. We need a string."})
         if len(node.split(":"))>0:
             nnode = self.reverse_ip(self.hex_to_ip(node.split(":")[1]))
             mensaje = f"Node received: {nnode}"
@@ -429,22 +450,28 @@ class TopologyCreator:
             self.logger.log_message(mensaje)
         props = self.evaluate_qkd_endpoints(nnode)
         if props == -1:
-            return str({"ERROR" : ERRORES["valor"], "syntax-error": "Properties not found for such PID."})
-        return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, props)
+            return str({"ERROR" : ERRORES["valor"],
+                        "syntax-error": "Properties not found for such PID."})
+        return self.__respuesta.respuesta_prop("endpointprop",
+                                               "networkmap-default",self.__vtag, props)
 
 
     def get_qkd_link_properties(self, link=None):
-        if link == None:
+        '''Get the properties of a given QKD link.'''
+        if link is None:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "Link-ID ."})
-        if type(link) is not str:
-            return str({"ERROR" : ERRORES["tipo"], "syntax-error": "The Link-ID type is incorrect. We need a string."})   
-        qkdl_remote = self.__get_qlink_information(link)                 
+        if not isinstance(link, str):
+            return str({"ERROR" : ERRORES["tipo"],
+                        "syntax-error": "The Link-ID type is incorrect. We need a string."})
+        qkdl_remote = self.__get_qlink_information(link)
         if qkdl_remote == {}:
             return str({"ERROR" : ERRORES["valor"], "syntax-error": "Link-ID not found."})
-        return self.__respuesta.respuesta_prop("endpointprop","networkmap-default",self.__vtag, qkdl_remote)        
+        return self.__respuesta.respuesta_prop("endpointprop",
+                                               "networkmap-default",self.__vtag, qkdl_remote)
 
     def __get_qlink_information(self, link):
-        with open('./endpoints/qkd-nodes.json','r') as archivo:
+        '''Get the properties of a given QKD link.'''
+        with open('./endpoints/qkd-nodes.json','r', encoding='utf-8') as archivo:
             qprop = json.load(archivo)
             for node in qprop["qkd_nodes"]:
                 for qlink in node["qkd_node"]["qkd_links"]["qkd_link"]:
@@ -453,13 +480,14 @@ class TopologyCreator:
         return {}
 
     def longest_path_min_weight(self, source, target):
+        '''Calculate the longest path with minimum weight between two nodes.'''
         # Generate all simple paths from source to target
         all_paths = list(networkx.all_simple_paths(self.topology, source=source, target=target))
         # print("ALL paths:\t", all_paths)
         # If no paths exist, return None
         if not all_paths:
             return None
-        
+
         # Calculate the weight of each path as the minimum edge weight in the path
         path_weights = []
         for path in all_paths:
@@ -472,9 +500,9 @@ class TopologyCreator:
                 if edge_weight < min_weight:
                     min_weight = edge_weight
             if min_weight == 99999999:
-                min_weight = -1 
+                min_weight = -1
             path_weights.append(min_weight)
-        
+
         # Return the maximum weight among all paths
         return max(path_weights)
 
@@ -507,54 +535,38 @@ class TopologyCreator:
 
     ### Ampliation functions
     def get_bordernode(self, node=None, source="cccccccc-cccc-cccc-cccc-cccccccccccc"):
+        '''This function is used to get the border node of a given node.'''
         # print("\n\n\n\n\n")
         node_local = ""
         node_remote = ""
         optimal = -1
         try:
         # if 1:
-            if node != None:
+            if node is not None:
                 mensaje = f"\nNode:\t{node}\nREMOTES:\t{self.bordernodes.keys()}"
                 self.logger.log_message(mensaje)
-                # existe = 0
-                # for server in self.known_servers:
-                #     costmap = self.get_remote_nodes(server)["cost-map"]
-                    # print(f"COSTMAP:\t{costmap}")
-                #     if node in costmap.keys():
-                #         existe = 1
-                #         break
-                # if existe == 0:
-                #     return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})                    
-                # print("Node:\t", node, "\nREMOTES:\t", self.bordernodes.keys())
-                # if node in self.bordernodes.keys():
-                #     for local in self.bordernodes[node].keys():
-                #         if self.bordernodes[node][local]["weight"] > optimal:
-                #             optimal = self.bordernodes[node][local]["weight"]
-                #             node_local = local
-                for remote in self.bordernodes.keys():
-                    for local in self.bordernodes[remote].keys():
-                        
+                for remote in self.bordernodes.items():
+                    for local in self.bordernodes[remote].items():
                         #peso = self.longest_path_min_weight(source, remote)
                         peso_remote = self.bordernodes[remote][local]["weight"]
-                        peso = peso_remote
-                        #if remote != node:
-                        #    peso_remote = min(peso, self.peso_remoto(remote, node))
-                        # else:
-                        #    peso_remote = peso
+                        # peso = peso_remote
                         if peso_remote > optimal:
-                            # print("Local:\t", local, "Remote:\t", remote, "Peso:\t", peso, "Peso remoto:\t", peso_remote)
                             optimal = peso_remote
-                            node_local = local  
-                            node_remote  = remote           
+                            node_local = local
+                            node_remote  = remote
                 if node_local:
-                    self.logger.log_message(f"Local node: {node_local}\t Remote Node: {node_remote}")
-                    return str({"local": {"qkdn_id": node_local, "qkdi_id": self.bordernodes[node_remote][node_local]["local_id"]}, 
-                        "remote": {"qkdn_id": node_remote, "qkdi_id": self.bordernodes[node_remote][node_local]["remote_id"]}})
+                    self.logger.log_message(f"Local node: {node_local}\t \
+                                            Remote Node: {node_remote}")
+                    return str({"local": {"qkdn_id": node_local,
+                        "qkdi_id": self.bordernodes[node_remote][node_local]["local_id"]},
+                        "remote": {"qkdn_id": node_remote,
+                        "qkdi_id": self.bordernodes[node_remote][node_local]["remote_id"]}})
         except Exception as e:
             print("ERROR:\t", e)
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
-    
+
     def peso_remoto(self, bnode, node):
+        '''This function is used to get the cost of a given node.'''
         peso = -2
         for server in self.known_servers:
             try:
@@ -562,57 +574,42 @@ class TopologyCreator:
                 if response != {}:
                     # print("DATOS peso remoto:\t", response)
                     if bnode in response["cost-map"].keys():
-                        peso = response["cost-map"][bnode]    
+                        peso = response["cost-map"][bnode]
             except Exception as e:
                 print("Connection refused.")
                 print("Error:\t", e)
                 continue
-            finally:
-                return peso
-    
+        return peso
 
     ### Ampliation functions
     def old_get_bordernode(self, node=None):
+        '''This function is used to get the border node of a given node.'''
         # print("NODE:\t", node)
-        if node != None:
-            if node in self.bordernodes.keys():
-                # Recorrer la lista de nodos que hacen BN con ese.
-                local = self.eval_best_link(node)
-                #return str({"local": {"qkdn_id": self.bordernodes[node]["node"], "qkdi_id": self.bordernodes[node]["local_id"]}, "remote": {"qkdn_id": node, "qkdi_id": self.bordernodes[node]["remote_id"]}})
-                #return str({"border-node":self.bordernodes[node], "remote" : node}) 
-            else:
-                for server in self.known_servers:
-                   try:
-                        # if ((server[1] != self.puerto) or (server[0] != self.ip)):
-                        response = self.ask_other_alto_server(node, server[0], server[1])
-                        if response != {}:
-                            #print("RESPUESTAAA:\t", str(response))
-                            #datos = response.split('\n')
-                            # print("DATOS:\t", response)
-                            #.replace('\t', '').replace('\n', '').strip())
-                            #print("DATOS:\t", type(response))
-                            #datos = dict(dat)
-                            for node2 in response["cost-map"].keys():
-                                if node2 in self.nodos:
-                                    # print("NODO:\t", node2)
-                                    # Potential Optimization problem. Ussing By default: remote node will be the first one saved. Just one Connection between networks.
-                                    for node3 in self.bordernodes.keys():
-                                        if self.bordernodes[node3]["node"] == node2:
-                                            return str({"local": {"qkdn_id": self.bordernodes[node3]["node"], "qkdi_id": self.bordernodes[node3]["local_id"]}, "remote": {"qkdn_id": node3, "qkdi_id": self.bordernodes[node3]["remote_id"]}})
-                                            #return str({"border-node":node2, "remote" : node3})                    
-                            #print(response)
-                   except Exception as e:
-                       print(f"Error de conexión: {e}")
-                       continue
+        if node is not None:
+            for server in self.known_servers:
+                try:
+                    # if ((server[1] != self.puerto) or (server[0] != self.ip)):
+                    response = self.ask_other_alto_server(node, server[0], server[1])
+                    if response != {}:
+                        for node2 in response["cost-map"].keys():
+                            if node2 in self.nodos:
+                                # print("NODO:\t", node2)
+                                # Potential Optimization problem.
+                                # Ussing By default: remote node will be the first one saved.
+                                # Just one Connection between networks.
+                                for node3 in self.bordernodes.items():
+                                    if self.bordernodes[node3]["node"] == node2:
+                                        return str({"local": {"qkdn_id": self.bordernodes[node3]["node"], "qkdi_id": self.bordernodes[node3]["local_id"]},
+                                                    "remote": {"qkdn_id": node3, "qkdi_id": self.bordernodes[node3]["remote_id"]}})
+                                        #return str({"border-node":node2, "remote" : node3})
+                        #print(response)
+                except Exception as e:
+                    print(f"Error de conexión: {e}")
+                    continue
         return str({"ERROR" : ERRORES["valor"], "syntax-error": "Remote PID not found."})
-    
-    def eval_best_link(self, bordern):
-        local = ""
-        cost = -1
-        
-        return local
-    
+
     def ask_other_alto_server(self, pid, rip="127.0.0.1", rport=REMOTE_PORT):
+        '''This function is used to ask the other ALTO server for the cost map.'''
         # Creamos un socket.
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #print("Me cago en mi puta vida 2")
@@ -622,16 +619,15 @@ class TopologyCreator:
         data = {"node": str(pid)}
         json_data = json.dumps(data)
         # Construir la solicitud HTTP POST
-        #request = f"POST /costmap HTTP/1.1\r\nHost: alto-server\r\nContent-Type: application/json\r\nContent-Length: {len(json_data)}\r\n\r\n{json_data}"
-        request = f"POST /costmap HTTP/1.0\r\nContent-Type: application/json\r\nContent-Length: {len(json_data)}\r\n\r\n{json_data}"
-        # Establecemos conexión con el otro ALTO server.    
+        request = f"POST /costmap HTTP/1.0\r\nContent-Type: application/json\r\n \
+        Content-Length: {len(json_data)}\r\n\r\n{json_data}"
+        # Establecemos conexión con el otro ALTO server.
         try:
             server_address = (rip, rport)
             s.settimeout(3)
             #print("Petición al otro server:\t", str(request))
-            s.connect(server_address)        
+            s.connect(server_address)
             s.sendall(request.encode())
-            
             # Recibimos los datos.
             response = s.recv(8192)
             datos = response.decode()
@@ -641,12 +637,13 @@ class TopologyCreator:
             #print("Resultado:\t", str(result))
         except ConnectionError as e:
             print(f"Connection error: {e}")
-            result = {}            
+            result = {}
         finally:
             s.close()
-        # Devolvemos los datos. Si hay error devolvemos un vacío dado que sería imposible alcanzar el destino.
+        # Devolvemos los datos.
+        # Si hay error devolvemos un vacío dado que sería imposible alcanzar el destino.
         return result
-    
+
     def shortest_path(self, a, b):
         '''
         Returns the shortest path between two nodes using the djikstras algoritm.
@@ -656,6 +653,7 @@ class TopologyCreator:
         try:
             return networkx.dijkstra_path(self.topology, a, b)
         except networkx.exception.NetworkXNoPath as e:
+            print(f"[ERROR] No path found between {a} and {b}: {e}")
             return []
         except Exception as e:
             print(e)
@@ -664,7 +662,8 @@ class TopologyCreator:
     def all_maps(self, topo, src, dst):
         '''
         Returns all the diferent paths between src and dest without any edge in common.
-        The result is a list of paths (each path is represented as a char list, e.g. ['a', 'c', 'd'])
+        The result is a list of paths (each path is represented as a char list,
+        e.g. ['a', 'c', 'd'])
         Args:
             topo: Topology map
             src: node used as source
@@ -684,17 +683,19 @@ class TopologyCreator:
             try:
                 sh_path = networkx.dijkstra_path(map_aux, src, dst)
             except networkx.exception.NetworkXNoPath as e:
+                print(f"[ERROR] No path found between {src} and {dst}: {e}")
                 sh_path = []
         return all_paths
 
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def get_filtered_cost_map(self, filtro):
+        '''This function is used to filter the cost map by a given filter.'''
         if filtro == "qkd":
             topo = self.topology.copy()
             # print(str(topo.nodes), str(topo.edges))
-            with open('./endpoints/qkd-properties.json','r') as archivo:
+            with open('./endpoints/qkd-properties.json', 'r', encoding='utf-8') as archivo:
                 qprop = json.load(archivo)
-                #nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
                 nodos = [ n["node"] for n in qprop["nodes"]]
                 eliminar = []
                 #print(str(nodos), str(topo.nodes))
@@ -708,68 +709,77 @@ class TopologyCreator:
             return self.compute_costmap(topo)
         else:
             return -1
-        
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def get_filtered_network_map(self, filtro):
+        '''This function is used to filter the network map by a given filter.'''
         if filtro == "qkd":
             netmap = self.compute_netmap(DEFAULT_ASN,self.__redes)
-            with open('./endpoints/qkd-properties.json','r') as archivo:
+            with open('./endpoints/qkd-properties.json','r', encoding='utf-8') as archivo:
                 qprop = json.load(archivo)
-                nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) for n in qprop["nodes"]]
+                nodos = [ 'pid%d:%s' % (DEFAULT_ASN, self.get_hex_id(n["node"])) \
+                    for n in qprop["nodes"]]
                 # nodos = [ self.obtain_pid(n["node"]) for n in qprop["nodes"]]
                 eliminar = []
                 #print(str(nodos))
                 #print(str(netmap.keys()))
-                for n in netmap.keys():
+                for n in netmap.items():
                     if n not in nodos:
                         #print(str(n),str(nodos))
                         eliminar.append(n)
                 for n in eliminar:
-                    netmap.pop(n)    
+                    netmap.pop(n)
             return str(netmap)
         else:
             return -1
 
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def evaluate_qkd_endpoints(self, node):
         '''
-        This funtion evaluates the SDN database with the information of the nodes with QKD capabilities. 
+        This funtion evaluates the SDN database with the information of the nodes with
+        QKD capabilities.
         It should read the nodes, their properties and filter the maps by these nodes.
-        This function if you are trying to integrate the QKD identification with other metrics, this could be called from other get properties.
-        In this first version it will be reading information from a static file that will follow the ETSI QKD 015 format. 
+        This function if you are trying to integrate the QKD identification with other metrics,
+        this could be called from other get properties.
+        In this first version it will be reading information from a static file that will follow
+        the ETSI QKD 015 format.
         Imput: node to be evaluated.
         Output: If the node is in the qkd-properties doc, return the "sd-qkd-node" properties.
         '''
-        with open('./endpoints/qkd-properties.json','r') as archivo:
+        with open('./endpoints/qkd-properties.json','r', encoding='utf-8') as archivo:
             qprop = json.load(archivo)
             for nodo in qprop["nodes"]:
                 if node == nodo["node"]:
                     return str(nodo["sd-qkd-node"])
         return -1
 
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def cifrar_pids(self, router, asn=DEFAULT_ASN):
         """Returns the hashed PID of the router passed as argument.
             If the PID was already mapped, it uses a dictionary to access to it.
         """
         tsn = self.__vtag
-        rid = self.__get_hex_id(router) if not self.__check_is_hex(router) else router
-        if rid not in self.__ts.keys():
-            self.__ts[rid] = tsn
+        rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
+        if rid not in self.ts.items():
+            self.ts[rid] = tsn
         else:
-            tsn = self.__ts[rid]
+            tsn = self.ts[rid]
         hash_r = hashlib.sha3_384((router + str(tsn)).encode())
         #return ('pid%d:%s:%d' % (asn, hash_r.hexdigest()[:32], tsn))
-        return ('pid%d:%s' % (asn, hash_r.hexdigest()[:32]))    
-    
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+        return ('pid%d:%s' % (asn, hash_r.hexdigest()[:32]))
+
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def __is_client_net(self, pid):
         '''
             If there are at least one network with client connectivity, then it's a end-net.
         '''
         try:
             #print(" __is_client_net", pid)
-            if pid in self.__net_map.keys():
+            if pid in self.__net_map.items():
                 for net in self.__net_map[pid]["ipv4"]:
                     #print(net.split("/")[-1])
                     if int(net.split("/")[-1]) < 30:
@@ -779,7 +789,8 @@ class TopologyCreator:
             print("Error:\t" , e)
         return 0
 
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def __is_border_node(self, pid):
         '''
             If it's connected with at least 1 diferent AS node, then it's a border node.
@@ -797,7 +808,8 @@ class TopologyCreator:
             print("Error:\t", e)
         return 0
 
-    ### Discretion function. This function is being deployed under the umbrella of the Discretion project.
+    ### Discretion function.
+    # This function is being deployed under the umbrella of the Discretion project.
     def __filter_net_map(self, filter_id):
         '''
             in this first version, the only filter we will do is the securoty filter.
@@ -805,21 +817,23 @@ class TopologyCreator:
             will be included in the returned net map.
         '''
         filtrado ={}
-        for pid in self.__net_map.keys():
+        for pid in self.__net_map.items():
             if self.__is_client_net(pid) or self.__is_border_node(pid):
-                cpid  = self.obtain_pid(pid)                
+                cpid  = self.obtain_pid(pid)
                 filtrado[cpid] = self.__net_map[pid]
         return filtrado
-    
+
     ### Manager function
     def gestiona_info(self, fuente):
+        '''This function is used to manage the information of the given module.'''
         if fuente in self.__d_modules.keys():
             self.__d_modules[fuente].manage_topology_updates()
 
     def mailbox(self):
+        '''This function is used to manage the mailbox of the given module.'''
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind(('localhost',self.port_module))
-        self.logger.log_message("Waiting...")      
+        self.logger.log_message("Waiting...")
         while 1:
             topo = s.recv(16384)
             mensaje = f"Received: {str(len(topo))} Bytes"
@@ -831,40 +845,29 @@ class TopologyCreator:
                 ejes = datos["data"]["costs-list"]
                 self.nodos = datos["data"]["nodes-list"]
                 self.apis = datos["data"]["prefixes"]
-                # print(str(self.__redes))
-                # print("NODOS:\t", self.nodos)
-                # print("EJES;\t", ejes)
+
                 for nodo in self.nodos:
                     self.topology.add_node(nodo)
                     self.topology.nodes[nodo]["type"] = "local"
                 for eje in ejes:
-                    #print(eje)
-                    leje = eval(eje.replace("(","[").replace(")","]"))
+                    leje = ast.literal_eval(eje.replace("(", "[").replace(")", "]"))
                     self.topology.add_edge(leje[0], leje[1], weight=leje[2])
                     if leje[1] not in self.nodos:
-                        # self.bordernodes[leje[1]] = {"node":leje[0],"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]]}
                         if leje[1] not in self.bordernodes:
                             self.bordernodes[leje[1]] = {}
-                        self.bordernodes[leje[1]][leje[0]] = {"local_id":self.apis[leje[0]][leje[1]],"remote_id":self.apis[leje[1]][leje[0]], "weight":leje[2]}
+                        self.bordernodes[leje[1]][leje[0]]={"local_id":self.apis[leje[0]][leje[1]],
+                                        "remote_id":self.apis[leje[1]][leje[0]], "weight":leje[2]}
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
-                #print("Topology loaded:\t", str(self.__vtag))
-                #print("Border Nodes:\t", self.bordernodes)
-                self.__cost_map = self.compute_costmap(self.topology)
-                #print(datos["data"]["pids"])
-                #self.compute_netmap()
-                #self.__pids = datos["data"]["pids"]
-                #print("Todo correcto Hulio")
-                #self.comput-e_netmap(int(asn), pids)
-            except:
-                print("Error during processing code:\n", str(topo))
-            #print("netmap:\t" + str(datos["data"]["pids"]).replace("'",'"'))
-            #print("costmap:\t" + str(self.__cost_map).replace("'",'"'))
-            #print(str(self.desire6g_graphs({"filter":{"name":"latency","value":20},"src-nodes":["1.1.1.1","2.2.2.2"]})))
 
-        self.http.detener()
+                self.__cost_map = self.compute_costmap(self.topology)
+            except Exception:
+                print("Error during processing code:\n", str(topo))
+
+        self.api.detener()
 
     def evaluate_endpoints(self):
-        with open('./endpoints/properties.json', 'r') as source:
+        '''This function is used to evaluate the endpoints of the given module.'''
+        with open('./endpoints/properties.json', 'r', encoding='utf-8') as source:
             jason = source.read()
             jason = jason.replace('\t', '').replace('\n', '').replace("'", '"').strip()
             users = json.loads(str(jason))
@@ -876,6 +879,7 @@ class TopologyCreator:
 
 
 class TopologyFileWriter:
+    '''Class to write files in the output path'''
 
     def __init__(self, output_path):
         self.__output_path = output_path
@@ -886,37 +890,40 @@ class TopologyFileWriter:
     def write_file(self, file_name, content_to_write):
         """Writes file_name in output_file"""
         full_path = os.path.join(self.__output_path, file_name)
-        with open(full_path, 'w') as out_file:
+        with open(full_path, 'w', encoding='utf-8') as out_file:
             json.dump(content_to_write, out_file, indent=4)
 
     def write_pid_file(self, content):
+        """Writes the pid file in the output path"""
         self.write_file(self.__pid_file, content)
 
     def write_cost_map(self, content):
+        """Writes the cost map file in the output path"""
         self.write_file(self.__cost_map_file, content)
 
     def write_same_ips(self, content):
+        """Writes the same node IPs file in the output path"""
         self.write_file(self.__same_node_ips, content)
 
 
 if __name__ == '__main__' and os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
-    mode = 0
     modules = {}
-    ipm = "localhost"
-    ipa = "0.0.0.0"
+    IPM = "localhost"
+    IPA = "0.0.0.0"
     DEF_PORT = 8888
-    portm = 5001
-    ruta = "./maps/qkd-topology.json"
-    modules['qkd'] = TopologyQKD((ipm, portm))
+    PORTM = 5001
+    RUTA = "./maps/qkd-topology.json"
+    modules['qkd'] = TopologyQKD((IPM, PORTM))
 
     print("Creating ALTO CORE")
-    print("Modules:\t", str(modules), "\nMode:\t", str(mode), "\nAPI IP:\t", str(ipa), "\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(portm))
+    print("Modules:\t", str(modules), "\nAPI IP:\t", str(IPA),
+          "\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(PORTM))
 
-    alto = TopologyCreator(modules, mode, ipa, DEF_PORT, portm, [["192.168.159.83", 8080]])
+    alto = TopologyCreator(modules, IPA, DEF_PORT, PORTM, [["192.168.159.83", 8080]])
 
     # Hilos para los módulos
     threads = []
-    for modulo in modules.keys():
+    for modulo in modules:
         print("Creating the topology module:", modulo)
         x = threading.Thread(target=alto.gestiona_info, args=(modulo,))
         threads.append(x)
@@ -929,7 +936,7 @@ if __name__ == '__main__' and os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
 
     # Hilo para lógica de la API REST (si es más que solo Dash)
     print("Launching API REST logic")
-    t_api_logic = threading.Thread(target=alto._TopologyCreator__api.run)
+    t_api_logic = threading.Thread(target=alto.api.run)
     t_api_logic.start()
 
     # GUI Dash: en el hilo principal

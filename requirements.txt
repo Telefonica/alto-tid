@@ -1,2 +1,4 @@
 networkx==3.2
 requests==2.25.1
+pandas==2.2
+dash==3.0
