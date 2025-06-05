@@ -52,9 +52,15 @@ class AltoGui:
                         # Sobrescribimos atributos excepto enlaces
                         base_graph.nodes[node].update(attrs)
 
-            for u, v, edge_attrs in remote_graph.edges(data=True):
-                if not base_graph.has_edge(u, v):
+        for u, v, edge_attrs in remote_graph.edges(data=True):
+            if not base_graph.has_edge(u, v):
+                u_type = base_graph.nodes[u].get('type', 'unknown')
+                v_type = base_graph.nodes[v].get('type', 'unknown')
+
+                # Evita enlaces entre local y remote
+                if u_type == v_type:
                     base_graph.add_edge(u, v, **edge_attrs)
+
 
         return base_graph
 
@@ -179,13 +185,22 @@ class AltoGui:
             for key, value in data.items():
                 edege_hover_text += f"<br>{key}: {value}"
             edege_hover_text += f"<br>Key Rate: {data['weight']}"
+            u_type = self.graph.nodes[u].get('type', 'unknown')
+            v_type = self.graph.nodes[v].get('type', 'unknown')
+            is_remote_edge = (u_type == 'unknown' and v_type == 'unknown')
+
             edge_trace = go.Scatter(
                 x=[x0, x1, None], y=[y0, y1, None],
-                line=dict(width=line_width, color=color),
+                line=dict(
+                    width=line_width,
+                    color=color,
+                    dash='dot' if is_remote_edge else 'solid'
+                ),
                 hoverinfo='text',
                 text=[f'{edege_hover_text}'] * 3,
                 mode='lines'
             )
+
             edge_trace["text"] += (edege_hover_text,)
             edge_traces.append(edge_trace)
 
@@ -307,6 +322,9 @@ class AltoGui:
         def update_graph(n):
             return self.create_network_graph()
 
+    def highlight_link(self, node_a, node_b):
+        self.highlighted_edges = [(node_a, node_b), (node_b, node_a)]  # soporta grafos no dirigidos
+        self.create_network_graph()
 
 
     def create_service(self, n_clicks, origin, destination):

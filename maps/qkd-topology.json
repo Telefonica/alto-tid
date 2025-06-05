@@ -1,33 +1,22 @@
-{ 
-    "devices": [ 
-        { 
+{
+    "devices": [
+        {
             "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
-            "name": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 
-            "type": "qkd-device" 
-        }, 
-        { 
-            "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
-            "name": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
-            "type": "qkd-device" 
-        }, 
-        { 
-            "id": "cccccccc-cccc-cccc-cccc-cccccccccccc", 
-            "name": "cccccccc-cccc-cccc-cccc-cccccccccccc", 
-            "type": "qkd-device" 
-        } 
-    ], 
-    "links": [ 
-        { 
-            "id": "29272f08-6c68-5258-aaf9-06b8decf0988", 
-            "link_id": "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb", 
-            "source": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 
-            "target": "cccccccc-cccc-cccc-cccc-cccccccccccc" 
-        }, 
-        { 
-            "id": "95d3231f-7fd2-501a-b3ad-57f001558076", 
-            "link_id": "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa", 
-            "source": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 
-            "target": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb" 
-        } 
-    ] 
+            "name": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+            "type": "qkd-device"
+        },
+        {
+            "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "name": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "type": "qkd-device"
+        }
+    ],
+    "links": [
+        {
+            "id": "7365a701-3e1b-448b-88cd-0df7011a3066",
+            "name": "qkd_link_7365a701-3e1b-448b-88cd-0df7011a3066",
+            "source": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+            "target": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+        }
+    ]
 }

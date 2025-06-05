@@ -16,7 +16,7 @@ from modulos.alto_module import AltoModule
 from alto_logger import AltoLogger
 
 DEFAULT_ASN = 0
-PRUEBA = True
+PRUEBA = False
 
 class TopologyQKD(AltoModule):
     ''' Class to manage the QKD topology. It inherits from AltoModule. '''
@@ -52,6 +52,7 @@ class TopologyQKD(AltoModule):
                 response = requests.get(url, timeout=5)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
+                print("Data:\t", data)
                 self.logger.log_message(f"Data:\t{data}")
             return data
         except (requests.exceptions.RequestException, json.JSONDecodeError,
@@ -74,7 +75,7 @@ class TopologyQKD(AltoModule):
                 with open(self.topology_devices, 'r', encoding='utf-8') as file:
                     nodos = json.load(file)
                     data = nodos[nodo]
-                    links = data["qkd_node"]["qkd_links"]["qkd_link"]
+                    links = data["qkd_links"]
             else:
                 # Realiza la petición HTTP
                 # URL: http://192.168.159.205/webui/qkd/device/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
@@ -83,6 +84,7 @@ class TopologyQKD(AltoModule):
                 response = requests.get(url, timeout=5)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
+                print("Data:\t", data)
                 links = data["qkd_links"]
                 self.logger.log_message(f"Links obtained:\t{links}")
             return links
@@ -115,6 +117,7 @@ class TopologyQKD(AltoModule):
                 response = requests.get(url, timeout=5)
                 response.raise_for_status()  # Lanza una excepción si el estatus no es 200
                 data = response.json()  # Parsear la respuesta a JSON
+                print("Data:\t", data)
                 peso = data["key_availability"]
                 self.logger.log_message(f"Link:\t{data}")
             return peso

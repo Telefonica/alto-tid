@@ -1,21 +1,14 @@
 {
-    "qkd_link_cccccccc-xxxx-xxxx-xxxx-cccccccccccc" : {
-       "key_availability" : 10
-    },
-    "qkd_link_bbbbbbbb-cccc-cccc-cccc-bbbbbbbbbbbb" : {
-       "key_availability" : 10
-    },
-    "qkd_link_yyyyyyyy-bbbb-bbbb-bbbb-yyyyyyyyyyyy" : {
-       "key_availability" : 10
-    },
-    "qkd_link_aaaaaaaa-bbbb-bbbb-bbbb-aaaaaaaaaaaa" : {
-       "key_availability" : 10
-    },
-    "qkd_link_xxxxxxxx-yyyy-yyyy-yyyy-xxxxxxxxxxxx" : {
-       "key_availability" : 10
-    },
-    "qkd_link_yyyyyyyy-zzzz-zzzz-zzzz-yyyyyyyyyyyy" : {
-       "key_availability" : 10
-    }
-    
-    }
+   "7365a701-3e1b-448b-88cd-0df7011a3066": {
+      "key_availability": 506841,
+      "link_uuid": "7365a701-3e1b-448b-88cd-0df7011a3066"
+   },
+   "d49ca67e-3f95-4d48-88ae-f4e73200ee74": {
+      "key_availability": 7488,
+      "link_uuid": "d49ca67e-3f95-4d48-88ae-f4e73200ee74"
+   },
+   "c1114295-8740-4c86-8db0-7ec9620658c8": {
+      "key_availability": 4608,
+      "link_uuid": "c1114295-8740-4c86-8db0-7ec9620658c8"
+   }
+}

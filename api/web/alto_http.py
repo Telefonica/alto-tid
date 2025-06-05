@@ -54,7 +54,7 @@ class AltoHttp:
             '/best': self.api_shortest,
             '/costmap/filter': self.api_costs_by_pid,
             '/get-bordernode': self.api_bordernode,
-            '/federation-api': self.api_federation,
+            '/app-federation': self.api_federation,
         }
         self.logger = AltoLogger("log/alto")
         # Visualización gráfica de la topología si está disponible
@@ -70,7 +70,7 @@ class AltoHttp:
 
         print("Dash app initialized")
         self.requests = []
-        self.federados = ["192.168.159.83:9998"]
+        self.federados = ["10.8.1.170:8888"]
         #self.sdn = "192.168.159.205:80"
         self.sdn = "10.8.0.90:80"
         self.logger.log_message("Federation API initialized")
@@ -92,17 +92,18 @@ class AltoHttp:
             self.logger.log_message(mensaje)
 
             while True:
-                conn, _ = s.accept()
+                conn, client_address = s.accept()
                 with conn:
                     try:
                         data = conn.recv(1024).decode('utf-8')
                         if data:
+                            print("DATA:", data)
                             method, npath, body = data.split(' ', 2)
                             npath = urlparse(npath).path
-                            # print("PATH:", path)
                             npath, params = self.parse_params(npath)
                             if body:
                                 params['data'] = body.split("\r\n\r\n")[1]
+                                params['remote_ip'] = client_address[0]
                             mensaje = f"Path: {npath}\tParametros: {str(params)}"
                             self.logger.log_message(mensaje)
                             response = self.handle_request(method, npath, params)
@@ -272,7 +273,9 @@ class AltoHttp:
             Output:
                 Cost Map and Filtered Cost Map.
         """
+        print("API COSTS\n", method, params)
         if method == 'GET':
+            print("GET METHOD")
             return self.build_response(200, self.alto.get_costs_map())
         if method == 'POST':
             d = params.get('data', None)
@@ -494,7 +497,7 @@ class AltoHttp:
     ##   Federation API functions     ##
     ####################################
 
-    def api_federation(self, method, params):
+    def api_federation(self, method, params, request_obj=None):
         '''
             Federation API. It receives a request from a federated server and
             checks if it matches any stored request.
@@ -514,7 +517,10 @@ class AltoHttp:
                                 "message": "No body found in request."})
 
             request = json.loads(raw_data)
-            client_address = request.get('remote_ip', None)  # IP del cliente
+            print("Request:\t", request)
+            #client_address = request.get('remote_ip', None)  # IP del cliente
+            client_address = params.get('remote_ip', 'unknown')
+
             if not client_address:
                 client_address = 'unknown'
 
@@ -527,15 +533,18 @@ class AltoHttp:
             if client_address in [f.split(':', maxsplit=1)[0] for f in self.federados]:
                 self.logger.log_message(f"Request from federated server {client_address}")
                 # En producción, aquí se haría forward a SDN
+                self.forward_request(request)
                 return self.build_response(200, {"status": "forwarded", "code": 0})
 
+            print("To be sent to federated servers")
             match = self.handle_federated_request(request)
-            if match:
-                return self.build_response(200, {"status": "Match found",
-                                                 "id": match['id'], "code": 1})
-            else:
-                if self.send_to_federated_servers(request):
-                    return self.build_response(200, {"status": "Match found in federated server",
+            print("Match:\t", match)
+            #if match:
+            #    return self.build_response(200, {"status": "Match found",
+            #                                     "id": match['id'], "code": 1})
+            #else:
+            if self.send_to_federated_servers(request):
+                return self.build_response(200, {"status": "Match found in federated server",
                                                      "id": request['client_app_id'], "code": 1})
                 # Si no hay match, guardar la petición
                 self.requests.append({
@@ -550,6 +559,18 @@ class AltoHttp:
         except Exception as e:
             self.logger.log_message(f"Federation API error: {e}")
             return self.build_response(500, {"ERROR": "E_SERVER_ERROR", "message": str(e)})
+
+    def forward_request(self, request):
+        try:
+            sdn_endpoint = "http://" + self.sdn + "/webui/qkd/appRegistry/registerQkdApp"  # Cambia esto según la ruta esperada por tu SDN
+            headers = {'Content-Type': 'application/json'}
+            response = requests.post(sdn_endpoint, data=json.dumps(request), headers=headers, timeout=1)
+            self.logger.log_message(f"Forwarded to SDN: {sdn_endpoint} | Response: {response.status_code} - {response.text}")
+            return self.build_response(200, {"status": "forwarded to SDN", "code": 0})
+        except Exception as e:
+            self.logger.log_message(f"Error forwarding to SDN: {e}")
+            return self.build_response(200, {"ERROR": "E_SDN_FORWARD", "message": str(e)})
+
 
     def compare_qos(self, qos1, qos2):
         '''
@@ -583,20 +604,48 @@ class AltoHttp:
 
 
     def send_to_federated_servers(self, request):
-        '''
+        for federado in self.federados:
+            # print("FEDERADO:\t", federado)
+            #ip, port = federado.split(':')
+            try:
+                try:
+                    j_request = json.loads(request.replace("'", '"'))
+                except:
+                    j_request = request
+                #j_request["expiration_time"] = "2024-10-12T12:30:50.55Z"
+                mensaje = f"PAYLOAD SEND:\t {j_request}"
+                self.logger.log_message(mensaje)
+                endpoint = "http://" + federado + "/app-federation"
+                response = requests.post(endpoint, json=j_request, headers={"Content-Type": "application/json"})
+                mess = str(response.text)
+                smess = mess.split("\r\n\r\n")[-1]
+                mensaje = f"RESPONSE:\t{mess}"
+                self.logger.log_message(mensaje)
+                j_res = json.loads(smess)
+                #j_res = json.loads(response.message)
+                #j_res = response.json()
+                if j_res["code"]:
+                    return True  # Si se encontró coincidencia en otro servidor
+            except Exception as e:
+                self.logger.log_message(f"Error connecting to federado {federado}: {e}")
+        return False
+
+
+    '''def send_to_federated_servers(self, request):
+        \'''
             Envia la petición a los servidores federados.
             Imputs:
                 request: Petición a enviar.
             Output:
                 True si se ha enviado correctamente.
                 False si no se ha podido enviar.
-        '''
+        \'''
         for federado in self.federados:
             try:
                 mensaje = f"Sending to federated: {federado}"
                 self.logger.log_message(mensaje)
 
-                endpoint = f"http://{federado}/federation-api"
+                endpoint = f"http://{federado}/app-federation"
                 enriched_request = request.copy()
                 enriched_request["remote_ip"] = self.ip  # Añadimos IP para identificar origen
 
@@ -611,4 +660,4 @@ class AltoHttp:
                     return True
             except Exception as e:
                 self.logger.log_message(f"Error connecting to federated server {federado}: {e}")
-        return False
+        return False'''

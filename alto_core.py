@@ -296,7 +296,7 @@ class TopologyCreator:
         red = "0.0.0.0/-1"
         pid_e = 0
         #print(str( self.__net_map))
-        for pid in self.__net_map.items():
+        for pid in self.__net_map.keys():
             #print("pid", pid)
             for prefijo in self.__net_map[pid]["ipv4"]:
                 if ip_e in ipaddress.IPv4Network(prefijo):
@@ -399,7 +399,7 @@ class TopologyCreator:
 
     def get_maps(self, filtro=None):
         '''Get the network and costs maps.'''
-        if filtro is not None:
+        if filtro is None:
             return '{"network_map":' + self.get_net_map() + \
                     ', "costs_map":' + self.get_costs_map() + '}'
         return '{"network_map":' + self.get_net_map(filtro) + \
@@ -407,7 +407,7 @@ class TopologyCreator:
 
     def get_costs_map(self, filtro=None):
         '''Get the costs map.'''
-        if filtro is not None:
+        if filtro is None:
             return self.__respuesta.respuesta_costes("costmap",
                                         "networkmap-default", self.__vtag, str(self.__cost_map))
         else:
@@ -419,7 +419,7 @@ class TopologyCreator:
 
     def get_net_map(self, filtro=None):
         '''Get the network map.'''
-        if filtro is not None:
+        if filtro is None:
             return self.__respuesta.respuesta_pid("networkmap",
                                         "networkmap-default", self.__vtag, str(self.__net_map))
         else:
@@ -534,7 +534,7 @@ class TopologyCreator:
             return None
 
     ### Ampliation functions
-    def get_bordernode(self, node=None, source="cccccccc-cccc-cccc-cccc-cccccccccccc"):
+    def get_bordernode(self, node=None, source="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"):
         '''This function is used to get the border node of a given node.'''
         # print("\n\n\n\n\n")
         node_local = ""
@@ -545,8 +545,8 @@ class TopologyCreator:
             if node is not None:
                 mensaje = f"\nNode:\t{node}\nREMOTES:\t{self.bordernodes.keys()}"
                 self.logger.log_message(mensaje)
-                for remote in self.bordernodes.items():
-                    for local in self.bordernodes[remote].items():
+                for remote in self.bordernodes.keys():
+                    for local in self.bordernodes[remote].keys():
                         #peso = self.longest_path_min_weight(source, remote)
                         peso_remote = self.bordernodes[remote][local]["weight"]
                         # peso = peso_remote
@@ -597,7 +597,7 @@ class TopologyCreator:
                                 # Potential Optimization problem.
                                 # Ussing By default: remote node will be the first one saved.
                                 # Just one Connection between networks.
-                                for node3 in self.bordernodes.items():
+                                for node3 in self.bordernodes.keys():
                                     if self.bordernodes[node3]["node"] == node2:
                                         return str({"local": {"qkdn_id": self.bordernodes[node3]["node"], "qkdi_id": self.bordernodes[node3]["local_id"]},
                                                     "remote": {"qkdn_id": node3, "qkdi_id": self.bordernodes[node3]["remote_id"]}})
@@ -724,7 +724,7 @@ class TopologyCreator:
                 eliminar = []
                 #print(str(nodos))
                 #print(str(netmap.keys()))
-                for n in netmap.items():
+                for n in netmap.keys():
                     if n not in nodos:
                         #print(str(n),str(nodos))
                         eliminar.append(n)
@@ -763,7 +763,7 @@ class TopologyCreator:
         """
         tsn = self.__vtag
         rid = self.get_hex_id(router) if not self.check_is_hex(router) else router
-        if rid not in self.ts.items():
+        if rid not in self.ts.keys():
             self.ts[rid] = tsn
         else:
             tsn = self.ts[rid]
@@ -779,7 +779,7 @@ class TopologyCreator:
         '''
         try:
             #print(" __is_client_net", pid)
-            if pid in self.__net_map.items():
+            if pid in self.__net_map.keys():
                 for net in self.__net_map[pid]["ipv4"]:
                     #print(net.split("/")[-1])
                     if int(net.split("/")[-1]) < 30:
@@ -817,7 +817,7 @@ class TopologyCreator:
             will be included in the returned net map.
         '''
         filtrado ={}
-        for pid in self.__net_map.items():
+        for pid in self.__net_map.keys():
             if self.__is_client_net(pid) or self.__is_border_node(pid):
                 cpid  = self.obtain_pid(pid)
                 filtrado[cpid] = self.__net_map[pid]
@@ -919,7 +919,7 @@ if __name__ == '__main__' and os.environ.get('WERKZEUG_RUN_MAIN') != 'true':
     print("Modules:\t", str(modules), "\nAPI IP:\t", str(IPA),
           "\nAPI_PORT:\t", str(DEF_PORT), "\nMailbox:\t", str(PORTM))
 
-    alto = TopologyCreator(modules, IPA, DEF_PORT, PORTM, [["192.168.159.83", 8080]])
+    alto = TopologyCreator(modules, IPA, DEF_PORT, PORTM, [["192.168.27.231", DEF_PORT]])
 
     # Hilos para los módulos
     threads = []
