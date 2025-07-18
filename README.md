@@ -84,16 +84,17 @@ Three main elements in ALTO maps:
 
 ### Contact
 
-Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com
+Alejandro Muñiz Da Costa: alejandro.muniz@telefonica.com (deprecated)
+Luis M. Contreras Murillo: luismiguel.contrerasmurillo@telefonica.com
 
 
 ### Our team
 
-Alejandro Muñiz Da Costa
+Alejandro Muñiz Da Costa (main contributor, ex partner)
 
 Luis Miguel Contreras Murillo
 
-Paula Aguado De Cabo
+Paula Aguado De Cabo (ex partner)
 
 Alberto Solano (ex partner)
 
