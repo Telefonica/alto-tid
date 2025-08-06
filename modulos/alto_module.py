@@ -26,6 +26,9 @@ sys.path.append('cdn-alto/')
 sys.path.append('alto-ale/')
 from ipaddress import ip_address, IPv4Address
 
+#Añadido para evitar sockets
+import queue
+
 DEFAULT_ASN = 0
 RR_BGP_0 = "50.50.50.1"
 #RR_BGP = BGP_INFO['bgp']['ip']
@@ -33,7 +36,7 @@ RR_BGP_0 = "50.50.50.1"
 
 class AltoModule(ABC):
 
-    def __init__(self, mb):
+    def __init__(self, mb : queue.Queue):
         #self.props = {}
         self.pids = {}
         #self.topology = networkx.Graph()
@@ -241,13 +244,16 @@ class AltoModule(ABC):
                 self.cost_map[src_pid_name][dst_pid_name] = weight
     
     def return_info(self, src, tipo, costs, msn):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         meta = '{"source":'+str(src)+', "action":'+str(tipo)+', "costs":'+str(costs)+"}"
         msg = '{"meta":' + str(meta) +', "data":' + str(msn) + "}"
         msg = msg.replace("(", '"(')
         msg = msg.replace(")", ')"')
         print("Sending data to: " + str(self.mailbox))
-        s.sendto(msg.encode(), self.mailbox)
+        # s.sendto(msg.encode(), self.mailbox)
+
+        # Añadido para evitar sockets
+        self.mailbox.put(msg.encode())
 
     ### Manager function
     @abstractmethod

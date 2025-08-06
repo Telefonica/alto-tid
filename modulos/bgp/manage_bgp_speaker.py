@@ -1,3 +1,4 @@
+
 """
 Module to manage exaBGP speaker:
 - Set neighbor speakers and config
@@ -8,8 +9,8 @@ import socket
 import subprocess
 import shlex
 
-IP_BGP_RR = ['50.50.50.1', '60.60.60.1']
-BGP_PORT = 179
+IP_BGP_RR = ['10.95.24.213']
+BGP_PORT = 11179
 
 
 def split_command(cmd):
@@ -31,12 +32,14 @@ class ManageBGPSpeaker:
     @staticmethod
     def get_journal():
         """ Get journalctl logs to read the routes from the speaker"""
-        cmd = split_command('journalctl -f')
+        cmd = split_command('journalctl -f -u exabgp')
+        print("Reading journal ExaBGP")
         return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def start_and_get_journal(self):
         self.start()
         if self.check_service_running() == 0:
+            print("Server running")
             return self.get_journal()
         raise Exception("Service exabgp is not running. Check status")
 

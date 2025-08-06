@@ -24,6 +24,8 @@ import ipaddress
 import hashlib
 import yaml
 
+import queue
+
 from time import sleep
 from datetime import datetime
 from api.kafka_ale.kafka_api import AltoProducer
@@ -44,7 +46,7 @@ DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
 
-    def __init__(self, modules, mode=0, ip="127.0.0.1", puerto=8000, portm=5000):
+    def __init__(self, modules, q, mode=0, ip="127.0.0.1", puerto=8000, portm=30001):
         # Necesita que depuremos las variables: Qué es necesario? Faltan algunas? Cómo referenciar las APIs et al?
         self.__d_modules = modules
         self.__redes = []
@@ -67,6 +69,11 @@ class TopologyCreator:
         self.ts = {}
         self.__endpoints = {}
         #self.known_servers = [ ["localhost", 8082], ["localhost",8081]]
+
+        # Añadido para evitar sockets
+        self.q = q
+        
+
 
     ######################
     ### Static Methods ###
@@ -706,11 +713,12 @@ class TopologyCreator:
             self.__d_modules[fuente].manage_topology_updates()
 
     def mailbox(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.bind(('localhost',self.port_module))
+        # s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        # s.bind(('localhost',self.port_module))
+        
         print("Waiting...")      
         while 1:
-            topo = s.recv(16384)
+            topo = self.q.get()
             print("Received:" + str(len(topo)) + " Bytes")
             topo = topo.decode()
             #try:
@@ -815,6 +823,8 @@ if __name__ == '__main__':
     
     ## Necesita depuración.
     
+    # Añadido después para evitar sockets
+    q = queue.Queue()
     
     mode = 0
     modules = {}
@@ -830,17 +840,17 @@ if __name__ == '__main__':
             if "MODULES_PORT" in doc.keys():
                 portm = doc["MODULES_PORT"]
             else:
-                portm = 5001    
+                portm = 30001
             #Cargamos los módulos
             if "MODULES" in doc.keys():
                 if "BGP" in doc["MODULES"]:
-                    modules["bgp"] = TopologyBGP((ipm,portm))
+                    modules["bgp"] = TopologyBGP((ipm, q))
                 if "IETF" in doc["MODULES"]:
-                    modules['ietf'] = TopologyIetf((ipm,portm))
+                    modules['ietf'] = TopologyIetf((ipm, q))
                 if "ALTO" in doc["MODULES"]:
-                    modules['alto'] = TopologyAlto((ipm,portm), "./maps/")
+                    modules['alto'] = TopologyAlto((ipm, q), "./maps/")
                 if "QKD" in doc["MODULES"]:
-                    modules['qkd'] = TopologyQKD((ipm,portm), "./maps/")
+                    modules['qkd'] = TopologyQKD((ipm, q), "./maps/")
                         
             # Una vez comprobados todos los módulos, tenemos que asegurar que por lo menos haya uno. 
             # Módulo por defecto: BGP
@@ -867,7 +877,7 @@ if __name__ == '__main__':
 
 
     print("Creando ALTO CORE")
-    alto = TopologyCreator(modules, mode, DEF_IP, DEF_PORT, portm)
+    alto = TopologyCreator(modules, q, mode, DEF_IP, DEF_PORT, portm)
     threads = list()
     for modulo in modules.keys():
         print("Creando el módulo de topología:",modulo)

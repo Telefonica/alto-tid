@@ -22,7 +22,7 @@ sys.path.append('alto-ale/')
 from modulos.alto_module import AltoModule
 
 DEFAULT_ASN = 0
-RR_BGP_0 = "50.50.50.1"
+RR_BGP_0 = "192.168.27.219"
 #RR_BGP = BGP_INFO['bgp']['ip']
 
 
@@ -30,7 +30,7 @@ class TopologyBGP(AltoModule):
 
     def __init__(self, mb):
         super().__init__(mb)
-        self.exabgp_process = ManageBGPSpeaker().check_tcp_connection()
+        self.exabgp_process = ManageBGPSpeaker().start_and_get_journal()
 
     ### Topology generation and information recopilation functions
     def __load_topology(self, lsa, igp_metric):
@@ -66,6 +66,7 @@ class TopologyBGP(AltoModule):
         pids_to_load = {RR_BGP_0: {'ipv4': {}}}
         while True:
             line = self.exabgp_process.stdout.readline().strip()
+            print(line)
             tipo = -1
             if b'decoded UPDATE' in line and b'json' in line:
                 #print(line)
@@ -120,5 +121,5 @@ class TopologyBGP(AltoModule):
                 #Aquí deberíamos mandar periódicamente la info al ALTO jefe.
                 datos = str(self.__pids).replace("'", '"')
                 data = '{"pids":'+datos+',"costs-list": '+str(self.ejes)+"}"
-                #print(str(data))
+                print(str(data))
                 self.return_info(0,tipo,1,data)
