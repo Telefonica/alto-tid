@@ -36,22 +36,22 @@ class TopologyBGP(AltoModule):
     def __load_topology(self, lsa, igp_metric):
         if lsa.get('ls-nlri-type') == 'bgpls-link':
             # Link information
-            src = self._get_info_from_node_descript_list(lsa['local-node-descriptors'], 'router-id')
-            dst = self._get_info_from_node_descript_list(lsa['remote-node-descriptors'], 'router-id')
+            src = self.get_info_from_node_descript_list(lsa['local-node-descriptors'], 'router-id')
+            dst = self.get_info_from_node_descript_list(lsa['remote-node-descriptors'], 'router-id')
             for i, j in zip(src, dst):
-                self.ejes.append((i, j, igp_metric))
+                self.ejes[(i, j)] = igp_metric
         if lsa.get('ls-nlri-type') == "bgpls-node":
             # If ls-nlri-type is not present or is not of type bgpls-link or bgpls-prefix-v4
             # add node to topology if not present
-            node_descriptors = self._get_info_from_node_descript_list(lsa['node-descriptors'], 'router-id')
+            node_descriptors = self.get_info_from_node_descript_list(lsa['node-descriptors'], 'router-id')
             for nd in node_descriptors:
                 if nd not in self.__pids.values():
-                    auts=self._get_info_from_node_descript_list(lsa['node-descriptors'], 'autonomous-system', nd)
+                    auts=self.get_info_from_node_descript_list(lsa['node-descriptors'], 'autonomous-system', nd)
                     if auts == []: 
                         print("Tremenda F " + str(nd))
                         auts = 0
                     pid = self.__obtain_pid(nd, auts)    
-                    self.__pids[pid] = nd
+                    self.pids[pid] = nd
 
 
 
@@ -66,7 +66,6 @@ class TopologyBGP(AltoModule):
         pids_to_load = {RR_BGP_0: {'ipv4': {}}}
         while True:
             line = self.exabgp_process.stdout.readline().strip()
-            print(line)
             tipo = -1
             if b'decoded UPDATE' in line and b'json' in line:
                 #print(line)
@@ -83,7 +82,7 @@ class TopologyBGP(AltoModule):
                         if is_bgp_ls:
                             for next_hop_address, nlri in is_bgp_ls.items():
                                 for prefix in nlri:
-                                    if self.__discard_message_from_protocol_id(prefix, [4, 5]):
+                                    if self.discard_message_from_protocol_id(prefix, [4, 5]):
                                         continue
                                     #print("hola load")
                                     self.__load_topology(prefix, igp_metric)
@@ -119,7 +118,7 @@ class TopologyBGP(AltoModule):
                     tipo = 0
                 #self.__compute_costmap()
                 #Aquí deberíamos mandar periódicamente la info al ALTO jefe.
-                datos = str(self.__pids).replace("'", '"')
+                datos = str(self.pids).replace("'", '"')
                 data = '{"pids":'+datos+',"costs-list": '+str(self.ejes)+"}"
                 print(str(data))
                 self.return_info(0,tipo,1,data)

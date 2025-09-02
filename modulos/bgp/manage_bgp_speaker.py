@@ -37,6 +37,7 @@ class ManageBGPSpeaker:
         return subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     def start_and_get_journal(self):
+        self.shutdown()
         self.start()
         if self.check_service_running() == 0:
             print("Server running")

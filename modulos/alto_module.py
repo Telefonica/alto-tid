@@ -44,7 +44,7 @@ class AltoModule(ABC):
         #self.router_ids = []
         self.ejes = {}
         self.vtag = 0
-        self.mailbox = mb
+        self.mailbox = queue.Queue()
         self.ts = {}
 
     ### Static Methods
@@ -159,18 +159,16 @@ class AltoModule(ABC):
     
     def get_info_from_node_descript_list(self, node_descriptors, key: str, rid=''):
         result = []
-        for descriptor in node_descriptors:
-            for key_d, value in descriptor.items():
-                if key_d == key:
-                    if key == "router-id":
-                        result.append(self.get_router_id(value))
-                        #print(value, key_d)
-                    elif key == 'autonomous-system':
-                        for des in node_descriptors:
-                            for kd, val in des.items(): 
-                                #print(kd,val)
-                                if kd == "router-id":
-                                    return value
+        for key_d, value in node_descriptors.items():
+            if key_d == key:
+                if key == "router-id":
+                    result.append(self.get_router_id(value))
+                    #print(value, key_d)
+                elif key == 'autonomous-system':
+                    for kd, val in node_descriptors.items(): 
+                        #print(kd,val)
+                        if kd == "router-id":
+                            return value
         return result
 
     def parseo_yang(self, mensaje, tipo):
