@@ -40,8 +40,8 @@ from api.desire.alto_http import AltoHttp
 #from api.web.alto_http import AltoHttp
 
 DEFAULT_ASN = 0
-DEF_PORT = 8080
-REMOTE_PORT = 8080
+DEF_PORT = 8082
+REMOTE_PORT = 8081
 DEF_IP = "127.0.0.1"
 ERRORES = { "sintax" : "E_SYNTAX", "campo" : "E_MISSING_FIELD", "tipo" : "E_INVALID_FIELD_TYPE", "valor" : "E_INVALID_FIELD_VALUE" }
 class TopologyCreator:
@@ -727,16 +727,16 @@ class TopologyCreator:
                 ejes = datos["data"]["costs-list"]
                 nodos = datos["data"]["nodes-list"]
                 self.__redes = datos["data"]["prefixes"]
-                #print(str(self.__redes))
+                print(str(self.__redes))
                 for nodo in nodos:
                     self.__topology.add_node(nodo)
-                for eje in ejes:
+                for eje, w in ejes.items():
                     #print(eje)
                     leje = eval(eje.replace("(","[").replace(")","]"))
-                    self.__topology.add_edge(leje[0], leje[1], weight=leje[2])
+                    self.__topology.add_edge(leje[0], leje[1], weight=w)
                 self.__vtag = str(int(datetime.now().timestamp()*1e6))
-                print(self.__vtag)
-                self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
+                #print(self.__vtag)
+                #self.__net_map = self.compute_netmap(DEFAULT_ASN, self.__redes)
                 self.__cost_map = self.compute_costmap(self.__topology)
                 #print(datos["data"]["pids"])
                 #self.compute_netmap()

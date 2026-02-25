@@ -119,6 +119,6 @@ class TopologyBGP(AltoModule):
                 #self.__compute_costmap()
                 #Aquí deberíamos mandar periódicamente la info al ALTO jefe.
                 datos = str(self.pids).replace("'", '"')
-                data = '{"pids":'+datos+',"costs-list": '+str(self.ejes)+"}"
+                data = '{"pids":' + datos + ',"nodes-list": ' + '""' + ',"costs-list": ' + str(self.ejes) + ',"prefixes": ' + '""' "}"
                 print(str(data))
                 self.return_info(0,tipo,1,data)
