@@ -11,7 +11,7 @@
 
 
 ### General Description
-This code is an ALTO's special implementation ussed in different european projects, being the Discretion application the main one used as root for this. ALTO is a 
+This code is an ALTO's special implementation ussed in different european projects, being the Desire application the main one used as root for this.  
 
 
 ### Lista de archivos
